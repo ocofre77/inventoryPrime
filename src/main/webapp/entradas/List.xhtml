@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListEntradasTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form style="display:block;">
+                <h:panelGrid width="900px" style="margin: 0 auto; background-color: lightgray;">
+                    <p:commandButton value="Nueva Entrada" icon="ui-icon-key" 
+                        actionListener="#{entradasController.generarGuia()}" 
+                        update=":AsignarProyectoListForm"/>
+                </h:panelGrid>                
+            </h:form>
+            <h:form id="AsignarProyectoListForm">
+                <p:growl id="mensajeGeneral" showDetail="true" autoUpdate="true" life="3000"/>
+                <p:panel header="INGRESAR PRODUCTOS" style="width: 900px; margin:  0 auto; text-align: center">
+                    <p:layout id="capaDatosProveedor" style="width: 100%; height: 130px">
+                        <p:layoutUnit  id="datosProveedor" position="center" style="padding: 5px; text-align: justify; font-size: 14px" size="500">
+                           
+                            <h:panelGrid id="gridBuscarDatosProveedor" columns="5">
+                                <p:outputLabel value="Proveedor" style="font-weight: bold"/>                               
+                                <p:commandButton icon="ui-icon-person" oncomplete="PF('dialogoProveedores').show();"
+                                                 update=":AsignarProyectoListForm:dlgProveedor"/>
+
+                                <p:outputLabel value="FECHA: " style="font-weight: bold"/>                     
+                                <p:outputLabel value="#{entradasController.fechaSistema}" />
+                            </h:panelGrid>
+
+                            <p:separator/>
+                            
+                            <h:panelGrid id="gridDatosProveedor" columns="6">
+                     
+                                <p:outputLabel value="Proveedor: " style="font-weight: bold"/>
+                                <p:outputLabel id="lblNombreProveedor" value="#{entradasController.selectedP.provNombre}"/>
+                                <p:outputLabel value="Dirección: " style="font-weight: bold"/>
+                                <p:outputLabel id="lblDireccionProveedor" value="#{entradasController.selectedP.provDireccion}"/>
+                                <p:outputLabel value="Transportista: " style="font-weight: bold" />
+                                <p:inputText size="12" value="#{entradasController.transportista}"/>
+                                <p:outputLabel value="Telefono: " style="font-weight: bold"/>
+                                <p:outputLabel id="lblTelefonoProveedor" value="#{entradasController.selectedP.provTelefono}"/>
+                                <p:outputLabel value="RUC: " style="font-weight: bold"/>
+                                <p:outputLabel id="lblRucProveedor" value="#{entradasController.selectedP.provRuc}"/>
+                                <p:outputLabel value="*Lugar llegada " style="font-weight: bold"/>
+                                <p:selectOneMenu id="bdId" value="#{entradasController.bodega}"  requiredMessage="#{bundle.EditProductosRequiredMessage_bdId}" style="size: 12px;">
+                                    <f:selectItem itemValue="" itemLabel="Seleccione uno"/>
+                                    <f:selectItems value="#{entradasController.lstBodega}"
+                                               var="bdIdItem"
+                                               itemValue="#{bdIdItem}"/>
+                                </p:selectOneMenu> 
+                            </h:panelGrid>
+                            
+                        </p:layoutUnit>
+                        
+                        <p:layoutUnit id="datoGuia" position="east" style="padding: 5px; text-align: center; 
+                                      font-size:  14px" size="120">
+                            <h:panelGrid columns="1" style="font-size: 20px; font-weight: bold; 
+                                         margin-bottom: 30px; margin: 0 auto">
+                                NÚMERO<BR/> GUIA  
+                                <p:outputLabel  value="#{entradasController.numeroGuia}" style="color: red"/>
+                            </h:panelGrid>
+                        </p:layoutUnit>
+                    </p:layout> 
+                    
+                     <p:layout id="capaDatosProductos" style="width: 100%; height: 300px">
+                         <p:layoutUnit  id="datosProducto" position="center" style="padding: 5px; text-align: justify; font-size: 14px" size="500">
+                        
+                            <p:separator/>
+                            <h:panelGrid id="gridDatosProducto" columns="3">
+                                <p:outputLabel value="Agregar Nombre del producto: " style="font-weight: bold"/>
+                                <p:commandButton icon="ui-icon-cart" oncomplete="PF('dialogoProductos').show();"
+                                                 update=":AsignarProyectoListForm:dlgProductos"/>                                
+                            </h:panelGrid>
+                            
+                            <p:dataTable id="tablaProductosEntrada" var="item" editable="true" value="#{entradasController.items2}" rowIndexVar="rowIndex">
+                                
+                                <p:ajax event="rowEdit" listener="#{entradasController.onRowEdit}" update=":AsignarProyectoListForm:tablaProductosEntrada :AsignarProyectoListForm:gridTotal" />
+                                <p:ajax event="rowEditCancel" listener="#{entradasController.onRowCancel}" update=":AsignarProyectoListForm:tablaProductosEntrada" />
+
+
+                                <p:column headerText="CÓDIGO" style="width: 100px">
+                                    <h:outputText value="#{item.proId4.proCodigopro}"/>
+                                </p:column>
+                                <p:column headerText="PRODUCTO" >
+                                    <h:outputText value="#{item.proId4.proNombres}"/>
+                                </p:column>
+                                <p:column headerText="CANTIDAD" style="width: 50px">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{item.entCantidad}"/></f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{item.entCantidad}" label="Cantidad de producto" 
+                                                         required="true" requiredMessage="Es necesario una cantidad" 
+                                                         converter="#{Integer}" converterMessage="Esta no es una cantidad" 
+                                                         validatorMessage="La cantidad debe ser mayor o igual a 1">
+                                                <f:validateLongRange minimum="1" />
+                                            </p:inputText>
+                                        </f:facet>
+                                    </p:cellEditor>                                    
+                                </p:column>
+                                <p:column headerText="PRECIO UNITARIO" style="width: 50px">
+                                    <p:cellEditor>
+                                        <f:facet name="output">$ <h:outputText value="#{item.entPrecioUni}"/></f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{item.entPrecioUni}" label="Precio unitario" 
+                                                         required="true" requiredMessage="Es necesario un valor" 
+                                                         converter="#{Integer}" converterMessage="Esta no es un precio" 
+                                                         validatorMessage="La cantidad debe ser mayor a 0">
+                                                <f:validateLongRange minimum="1" />
+                                            </p:inputText>
+                                        </f:facet>
+                                    </p:cellEditor>                                     
+                                </p:column>
+                                <p:column headerText="SUBTOTAL" style="width: 50px">
+                                    <h:outputText value="#{item.entSubtotal}"/>
+                                </p:column> 
+
+                                <p:column headerText="EDITAR" style="width: 40px">
+                                    <p:rowEditor />
+                                </p:column>
+                                
+                                <p:column headerText="QUITAR" style="width: 40px" >
+                                    <p:commandLink value="X" actionListener="#{entradasController.quitarProductoDetalle(item.entCodigo, rowIndex)}" 
+                                                   style="text-decoration: none; color: orangered;" title="Quitar producto"
+                                                   update=":AsignarProyectoListForm:tablaProductosEntrada :AsignarProyectoListForm:gridTotal" />
+                                </p:column>
+                               
+                            </p:dataTable>
+                            <center>
+                                <h:panelGrid id="gridTotal" columns="2" style="font-size: 14px; margin: 0 auto;">
+                                    TOTAL DE INGRESOS $
+                                    <p:outputLabel value="#{entradasController.totalV}"/>
+                                </h:panelGrid>
+
+                                <p:separator/>
+
+                                <table>
+                                    <tr>
+                                        <td >
+                                            <h:commandLink id="btnImprimir" actionListener="#{entradasController.verReporte()}"  title="Exportar a PDF" >    
+                                               <img src="../images/botonRegistrar.jpg" alt=""/>
+                                           </h:commandLink>
+                                        </td>
+                                         <td>                                         
+                                            <p:commandButton value="CANCELAR" icon="ui-icon-closethick" action="#{entradasController.limpiar()}" update=":AsignarProyectoListForm"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </center>
+                            
+                        </p:layoutUnit>                     
+                        
+                    </p:layout>                
+                </p:panel>
+                <!--VENTANA PARA AÑADIR PROVEEDOR -->
+                <p:dialog id="dlgProveedor" widgetVar="dialogoProveedores" 
+                          resizable="false" 
+                          header="Listado de Proveedores" >
+                    <p:dataTable id="datalistP" value="#{proveedorController.items}" var="item"
+                                 paginator="true" style="width: 900px;"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,15,20,25,30"
+                                 >
+                        <p:column style="width:90px;">
+                            <f:facet name="header">
+                                <h:outputText value="RUC"/>
+                            </f:facet>
+                            <h:outputText value="#{item.provRuc}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="NOMBRE"/>
+                            </f:facet>
+                            <h:outputText value="#{item.provNombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="DIRECCIÓN"/>
+                            </f:facet>
+                            <h:outputText value="#{item.provDireccion}"/>
+                        </p:column>
+                        <p:column style="width:80px;">
+                            <f:facet name="header">
+                                <h:outputText value="TELÉFONO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.provTelefono}"/>
+                        </p:column>
+                        <p:column style="width:95px;">
+                            <f:facet name="header">                                
+                            </f:facet>
+                            <p:commandButton value="Seleccionar"  actionListener="#{entradasController.agregarDatosProveedor(item.provId)}" 
+                                             oncomplete="PF('dialogoProveedores').hide();"
+                                             update=":AsignarProyectoListForm:gridDatosProveedor"/>
+                        </p:column>                        
+                    </p:dataTable>
+                    <p:commandButton value="Cerrar" onclick="PF('dialogoProveedores').hide();"/>
+                    
+                </p:dialog>
+                
+                <!--VENTANA PARA AÑADIR PRODUCTOS -->
+                <p:dialog id="dlgProductos" widgetVar="dialogoProductos" 
+                          resizable="false" showEffect="explode" header="Listado de Productos"
+                          hideEffect="explode" style="height: 300px;" >
+                    
+                    <p:panelGrid columns="6">
+                        <p:row>
+                            <p:outputLabel value="Producto:"/>
+                            <p:inputText placeholder="Nombre Producto" value="#{entradasController.productoNombre}"/>
+                            <p:commandButton value="Buscar" 
+                                action="#{entradasController.getListaProductosByNombre()}" 
+                                update="datalist" />
+                            <p:column colspan="2"></p:column>
+                        </p:row>
+                        <p:row>
+                            <p:outputLabel value="Cantidad:"/>
+                            <p:spinner id="cantidad" min="0.01" stepFactor="0.01" 
+                                value="#{entradasController.cantidadProducto}" />
+                            <p:outputLabel value="Precio:"/>
+                            <p:spinner id="precio" min="0.01" stepFactor="0.01" prefix="$" 
+                                value="#{entradasController.precioUnitario}" />
+                            <p:commandButton value="ACEPTAR"  icon="pi pi-check"
+                                actionListener="#{entradasController.agregarDatosProductos()}" 
+                                update=":AsignarProyectoListForm:tablaProductosEntrada :AsignarProyectoListForm:gridTotal :AsignarProyectoListForm:dlgProductos"/>
+                            <p:commandButton value="Cerrar" icon="ui-icon-closethick"
+                                onclick="PF('dialogoProductos').hide();" 
+                                style="margin: 1em !important;"/>
+                        </p:row>
+                    </p:panelGrid>
+                        
+                    <p:dataTable id="datalist" value="#{entradasController.listaProductos}" var="item" style="width: 1100px;"
+                                paginator="true"
+                                rowKey="#{item.proId4}"
+                                rows="5"
+                                rowsPerPageTemplate="5,10,15,20,25,30"
+                                selectionMode="single"
+                                selection="#{entradasController.productosSeleccionado}"
+                                 >     
+                        
+                        <p:column style="width: 100px;">
+                            <f:facet name="header">
+                                <h:outputText value="CÓDIGO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proCodigopro}"/>
+                        </p:column>
+                        <p:column headerText="Id" >
+                            <f:facet name="header">
+                                <h:outputText value="NOMBRE PRODUCTO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proNombres}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Bodega"/>
+                            </f:facet>
+                            <h:outputText value="#{item.bdId.bdNombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="MODELO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proModelo}"/>
+                        </p:column>
+                        <p:column style="width: 80px">
+                            <f:facet name="header">
+                                <h:outputText value="TAMAÑO / MEDIDA"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proTamanomedida}"/>
+                        </p:column>
+                        <p:column style="width: 50px;">
+                            <f:facet name="header">
+                                <h:outputText value="CANTIDAD"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proCantidad}"/>
+                        </p:column>
+                        <p:column style="width: 60px">
+                            <f:facet name="header">
+                                <h:outputText value="PRECIO UNITARIO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proPrecioUni}"/>
+                        </p:column>
+                        <p:column style="width: 60px">
+                            <f:facet name="header">
+                                <h:outputText value="IMAGEN"/>
+                            </f:facet>
+                            <h:graphicImage value="/DisplayImage?Image_id=#{item.proId4}" width="25" height="25"></h:graphicImage>
+                        </p:column>
+                        
+<!--                        
+                        <p:column style="width: 80px">
+                            <f:facet name="header"></f:facet>
+                            <p:commandButton value="Seleccionar" 
+                                actionListener="#{entradasController.pedirCantidadProducto(item.proId4)}"/>
+                        </p:column>-->
+                        
+                    </p:dataTable>
+                </p:dialog>
+                
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

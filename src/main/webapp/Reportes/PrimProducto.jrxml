@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="68687be3-ecaf-4fe8-957d-c0b1d16f55f5">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="CodigoProducto" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     productos.`PRO_ID4` AS productos_PRO_ID4,
+     productos.`BD_ID` AS productos_BD_ID,
+     productos.`PRO_CODIGOPRO` AS productos_PRO_CODIGOPRO,
+     productos.`PRO_NOMBRES` AS productos_PRO_NOMBRES,
+     productos.`PRO_MODELO` AS productos_PRO_MODELO,
+     productos.`PRO_SERIAL` AS productos_PRO_SERIAL,
+     productos.`PRO_TAMANOMEDIDA` AS productos_PRO_TAMANOMEDIDA,
+     productos.`PRO_CATEGORIA` AS productos_PRO_CATEGORIA,
+     productos.`PRO_CANTIDAD` AS productos_PRO_CANTIDAD,
+     productos.`PRO_PRECIO_UNI` AS productos_PRO_PRECIO_UNI,
+     productos.`PRO_IMAGEN` AS productos_PRO_IMAGEN,
+     productos.`PRO_ADI_OBSERVACION` AS productos_PRO_ADI_OBSERVACION,
+     bodega.`BD_ID` AS bodega_BD_ID,
+     bodega.`BD_NOMBRE` AS bodega_BD_NOMBRE,
+     imagenes.`IMG_ID` AS imagenes_IMG_ID,
+     imagenes.`logo` AS imagenes_logo,
+     imagenes.`pie` AS imagenes_pie
+FROM
+     `bodega` bodega INNER JOIN `productos` productos ON bodega.`BD_ID` = productos.`BD_ID`,
+     `imagenes` imagenes
+WHERE
+     productos.`PRO_CODIGOPRO` = $P{CodigoProducto}]]>
+	</queryString>
+	<field name="productos_PRO_ID4" class="java.lang.Integer"/>
+	<field name="productos_BD_ID" class="java.lang.Integer"/>
+	<field name="productos_PRO_CODIGOPRO" class="java.lang.String"/>
+	<field name="productos_PRO_NOMBRES" class="java.lang.String"/>
+	<field name="productos_PRO_MODELO" class="java.lang.String"/>
+	<field name="productos_PRO_SERIAL" class="java.lang.String"/>
+	<field name="productos_PRO_TAMANOMEDIDA" class="java.lang.String"/>
+	<field name="productos_PRO_CATEGORIA" class="java.lang.String"/>
+	<field name="productos_PRO_CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_PRECIO_UNI" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_IMAGEN" class="java.lang.Object"/>
+	<field name="productos_PRO_ADI_OBSERVACION" class="java.lang.String"/>
+	<field name="bodega_BD_ID" class="java.lang.Integer"/>
+	<field name="bodega_BD_NOMBRE" class="java.lang.String"/>
+	<field name="imagenes_IMG_ID" class="java.lang.Integer"/>
+	<field name="imagenes_logo" class="java.lang.Object"/>
+	<field name="imagenes_pie" class="java.lang.Object"/>
+	<variable name="productos_PRO_CANTIDAD_1" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{productos_PRO_CANTIDAD}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="74" splitType="Stretch">
+			<staticText>
+				<reportElement x="157" y="10" width="295" height="24" uuid="d47649ee-b7c9-4f85-81aa-cba31ca91f61"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONALGI CONSTRUCTORA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="34" width="235" height="22" uuid="081a637b-6e9e-4d12-96c6-685534d3f6a0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[INVENTARIO DE PRODUCTOS]]></text>
+			</staticText>
+			<image>
+				<reportElement x="23" y="10" width="100" height="50" uuid="875dad50-3853-4204-bf92-e26e56f85705"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="26" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="425" y="6" width="100" height="20" uuid="2ac4974f-8902-4df3-9b70-efb5a0ee653c"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="381" y="6" width="44" height="20" uuid="e50a7bc1-04e0-4857-996c-2ed6266d91f3"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="157" y="7" width="350" height="20" uuid="599c5f07-6064-4b51-9979-668d6e37eba6"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_NOMBRES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="57" y="7" width="100" height="20" uuid="77dfdbdd-dbe1-4c1a-9288-fe89d43ce70d"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[NOMBRE:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="358" splitType="Stretch">
+			<textField>
+				<reportElement x="175" y="17" width="100" height="20" uuid="77bebc63-52a8-47a6-a3ec-8d73a1a60a94"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_CODIGOPRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="54" width="100" height="20" uuid="31b22fd9-e504-4788-958a-9153dad93f73"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_MODELO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="93" width="100" height="20" uuid="7a3d0a7e-6aa1-42ef-8fd4-605a78ef978a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_SERIAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="128" width="100" height="20" uuid="b60b8ec2-627d-44bf-8a58-f1a06a04966e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_TAMANOMEDIDA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="165" width="100" height="20" uuid="0945ddc5-fbcf-4c61-8732-c69fef3a3171"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_CATEGORIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="239" width="100" height="20" uuid="4aa088db-542a-49bb-bee8-4196b6f5417f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="202" width="100" height="20" uuid="eecca2ea-d994-4bb1-b92f-8af533bfd433"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_PRECIO_UNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="313" width="350" height="42" uuid="c50b9779-586e-46eb-a686-22408b7e7274"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_ADI_OBSERVACION}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="302" y="55" width="223" height="193" uuid="d7f828a6-b708-4687-825f-792564d8364b"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{productos_PRO_IMAGEN})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="57" y="91" width="100" height="20" uuid="ad5d0d68-9d35-4219-a372-d99318158d41"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERIAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="128" width="100" height="20" uuid="6d51f463-3cbf-4f9f-8ea3-0ddd77f3853c"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TAMAÑO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="313" width="104" height="30" uuid="348f6bdf-05fa-448c-9c8a-2a7e5bc46373"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBSERVACIÓN / ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="54" width="100" height="20" uuid="ecdd7be1-0058-4f29-b31a-0cdf2947d2b9"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MODELO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="239" width="100" height="20" uuid="d61deed9-a304-4dd6-9aba-a469d123395a"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="202" width="104" height="20" uuid="fcdae692-7bfa-4abd-a790-236dd03fc8eb"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO UNITARIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="58" y="165" width="100" height="20" uuid="f15590b7-f1df-4295-98b1-e10d9e67bfbf"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CATEGORÍA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="325" width="104" height="30" uuid="89caafe8-2c4e-48fa-b3fa-3d736a05a2e5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[COMENTARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="57" y="17" width="100" height="20" uuid="9c001b58-f954-4e3c-9a42-1ed961268f07"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="276" width="100" height="20" uuid="c9b717dc-95ba-414c-9439-f60c0f59b276"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UBICACIÓN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="175" y="276" width="100" height="20" uuid="1fe75e14-5f73-4866-830e-49a718054dc8"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bodega_BD_NOMBRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="101" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="101" uuid="eb31a976-60b2-4441-9f6d-bfd6a437b938"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="492" y="46" width="53" height="20" uuid="21d6addb-3bd4-4c60-8413-66015213d5a7"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="275" y="12" width="100" height="20" uuid="c55a0fe4-f7f1-4d01-be06-7ab9f9a496fe"/>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{productos_PRO_CANTIDAD_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="163" y="12" width="100" height="20" uuid="1ae6cca2-4e64-489b-8c06-3ec80d33b607"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

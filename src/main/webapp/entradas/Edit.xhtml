@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EntradasEditDlg" widgetVar="EntradasEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditEntradasTitle}">
+            <h:form id="EntradasEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{entradasController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entId}" for="entId" />
+                        <p:inputText id="entId" value="#{entradasController.selected.entId}" title="#{bundle.EditEntradasTitle_entId}" required="true" requiredMessage="#{bundle.EditEntradasRequiredMessage_entId}"/>
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entCodigo}" for="entCodigo" />
+                        <p:inputText id="entCodigo" value="#{entradasController.selected.entCodigo}" title="#{bundle.EditEntradasTitle_entCodigo}" required="true" requiredMessage="#{bundle.EditEntradasRequiredMessage_entCodigo}"/>
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entTransportista}" for="entTransportista" />
+                        <p:inputText id="entTransportista" value="#{entradasController.selected.entTransportista}" title="#{bundle.EditEntradasTitle_entTransportista}" />
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entLugarLlegada}" for="entLugarLlegada" />
+                        <p:inputText id="entLugarLlegada" value="#{entradasController.selected.entLugarLlegada}" title="#{bundle.EditEntradasTitle_entLugarLlegada}" />
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entCantidad}" for="entCantidad" />
+                        <p:inputText id="entCantidad" value="#{entradasController.selected.entCantidad}" title="#{bundle.EditEntradasTitle_entCantidad}" required="true" requiredMessage="#{bundle.EditEntradasRequiredMessage_entCantidad}"/>
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entPrecioUni}" for="entPrecioUni" />
+                        <p:inputText id="entPrecioUni" value="#{entradasController.selected.entPrecioUni}" title="#{bundle.EditEntradasTitle_entPrecioUni}" required="true" requiredMessage="#{bundle.EditEntradasRequiredMessage_entPrecioUni}"/>
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entFecha}" for="entFecha" />
+                        <p:calendar id="entFecha" pattern="MM/dd/yyyy" value="#{entradasController.selected.entFecha}" title="#{bundle.EditEntradasTitle_entFecha}" required="true" requiredMessage="#{bundle.EditEntradasRequiredMessage_entFecha}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entSubtotal}" for="entSubtotal" />
+                        <p:inputText id="entSubtotal" value="#{entradasController.selected.entSubtotal}" title="#{bundle.EditEntradasTitle_entSubtotal}" />
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entNumero}" for="entNumero" />
+                        <p:inputText id="entNumero" value="#{entradasController.selected.entNumero}" title="#{bundle.EditEntradasTitle_entNumero}" required="true" requiredMessage="#{bundle.EditEntradasRequiredMessage_entNumero}"/>
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entTotal}" for="entTotal" />
+                        <p:inputText id="entTotal" value="#{entradasController.selected.entTotal}" title="#{bundle.EditEntradasTitle_entTotal}" />
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_entTotaliva}" for="entTotaliva" />
+                        <p:inputText id="entTotaliva" value="#{entradasController.selected.entTotaliva}" title="#{bundle.EditEntradasTitle_entTotaliva}" />
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_provId}" for="provId" />
+                        <p:selectOneMenu id="provId" value="#{entradasController.selected.provId}" required="true" requiredMessage="#{bundle.EditEntradasRequiredMessage_provId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{proveedorController.itemsAvailableSelectOne}"
+                                           var="provIdItem"
+                                           itemValue="#{provIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditEntradasLabel_proId4}" for="proId4" />
+                        <p:selectOneMenu id="proId4" value="#{entradasController.selected.proId4}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{productosController.itemsAvailableSelectOne}"
+                                           var="proId4Item"
+                                           itemValue="#{proId4Item}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{entradasController.update}" value="#{bundle.Save}" update="display,:EntradasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'EntradasEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EntradasEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

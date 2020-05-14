@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="COTIZACIÓN DE PRODUCTOS"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form>
+                <h:panelGrid width="900px" style="margin: 0 auto; background-color: lightgray;" >
+                    <p:commandButton value="Nueva Cotización"  icon="ui-icon-key" actionListener="#{cotizacionController.generarGuia()}" 
+                                     update=":AForm"/>
+                </h:panelGrid>                
+            </h:form>
+            <h:form id="AForm" >
+                <p:growl id="mensajeGeneral" showDetail="true" autoUpdate="true" life="3000"/>
+                <p:panel header="COTIZACIÓN DE PRODUCTOS" style="width: 900px; margin:  0 auto; text-align: center">
+                    <p:layout id="capaDatosProveedor" style="width: 100%; height: 100px">
+                        <p:layoutUnit  id="datosProveedor" position="center" style="padding: 5px; text-align: justify; font-size: 14px" size="500">
+                           
+                            <h:panelGrid id="gridBuscarDatosProyecto" columns="6" >
+                                <p:outputLabel value="PROYECTO" style="font-weight: bold"/>
+                                <p:commandButton icon="ui-icon-folder-open" oncomplete="PF('dialogoProyecto').show();"
+                                                 update=":AForm:dlgProyecto"/>                   
+                                
+                                <p:outputLabel value="FECHA: " style="font-weight: bold"/>                     
+                                <p:outputLabel value="#{cotizacionController.fechaSistema}" style="font-weight: bold"/>
+                            </h:panelGrid>                            
+
+                            <p:separator/>
+                            
+                            <h:panelGrid id="gridDatosProyecto" columns="8">
+                     
+                                <p:outputLabel value="PROYECTO: " style="font-weight: bold"/>
+                                <p:outputLabel value="#{cotizacionController.selectedP.proyNombre}"/>
+                                <p:outputLabel value="    DIRECCIÓN: " style="font-weight: bold"/>
+                                <p:outputLabel  value="#{cotizacionController.selectedP.proyDireccion}"/>
+                            </h:panelGrid>
+                           
+                        </p:layoutUnit>
+                        <p:layoutUnit id="datoGuia" position="east" style="padding: 5px; text-align: center; 
+                                      font-size:  14px" size="200">
+                            <h:panelGrid columns="1" style="font-size: 20px; font-weight: bold; 
+                                         margin-bottom: 30px; margin: 0 auto">
+                                NÚMERO GUIA  
+                                <p:outputLabel  value="#{cotizacionController.numeroGuia}"/>
+                            </h:panelGrid>
+                            
+                        </p:layoutUnit>
+                    </p:layout> 
+                    
+                    <p:layout id="capaDatosProductos" style="width: 100%; height: 300px">
+                         <p:layoutUnit  id="datosProducto" position="center" style="padding: 5px; text-align: justify; font-size: 14px" size="500">
+                                                    
+                            <p:separator/>
+                            
+                            <h:panelGrid id="gridDatosProducto" columns="3">
+                                <p:outputLabel value="ELEGIR PRODUCTO > " style="font-weight: bold"/>       
+                                <p:commandButton icon="ui-icon-cart" oncomplete="PF('dialogoProductos').show();"
+                                                 update=":AForm:dlgProductos"/>                                   
+                            </h:panelGrid>
+                                
+                            <p:separator/>
+                            
+                            <p:dataTable id="tablaProductosEntrada" var="item" editable="true" value="#{cotizacionController.items2}" rowIndexVar="rowIndex">
+                                
+                                <p:ajax event="rowEdit" listener="#{cotizacionController.onRowEdit}" update=":AForm:tablaProductosEntrada :AForm:gridTotal" />
+                                <p:ajax event="rowEditCancel" listener="#{cotizacionController.onRowCancel}" update=":AForm:tablaProductosEntrada" />
+
+
+                                <p:column headerText="CÓDIGO" >
+                                    <h:outputText value="#{item.proId4.proCodigopro}"/>
+                                </p:column>
+                                <p:column headerText="PRODUCTO" >
+                                    <h:outputText value="#{item.proId4.proNombres}"/>
+                                </p:column>
+                                <p:column headerText="CANTIDAD" >
+                                     <p:cellEditor>
+                                         <f:facet name="output"><h:outputText value="#{item.cotCantidad}"/></f:facet>
+                                        <f:facet name="input">
+                                            <p:inputText value="#{item.cotCantidad}" label="Cantidad de producto" 
+                                                         required="true" requiredMessage="Es necesario una cantidad" 
+                                                         converter="#{Integer}" converterMessage="Esta no es una cantidad" 
+                                                         validatorMessage="La cantidad debe ser mayor o igual a 1">
+                                                <f:validateLongRange minimum="1" />
+                                            </p:inputText>
+                                        </f:facet>
+                                    </p:cellEditor>   
+                                </p:column>
+                                <p:column headerText="PRECIO UNITARIO" >
+                                    <h:outputText value="#{item.cotPreUni}"/>                        
+                                </p:column>
+                                <p:column headerText="SUBTOTAL" >
+                                    <h:outputText value="#{item.cotSubtotal}"/>
+                                </p:column> 
+
+                                <p:column headerText="EDITAR" >
+                                   <p:rowEditor />
+                                </p:column>
+                                
+                                <p:column headerText="QUITAR" >
+                                    <p:commandLink value="X" actionListener="#{cotizacionController.quitarProductoDetalle(item.proId4.proId4, rowIndex)}" 
+                                                   style="text-decoration: none; color: orangered;" title="Quitar producto"
+                                                   update=":AForm:tablaProductosEntrada" />
+                                </p:column>
+                               
+                            </p:dataTable>
+                            
+                            <center>
+                                
+                            <h:panelGrid id="gridTotal" columns="2" style="font-size: 14px; margin: 0 auto;">
+                                    TOTAL DE SALIDAS $
+                                    <p:outputLabel value="#{cotizacionController.totalV}"/>
+
+                            </h:panelGrid>
+                            
+                            <p:separator/>
+                            
+                            
+                            <Table>
+                                <tr>
+                                    <td >
+                                        <br/>
+                                         <h:commandLink id="btnImprimir" actionListener="#{cotizacionController.verReporte()}"  title="Exportar a PDF" ><img src="../images/botonRegistrar.jpg" alt=""/> </h:commandLink>
+                                    </td>
+                                     <td>                                         
+                                              <p:commandButton value="CANCELAR"  icon="ui-icon-closethick" actionListener="#{cotizacionController.limpiar()}" update=":AForm" />
+                                              
+                                    </td>
+                                    
+                                </tr>
+                               
+                            </Table>
+
+                            </center>
+                            
+                        </p:layoutUnit>                     
+                        
+                    </p:layout>                
+                </p:panel>
+           
+                 <!--VENTANA PARA AÑADIR DATOS DEL PROYECTO -->
+                <p:dialog id="dlgProyecto" widgetVar="dialogoProyecto" 
+                          resizable="false" showEffect="explode" 
+                          hideEffect="explode" >
+                    <p:dataTable id="datalistProyecto" value="#{proyectoController.items}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.proyId}"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,15,20,25,30"
+                                 >
+                        <p:column filterBy="#{item.proyNombre}" headerText="Id" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyNombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyNombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyDireccion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyDireccion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyFechInicio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyFechInicio}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyFechFin}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyFechFin}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">                                
+                            </f:facet>
+                            <p:commandButton value="Seleccionar" actionListener="#{cotizacionController.agregarDatosProyecto(item.proyId)}"
+                                             oncomplete="PF('dialogoProyecto').hide();"
+                                             update=":AForm:gridDatosProyecto"/>
+                        </p:column>                        
+                    </p:dataTable>
+                    <p:commandButton value="Cerrar" onclick="PF('dialogoProyecto').hide();"/>
+                    
+                </p:dialog>
+                 
+                
+                
+                <!--VENTANA PARA AÑADIR PRODUCTOS -->
+                <p:dialog id="dlgProductos" widgetVar="dialogoProductos" 
+                          resizable="false" showEffect="explode" 
+                          hideEffect="explode" >
+                    
+                    <p:dataTable id="datalistProducto" value="#{cotizacionController.lista}" var="item"
+                                 paginator="true"
+                                 rowKey="#{item.proId4}"
+                                 rows="5"
+                                 rowsPerPageTemplate="5,10,15,20,25,30"
+                                 >                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="CÓDIGO DEL PRODUCTO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proCodigopro}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.proNombres}" headerText="Id" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="NOMBRE DEL PRODUCTO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proNombres}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="MODELO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proModelo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="SERIAL"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proSerial}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="TAMAÑO / MEDIDA"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proTamanomedida}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="CANTIDAD"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proCantidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="PRECIO UNITARIO"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proPrecioUni}"/>
+                        </p:column>
+                        <p:column >
+                            <f:facet name="header">
+                                <h:outputText value="IMAGEN"/>
+                            </f:facet>
+                            <h:graphicImage value="/DisplayImage?Image_id=#{item.proId4}" width="50" height="50"></h:graphicImage>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">                                
+                            </f:facet>
+                            <p:commandButton value="Seleccionar" actionListener="#{cotizacionController.pedirCantidadProducto(item.proId4)}"
+                                             oncomplete="PF('dialogoProductosCanPre').show();"
+                                             update=":AForm:dlgProductosCanPre"/>
+                        </p:column>  
+                    </p:dataTable>                    
+                    <p:commandButton value="Cerrar" onclick="PF('dialogoProductos').hide();"/>
+                    
+                </p:dialog>
+                <!--VENTANA PARA AÑADIR CANTIDAD PRODUCTOS -->
+                 <p:dialog id="dlgProductosCanPre" widgetVar="dialogoProductosCanPre" 
+                           resizable="false" header="INGRESE LOS DATOS:" 
+                           hideEffect="explode" >
+
+                     Cantidad: <p:spinner id="cantidad" min="1" style="height: 12px !important; box-shadow: none !important; border-radius: 4px 0px 0px 4px;" value="#{cotizacionController.cantidadProducto}" />
+                         <br/><br/>
+                     Prec.Unit.<p:spinner id="precio" value="#{cotizacionController.precioUnitario}" style="height: 12px !important; box-shadow: none !important; border-radius: 4px 0px 0px 4px;" prefix="$"  min="0.01" stepFactor="0.01" />
+                        <br/><br/>
+                     <p:commandButton value="ACEPTAR" actionListener="#{cotizacionController.agregarDatosProductos()}"  
+                                      oncomplete="PF('dialogoProductos').hide(); PF('dialogoProductosCanPre').hide();"
+                                      update=":AForm:tablaProductosEntrada :AForm:dlgProductosCanPre :AForm:gridTotal"/>
+
+                 </p:dialog>
+                
+                
+            </h:form>
+
+            
+        </ui:define>
+    </ui:composition>
+
+</html>
+

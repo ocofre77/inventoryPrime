@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13595c86-2f16-4394-b642-e6503f21bbdf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     productos.`PRO_ID4` AS productos_PRO_ID4,
+     productos.`BD_ID` AS productos_BD_ID,
+     productos.`PRO_CODIGOPRO` AS productos_PRO_CODIGOPRO,
+     productos.`PRO_NOMBRES` AS productos_PRO_NOMBRES,
+     productos.`PRO_MODELO` AS productos_PRO_MODELO,
+     productos.`PRO_SERIAL` AS productos_PRO_SERIAL,
+     productos.`PRO_TAMANOMEDIDA` AS productos_PRO_TAMANOMEDIDA,
+     productos.`PRO_CATEGORIA` AS productos_PRO_CATEGORIA,
+     productos.`PRO_CANTIDAD` AS productos_PRO_CANTIDAD,
+     productos.`PRO_PRECIO_UNI` AS productos_PRO_PRECIO_UNI,
+     productos.`PRO_IMAGEN` AS productos_PRO_IMAGEN,
+     productos.`PRO_ADI_OBSERVACION` AS productos_PRO_ADI_OBSERVACION,
+     productos.`PRO_ESTADO_ELIMINAR` AS productos_PRO_ESTADO_ELIMINAR,
+     productos.`PRO_SUBTOTAL_PRO` AS productos_PRO_SUBTOTAL_PRO,
+     productos.`PRO_TOTAL_PRO` AS productos_PRO_TOTAL_PRO,
+     productos.`PRO_SUB_PREC` AS productos_PRO_SUB_PREC,
+     productos.`PRO_TOTAL_PREC` AS productos_PRO_TOTAL_PREC,
+     productos.`PRO_TOTAL_IVA` AS productos_PRO_TOTAL_IVA,
+     producto.`PROD_ID` AS producto_PROD_ID,
+     producto.`PRO_ID4` AS producto_PRO_ID4,
+     producto.`PROD_PERIODO_CADU` AS producto_PROD_PERIODO_CADU,
+     producto.`PROD_FECHA_ING` AS producto_PROD_FECHA_ING,
+     imagenes.`IMG_ID` AS imagenes_IMG_ID,
+     imagenes.`logo` AS imagenes_logo,
+     imagenes.`pie` AS imagenes_pie
+FROM
+     `productos` productos INNER JOIN `producto` producto ON productos.`PRO_ID4` = producto.`PRO_ID4`,
+     `imagenes` imagenes
+WHERE
+     productos.`PRO_ESTADO_ELIMINAR` = "activo"
+     and DATEDIFF(producto.`PROD_FECHA_ING`,CURDATE()) BETWEEN 0 AND 30
+ORDER BY
+     productos.`PRO_NOMBRES` ASC]]>
+	</queryString>
+	<field name="productos_PRO_ID4" class="java.lang.Integer"/>
+	<field name="productos_BD_ID" class="java.lang.Integer"/>
+	<field name="productos_PRO_CODIGOPRO" class="java.lang.String"/>
+	<field name="productos_PRO_NOMBRES" class="java.lang.String"/>
+	<field name="productos_PRO_MODELO" class="java.lang.String"/>
+	<field name="productos_PRO_SERIAL" class="java.lang.String"/>
+	<field name="productos_PRO_TAMANOMEDIDA" class="java.lang.String"/>
+	<field name="productos_PRO_CATEGORIA" class="java.lang.String"/>
+	<field name="productos_PRO_CANTIDAD" class="java.lang.Integer"/>
+	<field name="productos_PRO_PRECIO_UNI" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_IMAGEN" class="java.lang.Object"/>
+	<field name="productos_PRO_ADI_OBSERVACION" class="java.lang.String"/>
+	<field name="productos_PRO_ESTADO_ELIMINAR" class="java.lang.String"/>
+	<field name="productos_PRO_SUBTOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_TOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_SUB_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_IVA" class="java.math.BigDecimal"/>
+	<field name="producto_PROD_ID" class="java.lang.Integer"/>
+	<field name="producto_PRO_ID4" class="java.lang.Integer"/>
+	<field name="producto_PROD_PERIODO_CADU" class="java.lang.String"/>
+	<field name="producto_PROD_FECHA_ING" class="java.sql.Date"/>
+	<field name="imagenes_IMG_ID" class="java.lang.Integer"/>
+	<field name="imagenes_logo" class="java.lang.Object"/>
+	<field name="imagenes_pie" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<image>
+				<reportElement x="19" y="16" width="139" height="57" uuid="52cd28b2-4625-40e3-a076-80d16fc369ce"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="195" y="16" width="229" height="20" uuid="f77620d7-bb32-417b-9586-a4e0ad8c905a"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSTRUCTORA CONALGI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="238" y="53" width="157" height="20" uuid="cbfee16e-46cf-4e8c-b9a1-35ed85da9027"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTOS CADUCIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="4" width="100" height="20" forecolor="#CC0000" uuid="daec9b07-38dd-4af6-8b8d-f2f0d793d87d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALERTA!!]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="384" y="15" width="52" height="20" uuid="668c16b6-7f71-45d0-9d6b-f87a60c7a26c"/>
+				<textElement>
+					<font fontName="Arial" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="436" y="15" width="100" height="20" uuid="6b04157c-212b-485b-ba5a-39ded000a13c"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="19" y="22" width="80" height="20" uuid="ea1bbdb1-350f-49de-9905-c1ffd1deba63"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="123" y="22" width="80" height="20" uuid="12071aab-cfff-4210-bc17-1dd81309a3e6"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="223" y="22" width="80" height="20" uuid="df0a015c-4b5d-48d5-9021-9c2ddf36a945"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[PERÍODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="324" y="22" width="100" height="20" uuid="e67d49f7-a32a-4fc8-a15d-38ee47cdb7a9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[FECHA CADUCIDAD]]></text>
+			</staticText>
+			<line>
+				<reportElement x="19" y="17" width="505" height="1" uuid="21916fd5-2e5c-4197-a848-ef7475c79ab2"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="105" splitType="Stretch">
+			<textField>
+				<reportElement x="19" y="16" width="92" height="79" uuid="2da4503d-c96d-4e43-8d52-a5dce04d6353"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="123" y="16" width="85" height="20" uuid="6a4369ed-af75-45ba-a5ed-5f2d03a2eaae"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_CODIGOPRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="223" y="16" width="80" height="20" uuid="589eaedd-adeb-4eac-a503-9b5c54b01ec9"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto_PROD_PERIODO_CADU}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="324" y="16" width="80" height="20" uuid="4f8a2627-d591-42c1-9354-5a5015fd6cc7"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{producto_PROD_FECHA_ING}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="424" y="10" width="100" height="72" uuid="91c73a17-6e13-4af1-8d50-104b1e526722"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{productos_PRO_IMAGEN})]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="23" y="0" width="501" height="1" uuid="12dcac0f-2a2b-47d8-949d-7293259005cf"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="111" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="111" uuid="bb73b3c3-6268-44c7-9c4c-4a447d7ced87"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="490" y="47" width="46" height="20" uuid="be80ef28-7b6e-4768-a961-367979a0c515"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

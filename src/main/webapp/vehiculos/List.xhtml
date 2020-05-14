@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListVehiculosTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="VehiculosListForm">
+                <p:panel header="#{bundle.ListVehiculosTitle}">
+                    <p:dataTable id="datalist" value="#{vehiculosController.items}" var="item"
+                                 selectionMode="single" selection="#{vehiculosController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.vehId}"
+                                 rows="3"
+                                 rowsPerPageTemplate="3,5,10,15"
+                                 >
+
+                        <p:ajax event="rowSelect"   update=" loadButton viewButton editButton "/>
+                        <p:ajax event="rowUnselect" update=" loadButton viewButton editButton "/>
+
+                         <p:column filterBy="#{item.proId4.proNombres}" headerText="Id"   filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Nombre"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proId4.proNombres}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVehiculosTitle_vehPlaca}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.vehPlaca}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVehiculosTitle_vehAnio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.vehAnio}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListVehiculosTitle_vehColor}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.vehColor}"/>
+                        </p:column>
+                     
+                        <f:facet name="footer">
+                            <p:commandButton id="loadButton" icon="ui-icon-refresh"  value="Actualizar" actionListener="#{vehiculosController.actualizar()}" oncomplete="@all" update=":VehiculosListForm" />  
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":VehiculosViewForm" oncomplete="PF('VehiculosViewDialog').show()" disabled="#{empty vehiculosController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":VehiculosEditForm" oncomplete="PF('VehiculosEditDialog').show()" disabled="#{empty vehiculosController.selected}"/>
+                            
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

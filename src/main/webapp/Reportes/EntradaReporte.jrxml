@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="70ab46a5-54cd-438f-8b07-789b74a326d5">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="Num_entrada" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     entradas.`ENT_ID` AS entradas_ENT_ID,
+     entradas.`PRO_ID4` AS entradas_PRO_ID4,
+     entradas.`PROV_ID` AS entradas_PROV_ID,
+     entradas.`ENT_CODIGO` AS entradas_ENT_CODIGO,
+     entradas.`ENT_TRANSPORTISTA` AS entradas_ENT_TRANSPORTISTA,
+     entradas.`ENT_LUGAR_LLEGADA` AS entradas_ENT_LUGAR_LLEGADA,
+     entradas.`ENT_CANTIDAD` AS entradas_ENT_CANTIDAD,
+     entradas.`ENT_PRECIO_UNI` AS entradas_ENT_PRECIO_UNI,
+     entradas.`ENT_FECHA` AS entradas_ENT_FECHA,
+     entradas.`ENT_SUBTOTAL` AS entradas_ENT_SUBTOTAL,
+     entradas.`ENT_NUMERO` AS entradas_ENT_NUMERO,
+     entradas.`ENT_TOTAL` AS entradas_ENT_TOTAL,
+     entradas.`ENT_TOTALIVA` AS entradas_ENT_TOTALIVA,
+     productos.`PRO_ID4` AS productos_PRO_ID4,
+     productos.`BD_ID` AS productos_BD_ID,
+     productos.`PRO_CODIGOPRO` AS productos_PRO_CODIGOPRO,
+     productos.`PRO_NOMBRES` AS productos_PRO_NOMBRES,
+     productos.`PRO_MODELO` AS productos_PRO_MODELO,
+     productos.`PRO_SERIAL` AS productos_PRO_SERIAL,
+     productos.`PRO_TAMANOMEDIDA` AS productos_PRO_TAMANOMEDIDA,
+     productos.`PRO_CATEGORIA` AS productos_PRO_CATEGORIA,
+     productos.`PRO_CANTIDAD` AS productos_PRO_CANTIDAD,
+     productos.`PRO_PRECIO_UNI` AS productos_PRO_PRECIO_UNI,
+     productos.`PRO_SUBTOTAL_PRO` AS productos_PRO_SUBTOTAL_PRO,
+     productos.`PRO_TOTAL_PRO` AS productos_PRO_TOTAL_PRO,
+     productos.`PRO_SUB_PREC` AS productos_PRO_SUB_PREC,
+     productos.`PRO_TOTAL_PREC` AS productos_PRO_TOTAL_PREC,
+     productos.`PRO_TOTAL_IVA` AS productos_PRO_TOTAL_IVA,
+     proveedor.`PROV_ID` AS proveedor_PROV_ID,
+     proveedor.`PROV_NOMBRE` AS proveedor_PROV_NOMBRE,
+     proveedor.`PROV_RUC` AS proveedor_PROV_RUC,
+     proveedor.`PROV_DIRECCION` AS proveedor_PROV_DIRECCION,
+     proveedor.`PROV_TELEFONO` AS proveedor_PROV_TELEFONO,
+     proveedor.`PROV_CORREO` AS proveedor_PROV_CORREO,
+     productos.`PRO_ADI_OBSERVACION` AS productos_PRO_ADI_OBSERVACION,
+     imagenes.`IMG_ID` AS imagenes_IMG_ID,
+     imagenes.`logo` AS imagenes_logo,
+     imagenes.`pie` AS imagenes_pie
+FROM
+     `productos` productos INNER JOIN `entradas` entradas ON productos.`PRO_ID4` = entradas.`PRO_ID4`
+     INNER JOIN `proveedor` proveedor ON entradas.`PROV_ID` = proveedor.`PROV_ID`,
+     `imagenes` imagenes
+WHERE
+     entradas.`ENT_NUMERO` = $P{Num_entrada}]]>
+	</queryString>
+	<field name="entradas_ENT_ID" class="java.lang.Integer"/>
+	<field name="entradas_PRO_ID4" class="java.lang.Integer"/>
+	<field name="entradas_PROV_ID" class="java.lang.Integer"/>
+	<field name="entradas_ENT_CODIGO" class="java.lang.String"/>
+	<field name="entradas_ENT_TRANSPORTISTA" class="java.lang.String"/>
+	<field name="entradas_ENT_LUGAR_LLEGADA" class="java.lang.String"/>
+	<field name="entradas_ENT_CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="entradas_ENT_PRECIO_UNI" class="java.math.BigDecimal"/>
+	<field name="entradas_ENT_FECHA" class="java.sql.Date"/>
+	<field name="entradas_ENT_SUBTOTAL" class="java.math.BigDecimal"/>
+	<field name="entradas_ENT_NUMERO" class="java.lang.String"/>
+	<field name="entradas_ENT_TOTAL" class="java.math.BigDecimal"/>
+	<field name="entradas_ENT_TOTALIVA" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_ID4" class="java.lang.Integer"/>
+	<field name="productos_BD_ID" class="java.lang.Integer"/>
+	<field name="productos_PRO_CODIGOPRO" class="java.lang.String"/>
+	<field name="productos_PRO_NOMBRES" class="java.lang.String"/>
+	<field name="productos_PRO_MODELO" class="java.lang.String"/>
+	<field name="productos_PRO_SERIAL" class="java.lang.String"/>
+	<field name="productos_PRO_TAMANOMEDIDA" class="java.lang.String"/>
+	<field name="productos_PRO_CATEGORIA" class="java.lang.String"/>
+	<field name="productos_PRO_CANTIDAD" class="java.lang.Integer"/>
+	<field name="productos_PRO_PRECIO_UNI" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_SUBTOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_TOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_SUB_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_IVA" class="java.math.BigDecimal"/>
+	<field name="proveedor_PROV_ID" class="java.lang.Integer"/>
+	<field name="proveedor_PROV_NOMBRE" class="java.lang.String"/>
+	<field name="proveedor_PROV_RUC" class="java.lang.String"/>
+	<field name="proveedor_PROV_DIRECCION" class="java.lang.String"/>
+	<field name="proveedor_PROV_TELEFONO" class="java.lang.String"/>
+	<field name="proveedor_PROV_CORREO" class="java.lang.String"/>
+	<field name="productos_PRO_ADI_OBSERVACION" class="java.lang.String"/>
+	<field name="imagenes_IMG_ID" class="java.lang.Integer"/>
+	<field name="imagenes_logo" class="java.lang.Object"/>
+	<field name="imagenes_pie" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="73" splitType="Stretch">
+			<image>
+				<reportElement x="24" y="10" width="136" height="55" uuid="58dc4943-092b-4f7b-b4bf-cbfa359a350d"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="173" y="10" width="218" height="22" uuid="8eab8343-3d0f-4e30-8580-f2fe14f257bb"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSTRUCTORA CONALGI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="32" width="151" height="20" uuid="211a92ee-789f-4c3a-b0bf-430d75e9ce90"/>
+				<textElement>
+					<font fontName="Arial" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ENTRADA DE PRODUCTOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="37" splitType="Stretch">
+			<textField>
+				<reportElement x="430" y="0" width="100" height="15" forecolor="#CC0000" uuid="84e0fa34-a37d-495d-a61c-d6ca426f2d91"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_ENT_NUMERO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="370" y="0" width="60" height="15" forecolor="#CC0000" uuid="4a9910ed-ed5a-4df9-b0cd-26d9e5aa333d"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° GUÍA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="14" width="60" height="15" uuid="0552a00b-695d-49f5-8cba-2171114d9e22"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="430" y="14" width="100" height="15" uuid="e464ed12-c22e-4b31-9e9d-e6703d3b6e6b"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="82" splitType="Stretch">
+			<textField>
+				<reportElement x="108" y="7" width="66" height="18" uuid="0be4cf22-b3b0-4bd0-947d-7948323ef1e3"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor_PROV_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="108" y="25" width="66" height="18" uuid="df7c909c-0681-4b1a-91de-bd49e56646e0"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor_PROV_TELEFONO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="254" y="7" width="87" height="18" uuid="e740bc8d-83d2-4caf-b529-4c2549156d36"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor_PROV_DIRECCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="254" y="25" width="75" height="18" uuid="95e662d0-9faa-4f70-9d31-8bc344e1f764"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor_PROV_RUC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="7" width="71" height="18" uuid="8824d4b0-ca79-48af-a049-3830195ac681"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_ENT_TRANSPORTISTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="441" y="25" width="59" height="18" uuid="fbce48d9-9862-4a82-ba53-4a2d00ec26b3"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_ENT_LUGAR_LLEGADA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="40" y="7" width="66" height="18" uuid="aab54421-b40b-4f66-8caa-e0d01aab50f1"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROVEEDOR:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="25" width="55" height="18" uuid="f80cbc9b-7d34-4449-8fa0-a8c4e072e20c"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TELÉFONO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="7" width="58" height="18" uuid="226dcefc-d297-4aba-a32c-0d65354d4297"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="189" y="25" width="38" height="18" uuid="cb352d03-f76b-4c89-8dce-e8d02601d357"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="7" width="82" height="18" uuid="fce89fc6-b247-47b2-88fc-ba977b3cb734"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRANSPORTISTA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="342" y="25" width="100" height="18" uuid="42c34ebb-3d7a-4ab5-8b31-e08b27ef6270"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LUGAR DE LLEGADA:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="60" width="80" height="20" forecolor="#000000" uuid="2d131b62-e087-4c56-a465-cd000847957c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="122" y="60" width="105" height="20" forecolor="#000000" uuid="75e92ff3-87e7-48c8-8093-2c52f8dd9e0a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="60" width="98" height="20" forecolor="#000000" uuid="56e20bf9-343d-410f-973d-949e88c41309"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[PRECIO UNITARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="443" y="60" width="80" height="20" forecolor="#000000" uuid="9b774aea-dba9-42da-bc64-9af53eab726b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[SUBTOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="247" y="60" width="80" height="20" forecolor="#000000" uuid="02ff7d98-e725-4c85-87b5-266a525365e5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<line>
+				<reportElement x="25" y="54" width="507" height="1" forecolor="#E3E3E3" uuid="c4480371-5ba6-4dd7-82f3-6e904c7b224c"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement x="26" y="5" width="80" height="20" forecolor="#000000" uuid="454a3f72-3dbc-438f-947f-45eceeeeff1b"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_CODIGOPRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="108" y="5" width="126" height="40" forecolor="#000000" uuid="c5709488-db55-45ec-9d2b-d62cabe9cb21"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="247" y="5" width="80" height="20" forecolor="#000000" uuid="df248298-208a-4f2b-9c86-db5a22a53199"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_ENT_CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="345" y="5" width="98" height="20" forecolor="#000000" uuid="da28ebcd-9bbe-4be3-988b-a7e01e7aad73"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_ENT_PRECIO_UNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="5" width="80" height="20" forecolor="#000000" uuid="4d00b969-f953-4369-a00f-96905a6c4553"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_ENT_SUBTOTAL}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="26" y="0" width="505" height="1" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="6e134d7f-ab4c-4206-b93c-18010bcd73d5"/>
+			</line>
+			<line>
+				<reportElement x="26" y="45" width="505" height="1" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="737245df-3b19-4901-9cad-62cde68594bd"/>
+			</line>
+			<line>
+				<reportElement x="24" y="1" width="1" height="45" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="e6d6cf93-1f30-4e63-ba0c-8baaf54849d7"/>
+			</line>
+			<line>
+				<reportElement x="106" y="1" width="1" height="45" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="36a7911e-0f05-45be-9f0d-ef495829f3c3"/>
+			</line>
+			<line>
+				<reportElement x="237" y="1" width="1" height="45" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="ef11102a-7d48-4705-8118-41d7e870c151"/>
+			</line>
+			<line>
+				<reportElement x="336" y="0" width="1" height="45" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="3f10427a-ce4a-4f20-b74a-ee87384aacf2"/>
+			</line>
+			<line>
+				<reportElement x="442" y="1" width="1" height="45" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="7c02b251-2070-4701-aa13-ce30ef441d41"/>
+			</line>
+			<line>
+				<reportElement x="531" y="1" width="1" height="45" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="1be4d97c-c2fb-4a5b-a465-13f8aeb09e5e"/>
+			</line>
+			<line>
+				<reportElement x="237" y="-28" width="1" height="28" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="ecd6205b-a134-4ed7-8e1f-7437d69ad384"/>
+			</line>
+			<line>
+				<reportElement x="336" y="-28" width="1" height="28" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="8a65c786-1f5d-43f8-8701-135864da8f0d"/>
+			</line>
+			<line>
+				<reportElement x="442" y="-27" width="1" height="28" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="ac6b7393-48ce-4b87-af63-7f88f8c48134"/>
+			</line>
+			<line>
+				<reportElement x="531" y="-27" width="1" height="28" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="c021f25a-c220-4754-9495-492ec2edb61d"/>
+			</line>
+			<line>
+				<reportElement x="106" y="-28" width="1" height="28" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="19f140fa-1e04-4206-912f-5ff4cf9924fa"/>
+			</line>
+			<line>
+				<reportElement x="24" y="-28" width="1" height="28" forecolor="#E3E3E3" backcolor="#E3E3E3" uuid="b259e6cd-d407-4ce3-8765-aa6d3d2f49e0"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="94" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="93" uuid="87d79107-b834-46e9-b2ab-45cf3e71f0ae"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="493" y="47" width="38" height="20" uuid="d1b525b9-73b4-4b48-9223-ed0cb1973f52"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="69" splitType="Stretch">
+			<rectangle>
+				<reportElement x="336" y="13" width="196" height="52" forecolor="#E3E3E3" uuid="8ef46978-597e-4a59-a071-9855016fb659"/>
+			</rectangle>
+			<textField>
+				<reportElement x="443" y="18" width="80" height="20" uuid="711964e7-c966-40cb-8835-3a3e5d82242a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_ENT_TOTAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="443" y="44" width="80" height="20" uuid="6692e327-1371-4e65-8c86-149ff08d5192"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{entradas_ENT_TOTALIVA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="347" y="22" width="73" height="20" uuid="5ad4546e-d9df-4113-a0c9-c074d8c9ee7a"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[SUBTOTAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="42" width="73" height="20" uuid="748cc72c-fbf8-4680-ad22-f9d29537b0fd"/>
+				<textElement>
+					<font fontName="Arial" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL (12%):]]></text>
+			</staticText>
+			<line>
+				<reportElement x="441" y="13" width="1" height="52" forecolor="#E3E3E3" uuid="13059b2b-f959-45a7-a747-709b386acb3a"/>
+			</line>
+			<line>
+				<reportElement x="336" y="37" width="191" height="1" forecolor="#E3E3E3" uuid="21536da8-96d0-4472-8cc4-88c327560e29"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

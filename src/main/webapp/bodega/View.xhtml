@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="BodegaViewDlg" widgetVar="BodegaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewBodegaTitle}">
+            <h:form id="BodegaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{bodegaController.selected != null}">
+                        <h:outputText value="#{bundle.ViewBodegaLabel_bdId}"/>
+                        <h:outputText value="#{bodegaController.selected.bdId}" title="#{bundle.ViewBodegaTitle_bdId}"/>
+                        <h:outputText value="#{bundle.ViewBodegaLabel_bdNombre}"/>
+                        <h:outputText value="#{bodegaController.selected.bdNombre}" title="#{bundle.ViewBodegaTitle_bdNombre}"/>
+                        <h:outputText value="#{bundle.ViewBodegaLabel_bdDireccion}"/>
+                        <h:outputText value="#{bodegaController.selected.bdDireccion}" title="#{bundle.ViewBodegaTitle_bdDireccion}"/>
+                        <h:outputText value="#{bundle.ViewBodegaLabel_bdTelefono}"/>
+                        <h:outputText value="#{bodegaController.selected.bdTelefono}" title="#{bundle.ViewBodegaTitle_bdTelefono}"/>
+                        <h:outputText value="#{bundle.ViewBodegaLabel_bdObservacion}"/>
+                        <h:outputText value="#{bodegaController.selected.bdObservacion}" title="#{bundle.ViewBodegaTitle_bdObservacion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="BodegaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

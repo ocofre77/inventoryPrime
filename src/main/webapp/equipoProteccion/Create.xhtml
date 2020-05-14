@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EquipoProteccionCreateDlg" widgetVar="EquipoProteccionCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateEquipoProteccionTitle}">
+            <h:form id="EquipoProteccionCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{equipoProteccionController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateEquipoProteccionLabel_proId2}" for="proId2" />
+                        <p:inputText id="proId2" value="#{equipoProteccionController.selected.proId2}" title="#{bundle.CreateEquipoProteccionTitle_proId2}" required="true" requiredMessage="#{bundle.CreateEquipoProteccionRequiredMessage_proId2}"/>
+                        <p:outputLabel value="#{bundle.CreateEquipoProteccionLabel_equiMaterial}" for="equiMaterial" />
+                        <p:inputText id="equiMaterial" value="#{equipoProteccionController.selected.equiMaterial}" title="#{bundle.CreateEquipoProteccionTitle_equiMaterial}" />
+                        <p:outputLabel value="#{bundle.CreateEquipoProteccionLabel_equiDuracion}" for="equiDuracion" />
+                        <p:inputText id="equiDuracion" value="#{equipoProteccionController.selected.equiDuracion}" title="#{bundle.CreateEquipoProteccionTitle_equiDuracion}" />
+                        <p:outputLabel value="#{bundle.CreateEquipoProteccionLabel_equiObservacion}" for="equiObservacion" />
+                        <p:inputText id="equiObservacion" value="#{equipoProteccionController.selected.equiObservacion}" title="#{bundle.CreateEquipoProteccionTitle_equiObservacion}" />
+                        <p:outputLabel value="#{bundle.CreateEquipoProteccionLabel_proId4}" for="proId4" />
+                        <p:selectOneMenu id="proId4" value="#{equipoProteccionController.selected.proId4}" >
+                            <f:selectItems value="#{productosController.itemsAvailableSelectOne}"
+                                           var="proId4Item"
+                                           itemValue="#{proId4Item}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{equipoProteccionController.create}" value="#{bundle.Save}" update="display,:EquipoProteccionListForm:datalist,:growl" oncomplete="handleSubmit(args,'EquipoProteccionCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="EquipoProteccionCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

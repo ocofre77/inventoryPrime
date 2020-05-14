@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListCotizacionTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="CotizacionListForm">
+                <p:panel header="#{bundle.ListCotizacionTitle}">
+                    <p:dataTable id="datalist" value="#{cotizacionController.items}" var="item"
+                                 selectionMode="single" selection="#{cotizacionController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.cotId}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="loadButton viewButton "/>
+                        <p:ajax event="rowUnselect" update=" loadButton viewButton "/>
+
+                        <p:column filterBy="#{item.cotNumero}" headerText="Id" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Número Guía"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cotNumero}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCotizacionTitle_cotFecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cotFecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                          <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Proyecto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyId.proyNombre}"/>
+                        </p:column>
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Producto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proId4.proNombres}"/>
+                        </p:column>
+                      
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCotizacionTitle_cotPreUni}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cotPreUni}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCotizacionTitle_cotCantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cotCantidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Total"/>
+                            </f:facet>
+                            <h:outputText value="#{item.cotSubtotal}"/>
+                        </p:column>
+                       
+                       
+                        <f:facet name="footer">
+                            <p:commandButton id="loadButton" icon="ui-icon-refresh"  value="Actualizar" actionListener="#{cotizacionController.actualizar()}" oncomplete="@all" update=":CotizacionListForm" />
+                           <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CotizacionViewForm" oncomplete="PF('CotizacionViewDialog').show()" disabled="#{empty cotizacionController.selected}"/>
+                             <h:commandLink id="btnImprimir"  actionListener="#{cotizacionController.verReporteDos()}"  title="Exportar a PDF" value="REPORTE"> </h:commandLink>  
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

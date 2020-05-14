@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EquipoProteccionViewDlg" widgetVar="EquipoProteccionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEquipoProteccionTitle}">
+            <h:form id="EquipoProteccionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{equipoProteccionController.selected != null}">
+                      
+                        <h:outputText value="Nombre:"/>
+                      <h:outputText value="#{equipoProteccionController.selected.proId4.proNombres}" title="#{bundle.ViewEquipoProteccionTitle_proId4}"/>
+                        <h:outputText value="#{bundle.ViewEquipoProteccionLabel_equiMaterial}"/>
+                        <h:outputText value="#{equipoProteccionController.selected.equiMaterial}" title="#{bundle.ViewEquipoProteccionTitle_equiMaterial}"/>
+                        <h:outputText value="#{bundle.ViewEquipoProteccionLabel_equiDuracion}"/>
+                        <h:outputText value="#{equipoProteccionController.selected.equiDuracion}" title="#{bundle.ViewEquipoProteccionTitle_equiDuracion}"/>
+                        <h:outputText value="#{bundle.ViewEquipoProteccionLabel_equiObservacion}"/>
+                        <h:outputText value="#{equipoProteccionController.selected.equiObservacion}" title="#{bundle.ViewEquipoProteccionTitle_equiObservacion}"/>
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EquipoProteccionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

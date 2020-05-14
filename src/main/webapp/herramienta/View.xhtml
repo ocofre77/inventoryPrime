@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HerramientaViewDlg" widgetVar="HerramientaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewHerramientaTitle}">
+            <h:form id="HerramientaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{herramientaController.selected != null}">
+                        
+                        <h:outputText value="Nombre:"/>
+                      <h:outputText value="#{herramientaController.selected.proId4.proNombres}" title="#{bundle.ViewEquipoProteccionTitle_proId4}"/>
+                        <h:outputText value="#{bundle.ViewHerramientaLabel_herEstado}"/>
+                        <h:outputText value="#{herramientaController.selected.herEstado}" title="#{bundle.ViewHerramientaTitle_herEstado}"/>
+                        <h:outputText value="#{bundle.ViewHerramientaLabel_herFechaMantenimiento}"/>
+                        <h:outputText value="#{herramientaController.selected.herFechaMantenimiento}" title="#{bundle.ViewHerramientaTitle_herFechaMantenimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewHerramientaLabel_herRazonMantenimiento}"/>
+                        <h:outputText value="#{herramientaController.selected.herRazonMantenimiento}" title="#{bundle.ViewHerramientaTitle_herRazonMantenimiento}"/>
+                        <h:outputText value="#{bundle.ViewHerramientaLabel_herFecCadaMante}"/>
+                        <h:outputText value="#{herramientaController.selected.herFecCadaMante}" title="#{bundle.ViewHerramientaTitle_herFecCadaMante}"/>
+                        <h:outputText value="#{bundle.ViewHerramientaLabel_herProAdicionales}"/>
+                        <h:outputText value="#{herramientaController.selected.herProAdicionales}" title="#{bundle.ViewHerramientaTitle_herProAdicionales}"/>
+                       
+                       
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="HerramientaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

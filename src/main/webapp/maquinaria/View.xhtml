@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaquinariaViewDlg" widgetVar="MaquinariaViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewMaquinariaTitle}">
+            <h:form id="MaquinariaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{maquinariaController.selected != null}">
+                        
+                        <h:outputText value="Nombre:"/>
+                      <h:outputText value="#{maquinariaController.selected.proId4.proNombres}" title="#{bundle.ViewEquipoProteccionTitle_proId4}"/>
+                        <h:outputText value="#{bundle.ViewMaquinariaLabel_maqEstado}"/>
+                        <h:outputText value="#{maquinariaController.selected.maqEstado}" title="#{bundle.ViewMaquinariaTitle_maqEstado}"/>
+                        <h:outputText value="#{bundle.ViewMaquinariaLabel_maqFechaMantenimiento}"/>
+                        <h:outputText value="#{maquinariaController.selected.maqFechaMantenimiento}" title="#{bundle.ViewMaquinariaTitle_maqFechaMantenimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewMaquinariaLabel_maqRazonMante}"/>
+                        <h:outputText value="#{maquinariaController.selected.maqRazonMante}" title="#{bundle.ViewMaquinariaTitle_maqRazonMante}"/>
+                        <h:outputText value="#{bundle.ViewMaquinariaLabel_maqFecCadaMante}"/>
+                        <h:outputText value="#{maquinariaController.selected.maqFecCadaMante}" title="#{bundle.ViewMaquinariaTitle_maqFecCadaMante}"/>
+                        <h:outputText value="#{bundle.ViewMaquinariaLabel_maqPlaca}"/>
+                        <h:outputText value="#{maquinariaController.selected.maqPlaca}" title="#{bundle.ViewMaquinariaTitle_maqPlaca}"/>
+                        <h:outputText value="#{bundle.ViewMaquinariaLabel_maqProdAdiciona}"/>
+                        <h:outputText value="#{maquinariaController.selected.maqProdAdiciona}" title="#{bundle.ViewMaquinariaTitle_maqProdAdiciona}"/>
+                        
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="MaquinariaViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="20b752b6-ae5b-4f7e-ae7a-d0d5668f3a24">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nomPro" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Vanessa\\Documents\\NetBeansProjects\\inventarioF9_FinalFinalFinal\\web\\Reportes\\"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     asignar_proyecto.`SAL_ID` AS asignar_proyecto_SAL_ID,
+     asignar_proyecto.`RES_ID` AS asignar_proyecto_RES_ID,
+     asignar_proyecto.`PRO_ID4` AS asignar_proyecto_PRO_ID4,
+     asignar_proyecto.`PROY_ID` AS asignar_proyecto_PROY_ID,
+     asignar_proyecto.`SAL_NUMERO` AS asignar_proyecto_SAL_NUMERO,
+     asignar_proyecto.`SAL_FECHA` AS asignar_proyecto_SAL_FECHA,
+     asignar_proyecto.`SAL_TRANSPORTISTA` AS asignar_proyecto_SAL_TRANSPORTISTA,
+     asignar_proyecto.`SAL_CANTIDAD` AS asignar_proyecto_SAL_CANTIDAD,
+     asignar_proyecto.`SAL_SUBTOTAL` AS asignar_proyecto_SAL_SUBTOTAL,
+     asignar_proyecto.`SAL_TOTAL` AS asignar_proyecto_SAL_TOTAL,
+     asignar_proyecto.`SAL_TOTAL_IVA` AS asignar_proyecto_SAL_TOTAL_IVA,
+     asignar_proyecto.`SAL_INGRESOADICIONAL` AS asignar_proyecto_SAL_INGRESOADICIONAL,
+     asignar_proyecto.`SAL_OBSERVACIONES_` AS asignar_proyecto_SAL_OBSERVACIONES_,
+     asignar_proyecto.`SAL_TOTALPROYECTO` AS asignar_proyecto_SAL_TOTALPROYECTO,
+     responsable.`RES_ID` AS responsable_RES_ID,
+     responsable.`RES_NOMBRE` AS responsable_RES_NOMBRE,
+     responsable.`RES_CEDULA` AS responsable_RES_CEDULA,
+     responsable.`RES_CARGO` AS responsable_RES_CARGO,
+     responsable.`RES_TELEFONO` AS responsable_RES_TELEFONO,
+     responsable.`RES_DIRECCION` AS responsable_RES_DIRECCION,
+     responsable.`RES_CORREO` AS responsable_RES_CORREO,
+     proyecto.`PROY_ID` AS proyecto_PROY_ID,
+     proyecto.`PROY_NOMBRE` AS proyecto_PROY_NOMBRE,
+     proyecto.`PROY_DIRECCION` AS proyecto_PROY_DIRECCION,
+     proyecto.`PROY_FECH_INICIO` AS proyecto_PROY_FECH_INICIO,
+     proyecto.`PROY_FECH_FIN` AS proyecto_PROY_FECH_FIN,
+     proyecto.`PROY_ESTADO` AS proyecto_PROY_ESTADO,
+     proyecto.`PROY_OBSERVACION` AS proyecto_PROY_OBSERVACION,
+     productos.`PRO_ID4` AS productos_PRO_ID4,
+     productos.`BD_ID` AS productos_BD_ID,
+     productos.`PRO_CODIGOPRO` AS productos_PRO_CODIGOPRO,
+     productos.`PRO_NOMBRES` AS productos_PRO_NOMBRES,
+     productos.`PRO_MODELO` AS productos_PRO_MODELO,
+     productos.`PRO_SERIAL` AS productos_PRO_SERIAL,
+     productos.`PRO_TAMANOMEDIDA` AS productos_PRO_TAMANOMEDIDA,
+     productos.`PRO_CATEGORIA` AS productos_PRO_CATEGORIA,
+     productos.`PRO_CANTIDAD` AS productos_PRO_CANTIDAD,
+     productos.`PRO_PRECIO_UNI` AS productos_PRO_PRECIO_UNI,
+     productos.`PRO_IMAGEN` AS productos_PRO_IMAGEN,
+     productos.`PRO_ADI_OBSERVACION` AS productos_PRO_ADI_OBSERVACION,
+     productos.`PRO_ESTADO_ELIMINAR` AS productos_PRO_ESTADO_ELIMINAR,
+     productos.`PRO_SUBTOTAL_PRO` AS productos_PRO_SUBTOTAL_PRO,
+     productos.`PRO_TOTAL_PRO` AS productos_PRO_TOTAL_PRO,
+     productos.`PRO_SUB_PREC` AS productos_PRO_SUB_PREC,
+     productos.`PRO_TOTAL_PREC` AS productos_PRO_TOTAL_PREC,
+     productos.`PRO_TOTAL_IVA` AS productos_PRO_TOTAL_IVA,
+     imagenes.`IMG_ID` AS imagenes_IMG_ID,
+     imagenes.`logo` AS imagenes_logo,
+     imagenes.`pie` AS imagenes_pie
+FROM
+     `responsable` responsable INNER JOIN `asignar_proyecto` asignar_proyecto ON responsable.`RES_ID` = asignar_proyecto.`RES_ID`
+     INNER JOIN `proyecto` proyecto ON asignar_proyecto.`PROY_ID` = proyecto.`PROY_ID`
+     INNER JOIN `productos` productos ON asignar_proyecto.`PRO_ID4` = productos.`PRO_ID4`,
+     `imagenes` imagenes
+WHERE
+     proyecto.`PROY_NOMBRE` = $P{nomPro}]]>
+	</queryString>
+	<field name="asignar_proyecto_SAL_ID" class="java.lang.Integer"/>
+	<field name="asignar_proyecto_RES_ID" class="java.lang.Integer"/>
+	<field name="asignar_proyecto_PRO_ID4" class="java.lang.Integer"/>
+	<field name="asignar_proyecto_PROY_ID" class="java.lang.Integer"/>
+	<field name="asignar_proyecto_SAL_NUMERO" class="java.lang.String"/>
+	<field name="asignar_proyecto_SAL_FECHA" class="java.sql.Date"/>
+	<field name="asignar_proyecto_SAL_TRANSPORTISTA" class="java.lang.String"/>
+	<field name="asignar_proyecto_SAL_CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="asignar_proyecto_SAL_SUBTOTAL" class="java.math.BigDecimal"/>
+	<field name="asignar_proyecto_SAL_TOTAL" class="java.math.BigDecimal"/>
+	<field name="asignar_proyecto_SAL_TOTAL_IVA" class="java.math.BigDecimal"/>
+	<field name="asignar_proyecto_SAL_INGRESOADICIONAL" class="java.math.BigDecimal"/>
+	<field name="asignar_proyecto_SAL_OBSERVACIONES_" class="java.lang.String"/>
+	<field name="asignar_proyecto_SAL_TOTALPROYECTO" class="java.math.BigDecimal"/>
+	<field name="responsable_RES_ID" class="java.lang.Integer"/>
+	<field name="responsable_RES_NOMBRE" class="java.lang.String"/>
+	<field name="responsable_RES_CEDULA" class="java.math.BigDecimal"/>
+	<field name="responsable_RES_CARGO" class="java.lang.String"/>
+	<field name="responsable_RES_TELEFONO" class="java.math.BigDecimal"/>
+	<field name="responsable_RES_DIRECCION" class="java.lang.String"/>
+	<field name="responsable_RES_CORREO" class="java.lang.String"/>
+	<field name="proyecto_PROY_ID" class="java.lang.Integer"/>
+	<field name="proyecto_PROY_NOMBRE" class="java.lang.String"/>
+	<field name="proyecto_PROY_DIRECCION" class="java.lang.String"/>
+	<field name="proyecto_PROY_FECH_INICIO" class="java.sql.Date"/>
+	<field name="proyecto_PROY_FECH_FIN" class="java.sql.Date"/>
+	<field name="proyecto_PROY_ESTADO" class="java.lang.String"/>
+	<field name="proyecto_PROY_OBSERVACION" class="java.lang.String"/>
+	<field name="productos_PRO_ID4" class="java.lang.Integer"/>
+	<field name="productos_BD_ID" class="java.lang.Integer"/>
+	<field name="productos_PRO_CODIGOPRO" class="java.lang.String"/>
+	<field name="productos_PRO_NOMBRES" class="java.lang.String"/>
+	<field name="productos_PRO_MODELO" class="java.lang.String"/>
+	<field name="productos_PRO_SERIAL" class="java.lang.String"/>
+	<field name="productos_PRO_TAMANOMEDIDA" class="java.lang.String"/>
+	<field name="productos_PRO_CATEGORIA" class="java.lang.String"/>
+	<field name="productos_PRO_CANTIDAD" class="java.lang.Integer"/>
+	<field name="productos_PRO_PRECIO_UNI" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_IMAGEN" class="java.lang.Object"/>
+	<field name="productos_PRO_ADI_OBSERVACION" class="java.lang.String"/>
+	<field name="productos_PRO_ESTADO_ELIMINAR" class="java.lang.String"/>
+	<field name="productos_PRO_SUBTOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_TOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_SUB_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_IVA" class="java.math.BigDecimal"/>
+	<field name="imagenes_IMG_ID" class="java.lang.Integer"/>
+	<field name="imagenes_logo" class="java.lang.Object"/>
+	<field name="imagenes_pie" class="java.lang.Object"/>
+	<variable name="productos_PRO_TOTAL_PRO_1" class="java.lang.Integer" calculation="Highest">
+		<variableExpression><![CDATA[$F{productos_PRO_TOTAL_PRO}]]></variableExpression>
+	</variable>
+	<variable name="asignar_proyecto_SAL_TOTALPROYECTO_1" class="java.math.BigDecimal" calculation="Highest">
+		<variableExpression><![CDATA[$F{asignar_proyecto_SAL_TOTALPROYECTO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="67" splitType="Stretch">
+			<image>
+				<reportElement x="27" y="5" width="125" height="62" uuid="a29c0ccd-dd4e-4a28-b288-505b2300ae9c"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="192" y="11" width="228" height="20" uuid="4c4f28c6-00f9-430e-bd4d-4dc39ca978e6"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSTRUCTORA CONALGI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="249" y="42" width="136" height="20" uuid="2e56804c-479e-4b56-a354-237ea014fc19"/>
+				<textElement>
+					<font fontName="Arial" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DEL PROYECTO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="388" y="7" width="40" height="15" uuid="b02e208e-d04e-47ba-98e8-f4a7eaa3dd2d"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="428" y="7" width="100" height="15" uuid="fd6d8e96-5154-4899-a7b4-a67b73707b6e"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="88" splitType="Stretch">
+			<staticText>
+				<reportElement x="285" y="16" width="59" height="15" uuid="83d574b1-3843-4cf1-b02b-7da5d8922768"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCIÓN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="16" width="89" height="15" uuid="90d79465-3599-4aa8-a951-c3cf8f59c554"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROYECTO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="185" y="15" width="100" height="15" uuid="29af0ef2-6bac-43e3-9c28-f82d857e9654"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proyecto_PROY_NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="15" width="75" height="15" uuid="85b4919d-9b83-4d95-aae5-84194cbdd9b9"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{responsable_RES_DIRECCION}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="96" y="31" width="88" height="15" uuid="c9af29c6-9aef-42a8-9901-f950f60fff29"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA INICIO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="285" y="30" width="58" height="15" uuid="725397bc-7d54-4d24-8d4d-a9ea2a819947"/>
+				<textElement>
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA FIN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="185" y="30" width="100" height="15" uuid="24b4edf5-8a34-4fd5-a645-16165c4e0068"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proyecto_PROY_FECH_INICIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="344" y="30" width="75" height="15" uuid="05c8e7ee-dfe0-4aaf-9dd0-f2ece5e305af"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proyecto_PROY_FECH_FIN}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="27" y="87" width="501" height="1" forecolor="#E3E3E3" uuid="959e6bd0-399b-4115-abc4-1fd65c20bea1"/>
+			</line>
+			<staticText>
+				<reportElement x="432" y="68" width="100" height="20" uuid="451a7a20-28fd-4125-a422-97e8bcf737aa"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBTOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="131" y="68" width="76" height="20" uuid="6599dfbe-c1e6-481a-bd37-813b0afedf30"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="68" width="100" height="20" uuid="5bdaeda9-63ce-4f07-9f0b-ff74ea284dfe"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRECIO UNITARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="68" width="63" height="20" uuid="d1c13efa-cd37-4c32-9cbe-d634e99142fd"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="27" y="67" width="501" height="1" forecolor="#E3E3E3" uuid="954b80f3-f42d-474a-a953-fc39f8f00d08"/>
+			</line>
+			<staticText>
+				<reportElement x="235" y="68" width="80" height="20" uuid="5f0661cc-87c7-4d56-a3a1-cc0bcb104c9b"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="69" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="7" width="93" height="20" uuid="55c7f7a2-cf29-479c-af2a-ebcb9a6d9fad"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_CODIGOPRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="113" y="7" width="116" height="58" uuid="eafe6904-aa6e-4b84-88ae-0e156efc305e"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="321" y="7" width="100" height="20" uuid="9d7a7100-ce29-4134-b9f0-3569ed04ffa8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_PRECIO_UNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="432" y="7" width="100" height="20" uuid="8e39a151-747e-416d-b63c-7cc07671dbfe"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{asignar_proyecto_SAL_SUBTOTAL}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="27" y="65" width="501" height="1" forecolor="#E3E3E3" uuid="57132f62-b7d8-4b8b-9ce5-4a1bd7328026"/>
+			</line>
+			<textField>
+				<reportElement x="235" y="7" width="80" height="20" uuid="78f86826-e3da-4ee8-aa0f-4d6ed8351ebd"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{asignar_proyecto_SAL_CANTIDAD}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="12" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="106" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="106" uuid="53c082ed-44d7-4414-9759-93a1500789c3"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="494" y="44" width="33" height="20" uuid="1cccdc3f-fed5-47f5-bd9d-94972f1ae7a8"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="48" splitType="Stretch">
+			<staticText>
+				<reportElement x="162" y="13" width="123" height="20" uuid="f9af3a68-2a85-47f4-b0cb-bbc957fd41cd"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL DEL PROYECTO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="285" y="13" width="100" height="20" uuid="71b9100d-9d11-4b23-b364-e77491402267"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{asignar_proyecto_SAL_TOTALPROYECTO_1}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

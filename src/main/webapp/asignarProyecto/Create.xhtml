@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AsignarProyectoCreateDlg" widgetVar="AsignarProyectoCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateAsignarProyectoTitle}">
+            <h:form id="AsignarProyectoCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{asignarProyectoController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salId}" for="salId" />
+                        <p:inputText id="salId" value="#{asignarProyectoController.selected.salId}" title="#{bundle.CreateAsignarProyectoTitle_salId}" required="true" requiredMessage="#{bundle.CreateAsignarProyectoRequiredMessage_salId}"/>
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salNumero}" for="salNumero" />
+                        <p:inputText id="salNumero" value="#{asignarProyectoController.selected.salNumero}" title="#{bundle.CreateAsignarProyectoTitle_salNumero}" required="true" requiredMessage="#{bundle.CreateAsignarProyectoRequiredMessage_salNumero}"/>
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salFecha}" for="salFecha" />
+                        <p:calendar id="salFecha" pattern="MM/dd/yyyy" value="#{asignarProyectoController.selected.salFecha}" title="#{bundle.EditAsignarProyectoTitle_salFecha}" required="true" requiredMessage="#{bundle.EditAsignarProyectoRequiredMessage_salFecha}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salTransportista}" for="salTransportista" />
+                        <p:inputText id="salTransportista" value="#{asignarProyectoController.selected.salTransportista}" title="#{bundle.CreateAsignarProyectoTitle_salTransportista}" />
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salCantidad}" for="salCantidad" />
+                        <p:inputText id="salCantidad" value="#{asignarProyectoController.selected.salCantidad}" title="#{bundle.CreateAsignarProyectoTitle_salCantidad}" required="true" requiredMessage="#{bundle.CreateAsignarProyectoRequiredMessage_salCantidad}"/>
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salSubtotal}" for="salSubtotal" />
+                        <p:inputText id="salSubtotal" value="#{asignarProyectoController.selected.salSubtotal}" title="#{bundle.CreateAsignarProyectoTitle_salSubtotal}" />
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salTotal}" for="salTotal" />
+                        <p:inputText id="salTotal" value="#{asignarProyectoController.selected.salTotal}" title="#{bundle.CreateAsignarProyectoTitle_salTotal}" />
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salTotalIva}" for="salTotalIva" />
+                        <p:inputText id="salTotalIva" value="#{asignarProyectoController.selected.salTotalIva}" title="#{bundle.CreateAsignarProyectoTitle_salTotalIva}" />
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salIngresoadicional}" for="salIngresoadicional" />
+                        <p:inputText id="salIngresoadicional" value="#{asignarProyectoController.selected.salIngresoadicional}" title="#{bundle.CreateAsignarProyectoTitle_salIngresoadicional}" />
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salObservaciones}" for="salObservaciones" />
+                        <p:inputText id="salObservaciones" value="#{asignarProyectoController.selected.salObservaciones}" title="#{bundle.CreateAsignarProyectoTitle_salObservaciones}" />
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_salTotalproyecto}" for="salTotalproyecto" />
+                        <p:inputText id="salTotalproyecto" value="#{asignarProyectoController.selected.salTotalproyecto}" title="#{bundle.CreateAsignarProyectoTitle_salTotalproyecto}" />
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_proyId}" for="proyId" />
+                        <p:selectOneMenu id="proyId" value="#{asignarProyectoController.selected.proyId}" >
+                            <f:selectItems value="#{proyectoController.itemsAvailableSelectOne}"
+                                           var="proyIdItem"
+                                           itemValue="#{proyIdItem}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_proId4}" for="proId4" />
+                        <p:selectOneMenu id="proId4" value="#{asignarProyectoController.selected.proId4}" >
+                            <f:selectItems value="#{productosController.itemsAvailableSelectOne}"
+                                           var="proId4Item"
+                                           itemValue="#{proId4Item}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateAsignarProyectoLabel_resId}" for="resId" />
+                        <p:selectOneMenu id="resId" value="#{asignarProyectoController.selected.resId}" >
+                            <f:selectItems value="#{responsableController.itemsAvailableSelectOne}"
+                                           var="resIdItem"
+                                           itemValue="#{resIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{asignarProyectoController.create}" value="#{bundle.Save}" update="display,:AsignarProyectoListForm:datalist,:growl" oncomplete="handleSubmit(args,'AsignarProyectoCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="AsignarProyectoCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="38bd44b5-59a5-4c39-8065-5074aea7cca0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     productos.`PRO_ID4` AS productos_PRO_ID4,
+     productos.`BD_ID` AS productos_BD_ID,
+     productos.`PRO_CODIGOPRO` AS productos_PRO_CODIGOPRO,
+     productos.`PRO_NOMBRES` AS productos_PRO_NOMBRES,
+     productos.`PRO_MODELO` AS productos_PRO_MODELO,
+     productos.`PRO_SERIAL` AS productos_PRO_SERIAL,
+     productos.`PRO_TAMANOMEDIDA` AS productos_PRO_TAMANOMEDIDA,
+     productos.`PRO_CATEGORIA` AS productos_PRO_CATEGORIA,
+     productos.`PRO_CANTIDAD` AS productos_PRO_CANTIDAD,
+     productos.`PRO_PRECIO_UNI` AS productos_PRO_PRECIO_UNI,
+     productos.`PRO_IMAGEN` AS productos_PRO_IMAGEN,
+     productos.`PRO_ADI_OBSERVACION` AS productos_PRO_ADI_OBSERVACION,
+     productos.`PRO_ESTADO_ELIMINAR` AS productos_PRO_ESTADO_ELIMINAR,
+     productos.`PRO_SUBTOTAL_PRO` AS productos_PRO_SUBTOTAL_PRO,
+     productos.`PRO_TOTAL_PRO` AS productos_PRO_TOTAL_PRO,
+     productos.`PRO_SUB_PREC` AS productos_PRO_SUB_PREC,
+     productos.`PRO_TOTAL_PREC` AS productos_PRO_TOTAL_PREC,
+     productos.`PRO_TOTAL_IVA` AS productos_PRO_TOTAL_IVA,
+     maquinaria.`MAQ_ID` AS maquinaria_MAQ_ID,
+     maquinaria.`PRO_ID4` AS maquinaria_PRO_ID4,
+     maquinaria.`MAQ_ESTADO` AS maquinaria_MAQ_ESTADO,
+     maquinaria.`MAQ_FECHA_MANTENIMIENTO` AS maquinaria_MAQ_FECHA_MANTENIMIENTO,
+     maquinaria.`MAQ_RAZON_MANTE` AS maquinaria_MAQ_RAZON_MANTE,
+     maquinaria.`MAQ_FEC_CADA_MANTE` AS maquinaria_MAQ_FEC_CADA_MANTE,
+     maquinaria.`MAQ_PLACA` AS maquinaria_MAQ_PLACA,
+     maquinaria.`MAQ_PROD_ADICIONA` AS maquinaria_MAQ_PROD_ADICIONA,
+     imagenes.`IMG_ID` AS imagenes_IMG_ID,
+     imagenes.`logo` AS imagenes_logo,
+     imagenes.`pie` AS imagenes_pie
+FROM
+     `productos` productos INNER JOIN `maquinaria` maquinaria ON productos.`PRO_ID4` = maquinaria.`PRO_ID4`,
+     `imagenes` imagenes
+WHERE
+     productos.`PRO_ESTADO_ELIMINAR` = "activo"
+     and DATEDIFF(maquinaria.`MAQ_FECHA_MANTENIMIENTO`,CURDATE()) BETWEEN 0 AND 30
+ORDER BY
+     productos.`PRO_NOMBRES` ASC]]>
+	</queryString>
+	<field name="productos_PRO_ID4" class="java.lang.Integer"/>
+	<field name="productos_BD_ID" class="java.lang.Integer"/>
+	<field name="productos_PRO_CODIGOPRO" class="java.lang.String"/>
+	<field name="productos_PRO_NOMBRES" class="java.lang.String"/>
+	<field name="productos_PRO_MODELO" class="java.lang.String"/>
+	<field name="productos_PRO_SERIAL" class="java.lang.String"/>
+	<field name="productos_PRO_TAMANOMEDIDA" class="java.lang.String"/>
+	<field name="productos_PRO_CATEGORIA" class="java.lang.String"/>
+	<field name="productos_PRO_CANTIDAD" class="java.lang.Integer"/>
+	<field name="productos_PRO_PRECIO_UNI" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_IMAGEN" class="java.lang.Object"/>
+	<field name="productos_PRO_ADI_OBSERVACION" class="java.lang.String"/>
+	<field name="productos_PRO_ESTADO_ELIMINAR" class="java.lang.String"/>
+	<field name="productos_PRO_SUBTOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_TOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_SUB_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_IVA" class="java.math.BigDecimal"/>
+	<field name="maquinaria_MAQ_ID" class="java.lang.Integer"/>
+	<field name="maquinaria_PRO_ID4" class="java.lang.Integer"/>
+	<field name="maquinaria_MAQ_ESTADO" class="java.lang.String"/>
+	<field name="maquinaria_MAQ_FECHA_MANTENIMIENTO" class="java.sql.Date"/>
+	<field name="maquinaria_MAQ_RAZON_MANTE" class="java.lang.String"/>
+	<field name="maquinaria_MAQ_FEC_CADA_MANTE" class="java.lang.String"/>
+	<field name="maquinaria_MAQ_PLACA" class="java.lang.String"/>
+	<field name="maquinaria_MAQ_PROD_ADICIONA" class="java.lang.String"/>
+	<field name="imagenes_IMG_ID" class="java.lang.Integer"/>
+	<field name="imagenes_logo" class="java.lang.Object"/>
+	<field name="imagenes_pie" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="182" y="14" width="229" height="23" uuid="fa598943-4ab0-4294-aa6b-b0568efcd79e"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSTRUCTORA CONALGI]]></text>
+			</staticText>
+			<image>
+				<reportElement x="18" y="4" width="111" height="65" uuid="96e9fef9-db55-4dcc-9733-92f10511328a"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="201" y="49" width="194" height="20" uuid="2977e9cf-fe2c-4e31-a62c-064d81063953"/>
+				<textElement>
+					<font fontName="Arial" size="12" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[MAQUINARIAS  MANTENIMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="468" y="0" width="87" height="49" forecolor="#FF3300" uuid="74242650-9dd6-4912-b7f7-33a27da16120"/>
+				<textElement>
+					<font fontName="Arial" size="18"/>
+				</textElement>
+				<text><![CDATA[ALERTA!!]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="378" y="15" width="48" height="20" uuid="77886ca5-6496-4bf3-ab78-5f4d153eff44"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="428" y="15" width="100" height="20" uuid="21e04660-bdf4-4de8-b06b-48032d63f154"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement x="19" y="10" width="75" height="20" uuid="00ab3aed-d883-41f4-ab46-96d469a452e8"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="106" y="11" width="75" height="20" uuid="cb988ac7-b507-4cee-aff6-363b691dc4f6"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLACA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="194" y="2" width="75" height="15" uuid="554c6da0-2672-447b-b280-590bbb2fad65"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="288" y="11" width="75" height="20" uuid="e687e3cd-04bc-4ee1-8861-7fbcee39c4f7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RAZÓN ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="11" width="75" height="20" uuid="15c1cb8e-2489-493e-903f-d37b5ebf3988"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERÍODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="17" width="97" height="20" uuid="94035fd9-602a-4485-abab-e7cbbe796ec7"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANTENIMIENTO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="19" y="36" width="509" height="1" uuid="ae48dc2e-b384-4d6a-8eb7-7378bc23791e"/>
+			</line>
+			<line>
+				<reportElement x="18" y="1" width="509" height="1" uuid="cc887cf8-4ab5-4b64-a33e-86bee8c12b2f"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="67" splitType="Stretch">
+			<textField>
+				<reportElement x="19" y="0" width="75" height="61" uuid="7aadb38b-27d7-4ad3-95cf-ccd2166a3a7e"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="107" y="23" width="75" height="20" uuid="06a64ff2-4949-41d4-8b9c-7ae78e14543c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{maquinaria_MAQ_PLACA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="194" y="23" width="75" height="20" uuid="15c31191-b838-427a-86ff-5132674f3ecc"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{maquinaria_MAQ_FECHA_MANTENIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="288" y="23" width="75" height="20" uuid="d74b8211-0c75-4216-86d0-8153a457ac51"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{maquinaria_MAQ_RAZON_MANTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="23" width="75" height="20" uuid="9a506a49-2298-4072-9407-3fce20d90094"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{maquinaria_MAQ_FEC_CADA_MANTE}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="468" y="11" width="83" height="50" uuid="5fe97458-10c7-4fd1-b8db-41e4d940a88a"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{productos_PRO_IMAGEN})]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="19" y="66" width="508" height="1" uuid="ce38511d-abb7-4aec-b048-3aa2d971a534"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="100" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="100" uuid="bde371e0-9ae0-49f5-a926-1b78d5fa2987"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="490" y="46" width="38" height="20" uuid="96084c1a-b10e-42f5-9045-b32246f4faed"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

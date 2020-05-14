@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListDevolucionesTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="DevolucionesListForm">
+                <p:panel header="#{bundle.ListDevolucionesTitle}">
+                    <p:dataTable id="datalist" value="#{devolucionesController.items}" var="item"
+                                 selectionMode="single" selection="#{devolucionesController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.devId}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update=" loadButton viewButton "/>
+                        <p:ajax event="rowUnselect" update=" loadButton viewButton "/>
+
+                        <p:column filterBy="#{item.devNumero}" headerText="Id" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Número de Guía"/>
+                            </f:facet>
+                            <h:outputText value="#{item.devNumero}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDevolucionesTitle_devFecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.devFecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Producto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.salId.proId4.proNombres}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDevolucionesTitle_devCantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.devCantidad}"/>
+                        </p:column>
+                         <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Precio Unitario"/>
+                            </f:facet>
+                             <h:outputText value="#{item.salId.proId4.proPrecioUni}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Total"/>
+                            </f:facet>
+                            <h:outputText value="#{item.devSubtotal}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListDevolucionesTitle_devRazon}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.devRazon}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                             <p:commandButton id="loadButton" icon="ui-icon-refresh"  value="Actualizar" actionListener="#{devolucionesController.actualizar()}" oncomplete="@all" update=":DevolucionesListForm" />
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":DevolucionesViewForm" oncomplete="PF('DevolucionesViewDialog').show()" disabled="#{empty devolucionesController.selected}"/>
+                             <h:commandLink id="btnImprimir"  actionListener="#{devolucionesController.verReporteDos()}"  title="Exportar a PDF" value="REPORTE"> </h:commandLink>  
+                             
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

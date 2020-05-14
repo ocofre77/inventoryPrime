@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba62152d-8ec3-42f6-9726-98a45a3c7492">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     productos.`PRO_ID4` AS productos_PRO_ID4,
+     productos.`BD_ID` AS productos_BD_ID,
+     productos.`PRO_CODIGOPRO` AS productos_PRO_CODIGOPRO,
+     productos.`PRO_NOMBRES` AS productos_PRO_NOMBRES,
+     productos.`PRO_MODELO` AS productos_PRO_MODELO,
+     productos.`PRO_SERIAL` AS productos_PRO_SERIAL,
+     productos.`PRO_TAMANOMEDIDA` AS productos_PRO_TAMANOMEDIDA,
+     productos.`PRO_CATEGORIA` AS productos_PRO_CATEGORIA,
+     productos.`PRO_CANTIDAD` AS productos_PRO_CANTIDAD,
+     productos.`PRO_PRECIO_UNI` AS productos_PRO_PRECIO_UNI,
+     productos.`PRO_IMAGEN` AS productos_PRO_IMAGEN,
+     productos.`PRO_ADI_OBSERVACION` AS productos_PRO_ADI_OBSERVACION,
+     productos.`PRO_ESTADO_ELIMINAR` AS productos_PRO_ESTADO_ELIMINAR,
+     productos.`PRO_SUBTOTAL_PRO` AS productos_PRO_SUBTOTAL_PRO,
+     productos.`PRO_TOTAL_PRO` AS productos_PRO_TOTAL_PRO,
+     productos.`PRO_SUB_PREC` AS productos_PRO_SUB_PREC,
+     productos.`PRO_TOTAL_PREC` AS productos_PRO_TOTAL_PREC,
+     productos.`PRO_TOTAL_IVA` AS productos_PRO_TOTAL_IVA,
+     producto.`PROD_ID` AS producto_PROD_ID,
+     producto.`PRO_ID4` AS producto_PRO_ID4,
+     producto.`PROD_PERIODO_CADU` AS producto_PROD_PERIODO_CADU,
+     producto.`PROD_FECHA_ING` AS producto_PROD_FECHA_ING,
+     imagenes.`IMG_ID` AS imagenes_IMG_ID,
+     imagenes.`logo` AS imagenes_logo,
+     imagenes.`pie` AS imagenes_pie,
+     bodega.`BD_ID` AS bodega_BD_ID,
+     bodega.`BD_NOMBRE` AS bodega_BD_NOMBRE,
+     bodega.`BD_DIRECCION` AS bodega_BD_DIRECCION,
+     bodega.`BD_TELEFONO` AS bodega_BD_TELEFONO,
+     bodega.`BD_OBSERVACION` AS bodega_BD_OBSERVACION
+FROM
+     `productos` productos INNER JOIN `producto` producto ON productos.`PRO_ID4` = producto.`PRO_ID4`
+     INNER JOIN `bodega` bodega ON productos.`BD_ID` = bodega.`BD_ID`,
+     `imagenes` imagenes]]>
+	</queryString>
+	<field name="productos_PRO_ID4" class="java.lang.Integer"/>
+	<field name="productos_BD_ID" class="java.lang.Integer"/>
+	<field name="productos_PRO_CODIGOPRO" class="java.lang.String"/>
+	<field name="productos_PRO_NOMBRES" class="java.lang.String"/>
+	<field name="productos_PRO_MODELO" class="java.lang.String"/>
+	<field name="productos_PRO_SERIAL" class="java.lang.String"/>
+	<field name="productos_PRO_TAMANOMEDIDA" class="java.lang.String"/>
+	<field name="productos_PRO_CATEGORIA" class="java.lang.String"/>
+	<field name="productos_PRO_CANTIDAD" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_PRECIO_UNI" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_IMAGEN" class="java.lang.Object"/>
+	<field name="productos_PRO_ADI_OBSERVACION" class="java.lang.String"/>
+	<field name="productos_PRO_ESTADO_ELIMINAR" class="java.lang.String"/>
+	<field name="productos_PRO_SUBTOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_TOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_SUB_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_IVA" class="java.math.BigDecimal"/>
+	<field name="producto_PROD_ID" class="java.lang.Integer"/>
+	<field name="producto_PRO_ID4" class="java.lang.Integer"/>
+	<field name="producto_PROD_PERIODO_CADU" class="java.lang.String"/>
+	<field name="producto_PROD_FECHA_ING" class="java.sql.Date"/>
+	<field name="imagenes_IMG_ID" class="java.lang.Integer"/>
+	<field name="imagenes_logo" class="java.lang.Object"/>
+	<field name="imagenes_pie" class="java.lang.Object"/>
+	<field name="bodega_BD_ID" class="java.lang.Integer"/>
+	<field name="bodega_BD_NOMBRE" class="java.lang.String"/>
+	<field name="bodega_BD_DIRECCION" class="java.lang.String"/>
+	<field name="bodega_BD_TELEFONO" class="java.lang.String"/>
+	<field name="bodega_BD_OBSERVACION" class="java.lang.String"/>
+	<variable name="TotalProductos" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{productos_PRO_PRECIO_UNI}.doubleValue()*$F{productos_PRO_CANTIDAD}.doubleValue()]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<variable name="productos_PRO_ID4_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{productos_PRO_ID4}]]></variableExpression>
+	</variable>
+	<variable name="productos_PRO_CANTIDAD_1" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{productos_PRO_CANTIDAD}]]></variableExpression>
+	</variable>
+	<variable name="productos_PRO_CANTIDAD_2" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{productos_PRO_CANTIDAD}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="85" splitType="Stretch">
+			<staticText>
+				<reportElement x="185" y="18" width="241" height="20" uuid="36112e1f-c77d-45b1-866e-0e9f01ebcceb"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSTRUCTORA CONALGI]]></text>
+			</staticText>
+			<image>
+				<reportElement x="28" y="18" width="111" height="59" uuid="4e782e97-6e07-481a-8a22-0bbd39a2650c"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="234" y="38" width="126" height="20" uuid="93d796f4-844b-4e8d-a2af-ec8eaee1684b"/>
+				<textElement>
+					<font fontName="Arial" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PRODUCTOS TOTALES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="241" y="65" width="100" height="20" uuid="72bf1525-5854-4a91-848a-04c039805afe"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[CATEGORÍA: Producto]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="481" y="10" width="55" height="20" uuid="048333fd-ed42-483d-bad3-58c5f48b29ca"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="442" y="10" width="39" height="20" uuid="cf8e6805-2cc4-4102-a29e-37fda4d01e4d"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="14" width="50" height="20" uuid="59d589ed-469e-4c90-a1d0-65117e875f37"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="264" y="14" width="57" height="20" uuid="3bdd7119-c09f-474f-bee3-8d4a70499b66"/>
+				<textElement>
+					<font size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CANTIDAD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="321" y="14" width="58" height="20" uuid="3ec26385-8815-49da-832e-aebad55c628a"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PRE.UNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="392" y="14" width="59" height="20" uuid="e538bac7-05ee-498a-a49f-c866c77186c0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBTOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="14" width="54" height="20" uuid="a12b1e49-418d-4b0a-9270-a5cca2069a58"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="14" width="49" height="20" uuid="03f4863c-d8ba-4900-a299-c0a314a05fb1"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[MODELO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="213" y="14" width="44" height="20" uuid="6526170c-209e-46ed-a8bb-383362c53171"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERIAL]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="44" width="536" height="1" uuid="638efa2f-e4d8-4071-a0bb-3b9fc67355d0"/>
+			</line>
+			<line>
+				<reportElement x="0" y="1" width="536" height="1" uuid="85d101b1-b5bc-41eb-86f0-40ffbb34f1a3"/>
+			</line>
+			<staticText>
+				<reportElement x="462" y="14" width="74" height="20" uuid="6471e9e7-4224-4f00-947f-b6c380b3c5ad"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[UBICACIÓN]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="107" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="5" width="72" height="79" uuid="93917250-2382-487e-ba8f-4b93e8113ac7"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="264" y="22" width="49" height="20" uuid="26e7a5a5-aeb8-4fc6-b6bf-2e518f31343d"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_CANTIDAD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="321" y="22" width="58" height="20" uuid="2cf5ffe6-6355-4bba-86d3-067408c99369"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_PRECIO_UNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="395" y="19" width="59" height="20" uuid="eaedb42c-7b42-498e-85fd-197c4ac049be"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_PRECIO_UNI}.doubleValue()*$F{productos_PRO_CANTIDAD}.doubleValue()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="79" y="23" width="79" height="20" uuid="be138b10-39cf-4b5f-8088-5d3731c6af58"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_CODIGOPRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="162" y="22" width="44" height="57" uuid="1460e186-c059-463e-ae7c-2b195b2b95c1"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_MODELO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="23" width="48" height="56" uuid="68ed517f-c2be-4a09-8170-3559062e6b07"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_SERIAL}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="462" y="49" width="69" height="49" uuid="f3e1577c-1be4-4b0e-a547-21ed6cb300f7"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{productos_PRO_IMAGEN})]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="0" y="106" width="536" height="1" uuid="32adfda2-c969-488d-a335-0e70c80b5811"/>
+			</line>
+			<textField>
+				<reportElement x="462" y="19" width="74" height="20" uuid="1d35a3af-9a46-4448-9263-59e0fb47c523"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{bodega_BD_NOMBRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="130" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="4" width="555" height="126" uuid="c7b0a8bd-b30a-4107-b8fb-b90a3b1aa4b2"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="488" y="55" width="18" height="20" uuid="481fc54b-f923-4319-a67f-ce3fffb042c8"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="110" splitType="Stretch">
+			<textField>
+				<reportElement x="260" y="57" width="100" height="20" uuid="d7a91c31-ed35-4e93-a861-812c9ebd5314"/>
+				<textFieldExpression><![CDATA[$V{TotalProductos}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="213" y="58" width="43" height="20" uuid="8492ca35-b174-46d2-adee-d28bd7d96f12"/>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="145" y="13" width="111" height="20" uuid="402ec430-7802-4a2a-90ce-7792d01bdec0"/>
+				<text><![CDATA[TOTAL PRODUCTOS: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="260" y="13" width="100" height="20" uuid="10434d8a-dde3-484a-816f-3da447c82280"/>
+				<textFieldExpression><![CDATA[$V{productos_PRO_ID4_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="156" y="37" width="100" height="20" uuid="ff84fc1c-f64c-4660-b185-eef0a6c1e72c"/>
+				<text><![CDATA[CANTIDAD TOTAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="261" y="38" width="100" height="20" uuid="380d789f-9aa1-4381-b1e3-48a8e7fe941c"/>
+				<textFieldExpression><![CDATA[$V{productos_PRO_CANTIDAD_2}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

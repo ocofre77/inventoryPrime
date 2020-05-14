@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7d92506a-7df2-4f42-b819-ce566f0dd6a3">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="estadoVehiculo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     productos.`PRO_ID4` AS productos_PRO_ID4,
+     productos.`BD_ID` AS productos_BD_ID,
+     productos.`PRO_CODIGOPRO` AS productos_PRO_CODIGOPRO,
+     productos.`PRO_NOMBRES` AS productos_PRO_NOMBRES,
+     productos.`PRO_MODELO` AS productos_PRO_MODELO,
+     productos.`PRO_SERIAL` AS productos_PRO_SERIAL,
+     productos.`PRO_TAMANOMEDIDA` AS productos_PRO_TAMANOMEDIDA,
+     productos.`PRO_CATEGORIA` AS productos_PRO_CATEGORIA,
+     productos.`PRO_CANTIDAD` AS productos_PRO_CANTIDAD,
+     productos.`PRO_PRECIO_UNI` AS productos_PRO_PRECIO_UNI,
+     productos.`PRO_IMAGEN` AS productos_PRO_IMAGEN,
+     productos.`PRO_ADI_OBSERVACION` AS productos_PRO_ADI_OBSERVACION,
+     productos.`PRO_ESTADO_ELIMINAR` AS productos_PRO_ESTADO_ELIMINAR,
+     productos.`PRO_SUBTOTAL_PRO` AS productos_PRO_SUBTOTAL_PRO,
+     productos.`PRO_TOTAL_PRO` AS productos_PRO_TOTAL_PRO,
+     productos.`PRO_SUB_PREC` AS productos_PRO_SUB_PREC,
+     productos.`PRO_TOTAL_PREC` AS productos_PRO_TOTAL_PREC,
+     productos.`PRO_TOTAL_IVA` AS productos_PRO_TOTAL_IVA,
+     vehiculos.`VEH_ID` AS vehiculos_VEH_ID,
+     vehiculos.`PRO_ID4` AS vehiculos_PRO_ID4,
+     vehiculos.`VEH_PLACA` AS vehiculos_VEH_PLACA,
+     vehiculos.`VEH_ANIO` AS vehiculos_VEH_ANIO,
+     vehiculos.`VEH_COLOR` AS vehiculos_VEH_COLOR
+FROM
+     `productos` productos INNER JOIN `vehiculos` vehiculos ON productos.`PRO_ID4` = vehiculos.`PRO_ID4`
+WHERE 
+   productos.`PRO_ESTADO_ELIMINAR`=$P{estadoVehiculo}]]>
+	</queryString>
+	<field name="productos_PRO_ID4" class="java.lang.Integer"/>
+	<field name="productos_BD_ID" class="java.lang.Integer"/>
+	<field name="productos_PRO_CODIGOPRO" class="java.lang.String"/>
+	<field name="productos_PRO_NOMBRES" class="java.lang.String"/>
+	<field name="productos_PRO_MODELO" class="java.lang.String"/>
+	<field name="productos_PRO_SERIAL" class="java.lang.String"/>
+	<field name="productos_PRO_TAMANOMEDIDA" class="java.lang.String"/>
+	<field name="productos_PRO_CATEGORIA" class="java.lang.String"/>
+	<field name="productos_PRO_CANTIDAD" class="java.lang.Integer"/>
+	<field name="productos_PRO_PRECIO_UNI" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_IMAGEN" class="java.lang.Object"/>
+	<field name="productos_PRO_ADI_OBSERVACION" class="java.lang.String"/>
+	<field name="productos_PRO_ESTADO_ELIMINAR" class="java.lang.String"/>
+	<field name="productos_PRO_SUBTOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_TOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_SUB_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_IVA" class="java.math.BigDecimal"/>
+	<field name="vehiculos_VEH_ID" class="java.lang.Integer"/>
+	<field name="vehiculos_PRO_ID4" class="java.lang.Integer"/>
+	<field name="vehiculos_VEH_PLACA" class="java.lang.String"/>
+	<field name="vehiculos_VEH_ANIO" class="java.lang.String"/>
+	<field name="vehiculos_VEH_COLOR" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="267" y="2" width="100" height="20" uuid="1af217cf-b2d6-4441-b07c-47b7052d6cec"/>
+				<text><![CDATA[productos_PRO_TAMANOMEDIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="19" width="100" height="20" uuid="09ce3b2f-2eb8-4954-90d1-f6647a8331d5"/>
+				<text><![CDATA[vehiculos_VEH_PLACA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="2" width="100" height="20" uuid="baf9bbde-3efa-4bc0-9938-6d38b599cfae"/>
+				<text><![CDATA[productos_PRO_PRECIO_UNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="19" width="100" height="20" uuid="40ff3276-2958-40d7-98c2-eee7c268a9dd"/>
+				<text><![CDATA[productos_PRO_MODELO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="134" y="32" width="100" height="20" uuid="2f58af6d-fdbf-40ed-ac2e-b665cab14c72"/>
+				<textFieldExpression><![CDATA[$F{productos_PRO_MODELO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="267" y="32" width="100" height="20" uuid="aa9a7b09-ad36-44a4-9513-41ca5a5037c8"/>
+				<textFieldExpression><![CDATA[$F{productos_PRO_TAMANOMEDIDA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="419" y="32" width="100" height="20" uuid="8c5c14e1-73a6-4561-870f-0a9c89c4aca4"/>
+				<textFieldExpression><![CDATA[$F{vehiculos_VEH_PLACA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="22" y="29" width="100" height="20" uuid="d8161df3-ab36-458d-9286-1e274dec5600"/>
+				<textFieldExpression><![CDATA[$F{productos_PRO_PRECIO_UNI}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

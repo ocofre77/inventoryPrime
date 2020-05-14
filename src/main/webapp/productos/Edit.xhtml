@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductosEditDlg" widgetVar="ProductosEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditProductosTitle}">
+            <h:form id="ProductosEditForm"  enctype="multipart/form-data">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{productosController.selected != null}">
+                        
+                        
+                        <p:outputLabel value="#{bundle.EditProductosLabel_proCodigopro}" for="proCodigopro" />
+                        <p:outputLabel id="proCodigopro" value="#{productosController.selected.proCodigopro}" title="#{bundle.EditProductosTitle_proCodigopro}" />
+                        <p:outputLabel value="#{bundle.EditProductosLabel_proNombres}" for="proNombres" />
+                        <p:inputText id="proNombres" value="#{productosController.selected.proNombres}" title="#{bundle.EditProductosTitle_proNombres}" required="true" requiredMessage="#{bundle.EditProductosRequiredMessage_proNombres}"/>
+                        <p:outputLabel value="Modelo/Marca" for="proModelo" />
+                        <p:inputText id="proModelo" value="#{productosController.selected.proModelo}" title="#{bundle.EditProductosTitle_proModelo}" />
+                        <p:outputLabel value="#{bundle.EditProductosLabel_proSerial}" for="proSerial" />
+                        <p:inputText id="proSerial" value="#{productosController.selected.proSerial}" title="#{bundle.EditProductosTitle_proSerial}" />
+                        <p:outputLabel value="#{bundle.EditProductosLabel_proTamanomedida}" for="proTamanomedida" />
+                        <p:inputText id="proTamanomedida" value="#{productosController.selected.proTamanomedida}" title="#{bundle.EditProductosTitle_proTamanomedida}" />
+                        <p:outputLabel value="#{bundle.EditProductosLabel_proCategoria}" for="proCategoria" />
+                        <p:outputLabel id="proCategoria" value="#{productosController.selected.proCategoria}" title="#{bundle.EditProductosTitle_proCategoria}"/>
+                        <p:outputLabel value="#{bundle.EditProductosLabel_proCantidad}" for="proCantidad" />
+                        <p:inputText id="proCantidad" value="#{productosController.selected.proCantidad}" title="#{bundle.EditProductosTitle_proCantidad}" />
+                        <p:outputLabel value="#{bundle.EditProductosLabel_proPrecioUni}" for="proPrecioUni" />
+                        <p:inputText id="proPrecioUni" value="#{productosController.selected.proPrecioUni}" title="#{bundle.EditProductosTitle_proPrecioUni}" required="true" requiredMessage="#{bundle.EditProductosRequiredMessage_proPrecioUni}"/>
+                        <p:outputLabel value="#{bundle.EditProductosLabel_proImagen}" for="proImagen" />
+                        <h:graphicImage  id="proImagen" value="/DisplayImage?Image_id=#{productosController.selected.proId4}" width="100" height="100">              
+                            <p:fileUpload id="proImagen1" value="#{productosController.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        </h:graphicImage>
+                        <p:outputLabel value="#{bundle.EditProductosLabel_proAdiObservacion}" for="proAdiObservacion" />
+                        <p:inputText id="proAdiObservacion" value="#{productosController.selected.proAdiObservacion}" title="#{bundle.EditProductosTitle_proAdiObservacion}" />
+                        <p:outputLabel value="Ubicación" for="bdId" />
+                        <p:selectOneMenu id="bdId" value="#{productosController.selected.bdId}" required="true" requiredMessage="#{bundle.EditProductosRequiredMessage_bdId}">
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{bodegaController.itemsAvailableSelectOne}"
+                                           var="bdIdItem"
+                                           itemValue="#{bdIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{productosController.update}" value="#{bundle.Save}" 
+                                     update="display,:ProductosListForm:datalist,:growl" 
+                                     oncomplete="handleSubmit(args, 'ProductosEditDialog');" ajax="false"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="PF('ProductosEditDialog').hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

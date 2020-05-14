@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductosCreateDlg" widgetVar="ProductosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateProductosTitle}">
+            <h:form id="ProductosCreateForm" enctype="multipart/form-data">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{productosController.selected != null}">
+                        
+                        <p:outputLabel value="#{bundle.CreateProductosLabel_proCategoria}" for="proCategoria" />
+                        <p:selectOneMenu  id="proCategoria" value="#{productosController.selected.proCategoria}" required="true" style="width:125px">        <f:selectItem itemLabel="Seleccione uno: " itemValue="Selecione" />
+                            <f:selectItem itemLabel="Herramientas" itemValue="Herramientas" />
+                            <f:selectItem itemLabel="Producto" itemValue="Producto" />
+                            <f:selectItem itemLabel="Equipos de Protección" itemValue="Equipos de Protección" />
+                            <f:selectItem itemLabel="Equipos" itemValue="Equipos" />
+                            <f:selectItem itemLabel="Vehículos" itemValue="Vehículos" />
+                            <f:selectItem itemLabel="Maquinaria" itemValue="Maquinaria" />
+                            <f:ajax render="@form" />
+                        </p:selectOneMenu> 
+                        <p:outputLabel value="#{bundle.CreateProductosLabel_proNombres}" for="proNombres" />
+                        <p:inputText id="proNombres" value="#{productosController.selected.proNombres}" title="#{bundle.CreateProductosTitle_proNombres}" required="true" requiredMessage="#{bundle.CreateProductosRequiredMessage_proNombres}"/>
+                        <p:outputLabel value="Modelo/Marca" for="proModelo" />
+                        <p:inputText id="proModelo" value="#{productosController.selected.proModelo}" title="#{bundle.CreateProductosTitle_proModelo}" />
+                        <p:outputLabel value="#{bundle.CreateProductosLabel_proSerial}" for="proSerial" />
+                        <p:inputText id="proSerial" value="#{productosController.selected.proSerial}" title="#{bundle.CreateProductosTitle_proSerial}" />
+                        <p:outputLabel value="#{bundle.CreateProductosLabel_proTamanomedida}" for="proTamanomedida" />
+                        <p:selectOneMenu id="proTamanomedida" value="#{productosController.selected.proTamanomedida}" style="width:125px">
+                            <f:selectItem itemLabel="Metro" itemValue="Metro" />
+                            <f:selectItem itemLabel="Litro" itemValue="Litro" />
+                            <f:selectItem itemLabel="Quintales" itemValue="Quintales" />
+                            <f:selectItem itemLabel="Libras" itemValue="Libras" />
+                            <f:selectItem itemLabel="Unidades" itemValue="Unidades" />
+                            <f:selectItem itemLabel="Kilogramos" itemValue="Kilogramos" />
+                            <f:selectItem itemLabel="Par" itemValue="Par" />
+                            <f:selectItem itemLabel="Caretillas" itemValue="Caretillas" />
+                            <f:selectItem itemLabel="Metro Cuadrado" itemValue="Metro Cuadrado" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateProductosLabel_proCantidad}" for="proCantidad" />
+                        <p:inputText id="proCantidad" value="#{productosController.selected.proCantidad}" title="#{bundle.CreateProductosTitle_proCantidad}" />
+                        <p:outputLabel value="#{bundle.CreateProductosLabel_proPrecioUni}" for="proPrecioUni" />
+                        <p:inputText id="proPrecioUni" value="#{productosController.selected.proPrecioUni}" title="#{bundle.CreateProductosTitle_proPrecioUni}" required="true" requiredMessage="#{bundle.CreateProductosRequiredMessage_proPrecioUni}"/>
+                        <p:outputLabel value="#{bundle.CreateProductosLabel_proImagen}" for="proImagen" />
+                        <p:fileUpload id="proImagen" value="#{productosController.file}" mode="simple" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        <p:outputLabel value="#{bundle.CreateProductosLabel_proAdiObservacion}" for="proAdiObservacion" />
+                        <p:inputText id="proAdiObservacion" value="#{productosController.selected.proAdiObservacion}" title="#{bundle.CreateProductosTitle_proAdiObservacion}" />
+                        <p:outputLabel value="Ubicación:" for="bdId" />
+                        <p:selectOneMenu id="bdId" value="#{productosController.selected.bdId}" required="true" requiredMessage="#{bundle.EditProductosRequiredMessage_bdId}">
+                            <f:selectItems value="#{bodegaController.itemsAvailableSelectOne}"
+                                           var="bdIdItem"
+                                           itemValue="#{bdIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    
+                    <h:panelGrid columns="2" rendered="#{productosController.selected.proCategoria=='Herramientas'}" >
+               
+                        <p:outputLabel value="Fecha de Mantenimiento:" for="herFechaMantenimiento" />
+                        <p:calendar id="herFechaMantenimiento" pattern="MM/dd/yyyy" locale="es"  value="#{productosController.hselected.herFechaMantenimiento}" title="#{bundle.EditHerramientaTitle_herFechaMantenimiento}"  showOn="button"/>
+                        <p:outputLabel value="Razón del mantenimiento:" for="herRazonMantenimiento" />
+                        <p:inputText id="herRazonMantenimiento" value="#{productosController.hselected.herRazonMantenimiento}" title="#{bundle.CreateHerramientaTitle_herRazonMantenimiento}" />
+                        <p:outputLabel value="Período: (mantenimiento)" for="herFecCadaMante" />
+                        <p:selectOneMenu id="herFecCadaMante" value="#{productosController.hselected.herFecCadaMante}" style="width:125px">
+                            <f:selectItem itemLabel="Mensual" itemValue="Mensual" />
+                            <f:selectItem itemLabel="Bimestral" itemValue="Bimestral" />
+                            <f:selectItem itemLabel="Trimestral" itemValue="Trimestral" />
+                            <f:selectItem itemLabel="Semestral" itemValue="Semestral" />
+                            <f:selectItem itemLabel="Anual" itemValue="Anual" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Adicionales (Productos)" for="herProAdicionales" />
+                        <p:inputText id="herProAdicionales" value="#{productosController.hselected.herProAdicionales}" title="#{bundle.CreateHerramientaTitle_herProAdicionales}" />
+                    </h:panelGrid>
+                     <h:panelGrid   columns="2" rendered="#{productosController.selected.proCategoria=='Producto'}">
+                        
+                        
+                        <p:outputLabel value="   Periodo de caducidad:     " for="prodPeriodoCadu" />
+                        <p:selectOneMenu id="prodPeriodoCadu" value="#{productosController.pselected.prodPeriodoCadu}" style="width:125px">
+                            <f:selectItem itemLabel="Mensual" itemValue="Mensual" />
+                            <f:selectItem itemLabel="Bimestral" itemValue="Bimestral" />
+                            <f:selectItem itemLabel="Trimestral" itemValue="Trimestral" />
+                            <f:selectItem itemLabel="Semestral" itemValue="Semestral" />
+                            <f:selectItem itemLabel="Anual" itemValue="Anual" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="   Fecha de Ingreso:        " for="prodFechaIng" />
+                        <p:calendar id="prodFechaIng" pattern="MM/dd/yyyy" locale="es" value="#{productosController.pselected.prodFechaIng}" title="#{bundle.EditProductoTitle_prodFechaIng}"  showOn="button"/>
+                    </h:panelGrid>
+                    
+                    <h:panelGrid  columns="2" rendered="#{productosController.selected.proCategoria=='Equipos de Protección'}">
+                         <p:outputLabel value="Material: " for="equiMaterial" />
+                        <p:inputText id="equiMaterial" value="#{productosController.eselected.equiMaterial}" title="#{bundle.CreateEquipoProteccionTitle_equiMaterial}" />
+                        <p:outputLabel value="Duración de equipos:" for="equiDuracion" />
+                        <p:selectOneMenu id="equiDuracion" value="#{productosController.eselected.equiDuracion}" style="width:125px">
+                            <f:selectItem itemLabel="Mensual" itemValue="Mensual" />
+                            <f:selectItem itemLabel="Bimestral" itemValue="Bimestral" />
+                            <f:selectItem itemLabel="Trimestral" itemValue="Trimestral" />
+                            <f:selectItem itemLabel="Semestral" itemValue="Semestral" />
+                            <f:selectItem itemLabel="Anual" itemValue="Anual" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid  columns="2"  rendered="#{productosController.selected.proCategoria=='Equipos'}">
+                        <p:outputLabel value="Descripción: " for="matObservacion" />
+                        <p:inputText id="matObservacion" value="#{productosController.mselected.matObservacion}" title="#{bundle.CreateMaterialAcabadoTitle_matObservacion}" required="true" requiredMessage="#{bundle.CreateMaterialAcabadoRequiredMessage_matObservacion}"/>
+                        <p:outputLabel value="Color:" for="matColor" />
+                        <p:inputText id="matColor" value="#{productosController.mselected.matColor}" title="#{bundle.CreateMaterialAcabadoTitle_matColor}" />
+                        <p:outputLabel value="Tipo de acabado:" for="matTipoDeAcabado" />
+                        <p:inputText id="matTipoDeAcabado" value="#{productosController.mselected.matTipoDeAcabado}" title="#{bundle.CreateMaterialAcabadoTitle_matTipoDeAcabado}" /> 
+                        
+                    </h:panelGrid>
+                    
+                    <h:panelGrid  columns="2"  rendered="#{productosController.selected.proCategoria=='Vehículos'}">
+                        <p:outputLabel value="Placa" for="vehPlaca" />
+                        <p:inputText id="vehPlaca" value="#{productosController.vselected.vehPlaca}" title="#{bundle.CreateVehiculosTitle_vehPlaca}" required="true" requiredMessage="#{bundle.CreateVehiculosRequiredMessage_vehPlaca}"/>
+                        <p:outputLabel value="#{bundle.CreateVehiculosLabel_vehAnio}" for="vehAnio" />
+                        <p:inputText id="vehAnio" value="#{productosController.vselected.vehAnio}" title="#{bundle.CreateVehiculosTitle_vehAnio}" />
+                        <p:outputLabel value="#{bundle.CreateVehiculosLabel_vehColor}" for="vehColor" />
+                        <p:selectOneMenu id="vehColor" value="#{productosController.vselected.vehColor}" style="width:125px">
+                            <f:selectItem itemLabel="Seleccione uno" itemValue="Seleccione" />
+                            <f:selectItem itemLabel="Rojo" itemValue="Rojo" />
+                            <f:selectItem itemLabel="Blanco" itemValue="Blanco" />
+                            <f:selectItem itemLabel="Amarillo" itemValue="Amarillo" />
+                            <f:selectItem itemLabel="Negro" itemValue="Negro" />
+                            <f:selectItem itemLabel="Azul" itemValue="Azul" />
+                            <f:selectItem itemLabel="Gris" itemValue="Gris" />
+                            <f:selectItem itemLabel="Otro" itemValue="Otro" />
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                    <h:panelGrid  columns="2"  rendered="#{productosController.selected.proCategoria=='Maquinaria'}">
+                     <p:outputLabel value="#{bundle.CreateMaquinariaLabel_maqEstado}" for="maqEstado" />
+                     <p:selectOneMenu id="maqEstado" value="#{productosController.maselected.maqEstado}" style="width:125px">
+                         <f:selectItem itemLabel="Activo" itemValue="Activo" />
+                         <f:selectItem itemLabel="Inactiva" itemValue="Inactiva" />
+                         <f:selectItem itemLabel="Descompuesta" itemValue="Descompuesta" />
+                     </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateMaquinariaLabel_maqFechaMantenimiento}" for="maqFechaMantenimiento" />
+                        <p:calendar id="maqFechaMantenimiento" pattern="MM/dd/yyyy" locale="es"  value="#{productosController.maselected.maqFechaMantenimiento}" title="#{bundle.EditMaquinariaTitle_maqFechaMantenimiento}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateMaquinariaLabel_maqRazonMante}" for="maqRazonMante" />
+                        <p:inputText id="maqRazonMante" value="#{productosController.maselected.maqRazonMante}" title="#{bundle.CreateMaquinariaTitle_maqRazonMante}" />
+                        <p:outputLabel value="#{bundle.CreateMaquinariaLabel_maqFecCadaMante}" for="maqFecCadaMante" />
+                        <p:selectOneMenu id="maqFecCadaMante" value="#{productosController.maselected.maqFecCadaMante}" style="width:125px">
+                            <f:selectItem itemLabel="Mensual" itemValue="Mensual" />
+                            <f:selectItem itemLabel="Bimestral" itemValue="Bimestral" />
+                            <f:selectItem itemLabel="Trimestral" itemValue="Trimestral" />
+                            <f:selectItem itemLabel="Semestral" itemValue="Semestral" />
+                            <f:selectItem itemLabel="Anual" itemValue="Anual" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.CreateMaquinariaLabel_maqPlaca}" for="maqPlaca" />
+                        <p:inputText id="maqPlaca" value="#{productosController.maselected.maqPlaca}" title="#{bundle.CreateMaquinariaTitle_maqPlaca}" required="true" requiredMessage="#{bundle.CreateMaquinariaRequiredMessage_maqPlaca}"/>
+                        <p:outputLabel value="#{bundle.CreateMaquinariaLabel_maqProdAdiciona}" for="maqProdAdiciona" />
+                        <p:inputText id="maqProdAdiciona" value="#{productosController.maselected.maqProdAdiciona}" title="#{bundle.CreateMaquinariaTitle_maqProdAdiciona}" />     
+                    </h:panelGrid>
+                    <p:commandButton actionListener="#{productosController.create}" value="#{bundle.Save}" update="display,:ProductosListForm:datalist,:growl" oncomplete="handleSubmit(args,'ProductosCreateDialog');" ajax="false"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ProductosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

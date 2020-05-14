@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListProyectoTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="ProyectoListForm">
+                <p:panel header="#{bundle.ListProyectoTitle}">
+                    <p:panelGrid columns="5" class="companyHeaderGrid">
+                        <p:outputLabel for="fechaDesde" value="Fecha Desde:" />
+                        <p:inputMask id="fechaDesde" value="#{proyectoController.fechaDesde}" mask="99/99/9999"/>
+                        <p:outputLabel for="fechaHasta" value="Fecha Hasta:" />
+                        <p:inputMask id="fechaHasta" value="#{proyectoController.fechaHasta}" mask="99/99/9999"/>
+
+                        <h:commandLink id="btnImprimir" actionListener="#{proyectoController.valorProyecto()}"  title="Reporte PDF" value="Consultar"> 
+                        </h:commandLink>
+                     
+
+                    </p:panelGrid>
+                    
+                    <p:dataTable id="datalist" value="#{proyectoController.items}" var="item"
+                                 selectionMode="single" selection="#{proyectoController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.proyId}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
+                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
+
+
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyNombre}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyNombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyDireccion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyDireccion}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyFechInicio}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyFechInicio}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyFechFin}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyFechFin}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyEstado}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyEstado}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListProyectoTitle_proyObservacion}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyObservacion}"/>
+                        </p:column>
+                        <f:facet name="footer">
+                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{proyectoController.prepareCreate}" update=":ProyectoCreateForm" oncomplete="PF('ProyectoCreateDialog').show()"/>
+                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":ProyectoViewForm" oncomplete="PF('ProyectoViewDialog').show()" disabled="#{empty proyectoController.selected}"/>
+                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="#{bundle.Edit}" update=":ProyectoEditForm" oncomplete="PF('ProyectoEditDialog').show()" disabled="#{empty proyectoController.selected}"/>
+                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="#{bundle.Delete}" actionListener="#{proyectoController.destroy}" update=":growl,datalist" disabled="#{empty proyectoController.selected}"/>
+                            <h:commandLink id="btnImprimir" actionListener="#{proyectoController.verReporteDos()}"  title="Exportar a PDF" value="TOTAL COSTO PROYECTO"> </h:commandLink>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="Create.xhtml"/>
+            <ui:include src="Edit.xhtml"/>
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

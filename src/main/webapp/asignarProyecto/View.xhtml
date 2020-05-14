@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AsignarProyectoViewDlg" widgetVar="AsignarProyectoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewAsignarProyectoTitle}">
+            <h:form id="AsignarProyectoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{asignarProyectoController.selected != null}">
+                       <h:outputText value="#{bundle.ViewAsignarProyectoLabel_salNumero}"/>
+                        <h:outputText value="#{asignarProyectoController.selected.salNumero}" title="#{bundle.ViewAsignarProyectoTitle_salNumero}"/>
+                        <h:outputText value="#{bundle.ViewAsignarProyectoLabel_salFecha}"/>
+                        <h:outputText value="#{asignarProyectoController.selected.salFecha}" title="#{bundle.ViewAsignarProyectoTitle_salFecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="Proyecto"/>
+                        <h:outputText value="#{asignarProyectoController.selected.proyId.proyNombre}" title="#{bundle.ViewAsignarProyectoTitle_proyId}"/>
+                         <h:outputText value="Responsable:"/>
+                        <h:outputText value="#{asignarProyectoController.selected.resId.resNombre}" title="#{bundle.ViewAsignarProyectoTitle_resId}"/>
+                        <h:outputText value="#{bundle.ViewAsignarProyectoLabel_salTransportista}"/>
+                        <h:outputText value="#{asignarProyectoController.selected.salTransportista}" title="#{bundle.ViewAsignarProyectoTitle_salTransportista}"/>
+                         <h:outputText value="Producto"/>
+                        <h:outputText value="#{asignarProyectoController.selected.proId4.proNombres}" title="#{bundle.ViewAsignarProyectoTitle_proId4}"/>
+                        <h:outputText value="#{bundle.ViewAsignarProyectoLabel_salCantidad}"/>
+                        <h:outputText value="#{asignarProyectoController.selected.salCantidad}" title="#{bundle.ViewAsignarProyectoTitle_salCantidad}"/>
+                        <h:outputText value="#{bundle.ViewAsignarProyectoLabel_salSubtotal}"/>
+                        <h:outputText value="#{asignarProyectoController.selected.salSubtotal}" title="#{bundle.ViewAsignarProyectoTitle_salSubtotal}"/>
+                        <h:outputText value="#{bundle.ViewAsignarProyectoLabel_salTotal}"/>
+                        <h:outputText value="#{asignarProyectoController.selected.salTotal}" title="#{bundle.ViewAsignarProyectoTitle_salTotal}"/>
+                        
+                        <h:outputText value="#{bundle.ViewAsignarProyectoLabel_salIngresoadicional}"/>
+                        <h:outputText value="#{asignarProyectoController.selected.salIngresoadicional}" title="#{bundle.ViewAsignarProyectoTitle_salIngresoadicional}"/>
+                        <h:outputText value="#{bundle.ViewAsignarProyectoLabel_salObservaciones}"/>
+                        <h:outputText value="#{asignarProyectoController.selected.salObservaciones}" title="#{bundle.ViewAsignarProyectoTitle_salObservaciones}"/>
+                    
+                       
+                       
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="AsignarProyectoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

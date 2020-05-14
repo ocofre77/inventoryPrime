@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TotalProyecto_subreport3" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3e57bc0c-ae98-45ed-b0ec-cd016ced4896">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nomPro" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[(Select SAL_TOTALPROYECTO - (select (sum(SAL_SUBTOTAL) + sum(SAL_SUBTOTAL)*0.12) from asignar_proyecto) from ASIGNAR_PROYECTO order by SAL_ID DESC LIMIT 1)]]>
+	</queryString>
+	<field name="SAL_TOTALPROYECTO - (select (sum(SAL_SUBTOTAL) + sum(SAL_SUBTOTAL)*0.12) from asignar_proyecto)" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField>
+				<reportElement x="220" y="11" width="100" height="20" uuid="b63d4ef4-3c26-4431-816b-89a92eb325e8"/>
+				<textFieldExpression><![CDATA[$F{SAL_TOTALPROYECTO - (select (sum(SAL_SUBTOTAL) + sum(SAL_SUBTOTAL)*0.12) from asignar_proyecto)}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DevolucionesCreateDlg" widgetVar="DevolucionesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateDevolucionesTitle}">
+            <h:form id="DevolucionesCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{devolucionesController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateDevolucionesLabel_devId}" for="devId" />
+                        <p:inputText id="devId" value="#{devolucionesController.selected.devId}" title="#{bundle.CreateDevolucionesTitle_devId}" required="true" requiredMessage="#{bundle.CreateDevolucionesRequiredMessage_devId}"/>
+                        <p:outputLabel value="#{bundle.CreateDevolucionesLabel_devNumero}" for="devNumero" />
+                        <p:inputText id="devNumero" value="#{devolucionesController.selected.devNumero}" title="#{bundle.CreateDevolucionesTitle_devNumero}" />
+                        <p:outputLabel value="#{bundle.CreateDevolucionesLabel_devFecha}" for="devFecha" />
+                        <p:calendar id="devFecha" pattern="MM/dd/yyyy" value="#{devolucionesController.selected.devFecha}" title="#{bundle.EditDevolucionesTitle_devFecha}" required="true" requiredMessage="#{bundle.EditDevolucionesRequiredMessage_devFecha}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateDevolucionesLabel_devCantidad}" for="devCantidad" />
+                        <p:inputText id="devCantidad" value="#{devolucionesController.selected.devCantidad}" title="#{bundle.CreateDevolucionesTitle_devCantidad}" required="true" requiredMessage="#{bundle.CreateDevolucionesRequiredMessage_devCantidad}"/>
+                        <p:outputLabel value="#{bundle.CreateDevolucionesLabel_devSubtotal}" for="devSubtotal" />
+                        <p:inputText id="devSubtotal" value="#{devolucionesController.selected.devSubtotal}" title="#{bundle.CreateDevolucionesTitle_devSubtotal}" />
+                        <p:outputLabel value="#{bundle.CreateDevolucionesLabel_devTotal}" for="devTotal" />
+                        <p:inputText id="devTotal" value="#{devolucionesController.selected.devTotal}" title="#{bundle.CreateDevolucionesTitle_devTotal}" />
+                        <p:outputLabel value="#{bundle.CreateDevolucionesLabel_devRazon}" for="devRazon" />
+                        <p:inputText id="devRazon" value="#{devolucionesController.selected.devRazon}" title="#{bundle.CreateDevolucionesTitle_devRazon}" />
+                        <p:outputLabel value="#{bundle.CreateDevolucionesLabel_devTotalIva}" for="devTotalIva" />
+                        <p:inputText id="devTotalIva" value="#{devolucionesController.selected.devTotalIva}" title="#{bundle.CreateDevolucionesTitle_devTotalIva}" />
+                        <p:outputLabel value="#{bundle.CreateDevolucionesLabel_salId}" for="salId" />
+                        <p:selectOneMenu id="salId" value="#{devolucionesController.selected.salId}" >
+                            <f:selectItems value="#{asignarProyectoController.itemsAvailableSelectOne}"
+                                           var="salIdItem"
+                                           itemValue="#{salIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{devolucionesController.create}" value="#{bundle.Save}" update="display,:DevolucionesListForm:datalist,:growl" oncomplete="handleSubmit(args,'DevolucionesCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DevolucionesCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

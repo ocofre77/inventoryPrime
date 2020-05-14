@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DevolucionesEntradasEditDlg" widgetVar="DevolucionesEntradasEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDevolucionesEntradasTitle}">
+            <h:form id="DevolucionesEntradasEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{devolucionesEntradasController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDevolucionesEntradasLabel_deveId}" for="deveId" />
+                        <p:inputText id="deveId" value="#{devolucionesEntradasController.selected.deveId}" title="#{bundle.EditDevolucionesEntradasTitle_deveId}" required="true" requiredMessage="#{bundle.EditDevolucionesEntradasRequiredMessage_deveId}"/>
+                        <p:outputLabel value="#{bundle.EditDevolucionesEntradasLabel_deveFecha}" for="deveFecha" />
+                        <p:calendar id="deveFecha" pattern="MM/dd/yyyy" value="#{devolucionesEntradasController.selected.deveFecha}" title="#{bundle.EditDevolucionesEntradasTitle_deveFecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditDevolucionesEntradasLabel_deveCantidad}" for="deveCantidad" />
+                        <p:inputText id="deveCantidad" value="#{devolucionesEntradasController.selected.deveCantidad}" title="#{bundle.EditDevolucionesEntradasTitle_deveCantidad}" />
+                        <p:outputLabel value="#{bundle.EditDevolucionesEntradasLabel_deveRazon}" for="deveRazon" />
+                        <p:inputText id="deveRazon" value="#{devolucionesEntradasController.selected.deveRazon}" title="#{bundle.EditDevolucionesEntradasTitle_deveRazon}" />
+                        <p:outputLabel value="#{bundle.EditDevolucionesEntradasLabel_deveNumero}" for="deveNumero" />
+                        <p:inputText id="deveNumero" value="#{devolucionesEntradasController.selected.deveNumero}" title="#{bundle.EditDevolucionesEntradasTitle_deveNumero}" />
+                        <p:outputLabel value="#{bundle.EditDevolucionesEntradasLabel_devePUnitario}" for="devePUnitario" />
+                        <p:inputText id="devePUnitario" value="#{devolucionesEntradasController.selected.devePUnitario}" title="#{bundle.EditDevolucionesEntradasTitle_devePUnitario}" />
+                        <p:outputLabel value="#{bundle.EditDevolucionesEntradasLabel_deveSubtotal}" for="deveSubtotal" />
+                        <p:inputText id="deveSubtotal" value="#{devolucionesEntradasController.selected.deveSubtotal}" title="#{bundle.EditDevolucionesEntradasTitle_deveSubtotal}" />
+                        <p:outputLabel value="#{bundle.EditDevolucionesEntradasLabel_deveTotal}" for="deveTotal" />
+                        <p:inputText id="deveTotal" value="#{devolucionesEntradasController.selected.deveTotal}" title="#{bundle.EditDevolucionesEntradasTitle_deveTotal}" />
+                        <p:outputLabel value="#{bundle.EditDevolucionesEntradasLabel_entId}" for="entId" />
+                        <p:selectOneMenu id="entId" value="#{devolucionesEntradasController.selected.entId}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{entradasController.itemsAvailableSelectOne}"
+                                           var="entIdItem"
+                                           itemValue="#{entIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{devolucionesEntradasController.update}" value="#{bundle.Save}" update="display,:DevolucionesEntradasListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DevolucionesEntradasEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DevolucionesEntradasEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

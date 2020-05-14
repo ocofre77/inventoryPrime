@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DevolucionesEntradasViewDlg" widgetVar="DevolucionesEntradasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewDevolucionesEntradasTitle}">
+            <h:form id="DevolucionesEntradasViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{devolucionesEntradasController.selected != null}">
+                         <h:outputText value="#{bundle.ViewDevolucionesEntradasLabel_deveNumero}"/>
+                        <h:outputText value="#{devolucionesEntradasController.selected.deveNumero}" title="#{bundle.ViewDevolucionesEntradasTitle_deveNumero}"/>
+                        <h:outputText value="Fecha:"/>
+                        <h:outputText value="#{devolucionesEntradasController.selected.deveFecha}" title="#{bundle.ViewDevolucionesEntradasTitle_deveFecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                         <h:outputText value="Producto:"/>
+                        <h:outputText value="#{devolucionesEntradasController.selected.entId.proId4.proNombres}" title="#{bundle.ViewDevolucionesEntradasTitle_entId}"/>
+                        <h:outputText value="#{bundle.ViewDevolucionesEntradasLabel_deveCantidad}"/>
+                        <h:outputText value="#{devolucionesEntradasController.selected.deveCantidad}" title="#{bundle.ViewDevolucionesEntradasTitle_deveCantidad}"/>
+                        <h:outputText value="#{bundle.ViewDevolucionesEntradasLabel_devePUnitario}"/>
+                        <h:outputText value="#{devolucionesEntradasController.selected.devePUnitario}" title="#{bundle.ViewDevolucionesEntradasTitle_devePUnitario}"/>
+                        <h:outputText value="#{bundle.ViewDevolucionesEntradasLabel_deveRazon}"/>
+                        <h:outputText value="#{devolucionesEntradasController.selected.deveRazon}" title="#{bundle.ViewDevolucionesEntradasTitle_deveRazon}"/>
+                       
+                        
+                        <h:outputText value="Total:"/>
+                        <h:outputText value="#{devolucionesEntradasController.selected.deveSubtotal}" title="#{bundle.ViewDevolucionesEntradasTitle_deveSubtotal}"/>
+                        
+                       
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="DevolucionesEntradasViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

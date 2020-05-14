@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="HerramientaCreateDlg" widgetVar="HerramientaCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateHerramientaTitle}">
+            <h:form id="HerramientaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{herramientaController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateHerramientaLabel_herId}" for="herId" />
+                        <p:inputText id="herId" value="#{herramientaController.selected.herId}" title="#{bundle.CreateHerramientaTitle_herId}" required="true" requiredMessage="#{bundle.CreateHerramientaRequiredMessage_herId}"/>
+                        <p:outputLabel value="#{bundle.CreateHerramientaLabel_herEstado}" for="herEstado" />
+                        <p:inputText id="herEstado" value="#{herramientaController.selected.herEstado}" title="#{bundle.CreateHerramientaTitle_herEstado}" />
+                        <p:outputLabel value="#{bundle.CreateHerramientaLabel_herFechaMantenimiento}" for="herFechaMantenimiento" />
+                        <p:calendar id="herFechaMantenimiento" pattern="MM/dd/yyyy" value="#{herramientaController.selected.herFechaMantenimiento}" title="#{bundle.EditHerramientaTitle_herFechaMantenimiento}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.CreateHerramientaLabel_herRazonMantenimiento}" for="herRazonMantenimiento" />
+                        <p:inputText id="herRazonMantenimiento" value="#{herramientaController.selected.herRazonMantenimiento}" title="#{bundle.CreateHerramientaTitle_herRazonMantenimiento}" />
+                        <p:outputLabel value="#{bundle.CreateHerramientaLabel_herFecCadaMante}" for="herFecCadaMante" />
+                        <p:inputText id="herFecCadaMante" value="#{herramientaController.selected.herFecCadaMante}" title="#{bundle.CreateHerramientaTitle_herFecCadaMante}" />
+                        <p:outputLabel value="#{bundle.CreateHerramientaLabel_herProAdicionales}" for="herProAdicionales" />
+                        <p:inputText id="herProAdicionales" value="#{herramientaController.selected.herProAdicionales}" title="#{bundle.CreateHerramientaTitle_herProAdicionales}" />
+                        <p:outputLabel value="#{bundle.CreateHerramientaLabel_proId4}" for="proId4" />
+                        <p:selectOneMenu id="proId4" value="#{herramientaController.selected.proId4}" >
+                            <f:selectItems value="#{productosController.itemsAvailableSelectOne}"
+                                           var="proId4Item"
+                                           itemValue="#{proId4Item}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{herramientaController.create}" value="#{bundle.Save}" update="display,:HerramientaListForm:datalist,:growl" oncomplete="handleSubmit(args,'HerramientaCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="HerramientaCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

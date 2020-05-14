@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="DarBajaEditDlg" widgetVar="DarBajaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditDarBajaTitle}">
+            <h:form id="DarBajaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{darBajaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditDarBajaLabel_dbId}" for="dbId" />
+                        <p:inputText id="dbId" value="#{darBajaController.selected.dbId}" title="#{bundle.EditDarBajaTitle_dbId}" required="true" requiredMessage="#{bundle.EditDarBajaRequiredMessage_dbId}"/>
+                        <p:outputLabel value="#{bundle.EditDarBajaLabel_dbNombrepro}" for="dbNombrepro" />
+                        <p:inputText id="dbNombrepro" value="#{darBajaController.selected.dbNombrepro}" title="#{bundle.EditDarBajaTitle_dbNombrepro}" />
+                        <p:outputLabel value="#{bundle.EditDarBajaLabel_dbRazones}" for="dbRazones" />
+                        <p:inputText id="dbRazones" value="#{darBajaController.selected.dbRazones}" title="#{bundle.EditDarBajaTitle_dbRazones}" required="true" requiredMessage="#{bundle.EditDarBajaRequiredMessage_dbRazones}"/>
+                        <p:outputLabel value="#{bundle.EditDarBajaLabel_proId4}" for="proId4" />
+                        <p:selectOneMenu id="proId4" value="#{darBajaController.selected.proId4}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{productosController.itemsAvailableSelectOne}"
+                                           var="proId4Item"
+                                           itemValue="#{proId4Item}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{darBajaController.update}" value="#{bundle.Save}" update="display,:DarBajaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'DarBajaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="DarBajaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

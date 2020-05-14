@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VehiculosViewDlg" widgetVar="VehiculosViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewVehiculosTitle}">
+            <h:form id="VehiculosViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{vehiculosController.selected != null}">
+                        <h:outputText value="Nombre:"/>
+                        <h:outputText value="#{vehiculosController.selected.proId4.proNombres}" title="#{bundle.ViewEquipoProteccionTitle_proId4}"/>
+                        <h:outputText value="#{bundle.ViewVehiculosLabel_vehPlaca}"/>
+                        <h:outputText value="#{vehiculosController.selected.vehPlaca}" title="#{bundle.ViewVehiculosTitle_vehPlaca}"/>
+                        <h:outputText value="#{bundle.ViewVehiculosLabel_vehAnio}"/>
+                        <h:outputText value="#{vehiculosController.selected.vehAnio}" title="#{bundle.ViewVehiculosTitle_vehAnio}"/>
+                        <h:outputText value="#{bundle.ViewVehiculosLabel_vehColor}"/>
+                        <h:outputText value="#{vehiculosController.selected.vehColor}" title="#{bundle.ViewVehiculosTitle_vehColor}"/>
+                        
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="VehiculosViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

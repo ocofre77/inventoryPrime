@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ResponsableEditDlg" widgetVar="ResponsableEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditResponsableTitle}">
+            <h:form id="ResponsableEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{responsableController.selected != null}">
+                       
+                       
+                        <p:outputLabel value="#{bundle.EditResponsableLabel_resNombre}" for="resNombre" />
+                        <p:inputText id="resNombre" value="#{responsableController.selected.resNombre}" title="#{bundle.EditResponsableTitle_resNombre}" required="true" requiredMessage="#{bundle.EditResponsableRequiredMessage_resNombre}"/>
+                        <p:outputLabel value="#{bundle.EditResponsableLabel_resCedula}" for="resCedula" />
+                        <p:inputText id="resCedula" value="#{responsableController.selected.resCedula}" title="#{bundle.EditResponsableTitle_resCedula}" required="true" requiredMessage="#{bundle.EditResponsableRequiredMessage_resCedula}"/>
+                        <p:outputLabel value="#{bundle.EditResponsableLabel_resCargo}" for="resCargo" />
+                        <p:inputText id="resCargo" value="#{responsableController.selected.resCargo}" title="#{bundle.EditResponsableTitle_resCargo}" required="true" requiredMessage="#{bundle.EditResponsableRequiredMessage_resCargo}"/>
+                        <p:outputLabel value="#{bundle.EditResponsableLabel_resTelefono}" for="resTelefono" />
+                        <p:inputText id="resTelefono" value="#{responsableController.selected.resTelefono}" title="#{bundle.EditResponsableTitle_resTelefono}" />
+                        <p:outputLabel value="#{bundle.EditResponsableLabel_resDireccion}" for="resDireccion" />
+                        <p:inputText id="resDireccion" value="#{responsableController.selected.resDireccion}" title="#{bundle.EditResponsableTitle_resDireccion}" />
+                        <p:outputLabel value="#{bundle.EditResponsableLabel_resCorreo}" for="resCorreo" />
+                        <p:inputText id="resCorreo" value="#{responsableController.selected.resCorreo}" title="#{bundle.EditResponsableTitle_resCorreo}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{responsableController.update}" value="#{bundle.Save}" update="display,:ResponsableListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ResponsableEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ResponsableEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

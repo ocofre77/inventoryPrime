@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+
+
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListAsignarProyectoTitle}"></h:outputText>
+        </ui:define>
+
+        <ui:define name="body">
+            <h:form id="AsignarProyectoListForm">
+                <p:panel header="#{bundle.ListAsignarProyectoTitle}">
+                    <p:dataTable id="datalist" value="#{asignarProyectoController.items}" var="item"
+                                 selectionMode="single" selection="#{asignarProyectoController.selected}"
+                                 paginator="true"
+                                 rowKey="#{item.salId}"
+                                 rows="10"
+                                 rowsPerPageTemplate="10,20,30,40,50"
+                                 >
+
+                        <p:ajax event="rowSelect"   update="loadButton viewButton"/>
+                        <p:ajax event="rowUnselect" update="loadButton viewButton"/>
+                        
+                        <p:column filterBy="#{item.salNumero}" headerText="Id" filterMatchMode="contains">
+                            <f:facet name="header">
+                                <h:outputText value="Número Guía"/>
+                            </f:facet>
+                            <h:outputText value="#{item.salNumero}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignarProyectoTitle_salFecha}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.salFecha}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Proyecto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proyId.proyNombre}"/>
+                        </p:column>
+                            <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Responsable"/>
+                            </f:facet>
+                            <h:outputText value="#{item.resId.resNombre}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignarProyectoTitle_salTransportista}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.salTransportista}"/>
+                        </p:column>
+                        
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Producto"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proId4.proNombres}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignarProyectoTitle_salCantidad}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.salCantidad}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="Precio Unitario"/>
+                            </f:facet>
+                            <h:outputText value="#{item.proId4.proPrecioUni}"/>
+                        </p:column> 
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListAsignarProyectoTitle_salSubtotal}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.salSubtotal}"/>
+                        </p:column>          
+  
+                    
+                        <f:facet name="footer">
+                            
+                            <p:commandButton id="loadButton" icon="ui-icon-refresh"  value="Actualizar" actionListener="#{asignarProyectoController.actualizar()}" oncomplete="@all" update=":AsignarProyectoListForm" />
+                           <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":AsignarProyectoViewForm" oncomplete="PF('AsignarProyectoViewDialog').show()" disabled="#{empty asignarProyectoController.selected}"/>
+                           <h:commandLink id="btnImprimir"  actionListener="#{asignarProyectoController.verReporteDos()}"  title="Exportar a PDF" value="REPORTE"> </h:commandLink>
+                        </f:facet>
+                    </p:dataTable>
+                </p:panel>
+            </h:form>
+
+            <ui:include src="View.xhtml"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

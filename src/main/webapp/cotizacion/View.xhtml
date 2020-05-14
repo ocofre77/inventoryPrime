@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CotizacionViewDlg" widgetVar="CotizacionViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewCotizacionTitle}">
+            <h:form id="CotizacionViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cotizacionController.selected != null}">
+                       
+                        <h:outputText value="#{bundle.ViewCotizacionLabel_cotNumero}"/>
+                        <h:outputText value="#{cotizacionController.selected.cotNumero}" title="#{bundle.ViewCotizacionTitle_cotNumero}"/>
+                        <h:outputText value="#{bundle.ViewCotizacionLabel_cotFecha}"/>
+                        <h:outputText value="#{cotizacionController.selected.cotFecha}" title="#{bundle.ViewCotizacionTitle_cotFecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="Proyecto:"/>
+                        <h:outputText value="#{cotizacionController.selected.proyId.proyNombre}" title="#{bundle.ViewCotizacionTitle_proyId}"/>
+                        <h:outputText value="Producto:"/>
+                        <h:outputText value="#{cotizacionController.selected.proId4.proNombres}" title="#{bundle.ViewCotizacionTitle_proId4}"/>
+                        <h:outputText value="#{bundle.ViewCotizacionLabel_cotPreUni}"/>
+                        <h:outputText value="#{cotizacionController.selected.cotPreUni}" title="#{bundle.ViewCotizacionTitle_cotPreUni}"/>
+                        <h:outputText value="#{bundle.ViewCotizacionLabel_cotCantidad}"/>
+                        <h:outputText value="#{cotizacionController.selected.cotCantidad}" title="#{bundle.ViewCotizacionTitle_cotCantidad}"/>
+                        <h:outputText value="Total"/>
+                        <h:outputText value="#{cotizacionController.selected.cotSubtotal}" title="#{bundle.ViewCotizacionTitle_cotSubtotal}"/>
+                       
+                        
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="CotizacionViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="VehiculosCreateDlg" widgetVar="VehiculosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.CreateVehiculosTitle}">
+            <h:form id="VehiculosCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{vehiculosController.selected != null}">
+                        <p:outputLabel value="#{bundle.CreateVehiculosLabel_vehId}" for="vehId" />
+                        <p:inputText id="vehId" value="#{vehiculosController.selected.vehId}" title="#{bundle.CreateVehiculosTitle_vehId}" required="true" requiredMessage="#{bundle.CreateVehiculosRequiredMessage_vehId}"/>
+                        <p:outputLabel value="#{bundle.CreateVehiculosLabel_vehPlaca}" for="vehPlaca" />
+                        <p:inputText id="vehPlaca" value="#{vehiculosController.selected.vehPlaca}" title="#{bundle.CreateVehiculosTitle_vehPlaca}" required="true" requiredMessage="#{bundle.CreateVehiculosRequiredMessage_vehPlaca}"/>
+                        <p:outputLabel value="#{bundle.CreateVehiculosLabel_vehAnio}" for="vehAnio" />
+                        <p:inputText id="vehAnio" value="#{vehiculosController.selected.vehAnio}" title="#{bundle.CreateVehiculosTitle_vehAnio}" />
+                        <p:outputLabel value="#{bundle.CreateVehiculosLabel_vehColor}" for="vehColor" />
+                        <p:inputText id="vehColor" value="#{vehiculosController.selected.vehColor}" title="#{bundle.CreateVehiculosTitle_vehColor}" />
+                        <p:outputLabel value="#{bundle.CreateVehiculosLabel_proId4}" for="proId4" />
+                        <p:selectOneMenu id="proId4" value="#{vehiculosController.selected.proId4}" >
+                            <f:selectItems value="#{productosController.itemsAvailableSelectOne}"
+                                           var="proId4Item"
+                                           itemValue="#{proId4Item}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{vehiculosController.create}" value="#{bundle.Save}" update="display,:VehiculosListForm:datalist,:growl" oncomplete="handleSubmit(args,'VehiculosCreateDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="VehiculosCreateDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

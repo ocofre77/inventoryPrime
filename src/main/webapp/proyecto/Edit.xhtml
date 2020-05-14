@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProyectoEditDlg" widgetVar="ProyectoEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditProyectoTitle}">
+            <h:form id="ProyectoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{proyectoController.selected != null}">
+                        
+                        
+                        <p:outputLabel value="#{bundle.EditProyectoLabel_proyNombre}" for="proyNombre" />
+                        <p:inputText id="proyNombre" value="#{proyectoController.selected.proyNombre}" title="#{bundle.EditProyectoTitle_proyNombre}" required="true" requiredMessage="#{bundle.EditProyectoRequiredMessage_proyNombre}"/>
+                        <p:outputLabel value="#{bundle.EditProyectoLabel_proyDireccion}" for="proyDireccion" />
+                        <p:inputText id="proyDireccion" value="#{proyectoController.selected.proyDireccion}" title="#{bundle.EditProyectoTitle_proyDireccion}" required="true" requiredMessage="#{bundle.EditProyectoRequiredMessage_proyDireccion}"/>
+                        <p:outputLabel value="#{bundle.EditProyectoLabel_proyFechInicio}" for="proyFechInicio" />
+                        <p:calendar id="proyFechInicio" pattern="MM/dd/yyyy" value="#{proyectoController.selected.proyFechInicio}" title="#{bundle.EditProyectoTitle_proyFechInicio}" required="true" requiredMessage="#{bundle.EditProyectoRequiredMessage_proyFechInicio}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditProyectoLabel_proyFechFin}" for="proyFechFin" />
+                        <p:calendar id="proyFechFin" pattern="MM/dd/yyyy" value="#{proyectoController.selected.proyFechFin}" title="#{bundle.EditProyectoTitle_proyFechFin}" required="true" requiredMessage="#{bundle.EditProyectoRequiredMessage_proyFechFin}" showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditProyectoLabel_proyEstado}" for="proyEstado" />
+                        <p:selectOneMenu id="proyEstado" value="#{proyectoController.selected.proyEstado}" style="width:125px">    
+                            <f:selectItem itemLabel="Seleccione uno:" itemValue="Activo" />
+                            <f:selectItem itemLabel="Activo" itemValue="Activo" />
+                            <f:selectItem itemLabel="Terminado" itemValue="Terminado" />
+                            <f:selectItem itemLabel="Suspendido" itemValue="Suspendido" />
+                            <f:selectItem itemLabel="No activo" itemValue="No activo" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditProyectoLabel_proyObservacion}" for="proyObservacion" />
+                        <p:inputText id="proyObservacion" value="#{proyectoController.selected.proyObservacion}" title="#{bundle.EditProyectoTitle_proyObservacion}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{proyectoController.update}" value="#{bundle.Save}" update="display,:ProyectoListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProyectoEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="ProyectoEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

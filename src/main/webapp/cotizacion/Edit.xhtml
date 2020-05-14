@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CotizacionEditDlg" widgetVar="CotizacionEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCotizacionTitle}">
+            <h:form id="CotizacionEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{cotizacionController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_cotId}" for="cotId" />
+                        <p:inputText id="cotId" value="#{cotizacionController.selected.cotId}" title="#{bundle.EditCotizacionTitle_cotId}" required="true" requiredMessage="#{bundle.EditCotizacionRequiredMessage_cotId}"/>
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_cotNumero}" for="cotNumero" />
+                        <p:inputText id="cotNumero" value="#{cotizacionController.selected.cotNumero}" title="#{bundle.EditCotizacionTitle_cotNumero}" />
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_cotFecha}" for="cotFecha" />
+                        <p:calendar id="cotFecha" pattern="MM/dd/yyyy" value="#{cotizacionController.selected.cotFecha}" title="#{bundle.EditCotizacionTitle_cotFecha}"  showOn="button"/>
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_cotPreUni}" for="cotPreUni" />
+                        <p:inputText id="cotPreUni" value="#{cotizacionController.selected.cotPreUni}" title="#{bundle.EditCotizacionTitle_cotPreUni}" />
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_cotCantidad}" for="cotCantidad" />
+                        <p:inputText id="cotCantidad" value="#{cotizacionController.selected.cotCantidad}" title="#{bundle.EditCotizacionTitle_cotCantidad}" />
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_cotSubtotal}" for="cotSubtotal" />
+                        <p:inputText id="cotSubtotal" value="#{cotizacionController.selected.cotSubtotal}" title="#{bundle.EditCotizacionTitle_cotSubtotal}" />
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_cotTotal}" for="cotTotal" />
+                        <p:inputText id="cotTotal" value="#{cotizacionController.selected.cotTotal}" title="#{bundle.EditCotizacionTitle_cotTotal}" />
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_cotTotalIva}" for="cotTotalIva" />
+                        <p:inputText id="cotTotalIva" value="#{cotizacionController.selected.cotTotalIva}" title="#{bundle.EditCotizacionTitle_cotTotalIva}" />
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_proId4}" for="proId4" />
+                        <p:selectOneMenu id="proId4" value="#{cotizacionController.selected.proId4}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{productosController.itemsAvailableSelectOne}"
+                                           var="proId4Item"
+                                           itemValue="#{proId4Item}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditCotizacionLabel_proyId}" for="proyId" />
+                        <p:selectOneMenu id="proyId" value="#{cotizacionController.selected.proyId}" >
+                            <f:selectItem itemLabel="#{bundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{proyectoController.itemsAvailableSelectOne}"
+                                           var="proyIdItem"
+                                           itemValue="#{proyIdItem}"/>
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{cotizacionController.update}" value="#{bundle.Save}" update="display,:CotizacionListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CotizacionEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="CotizacionEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

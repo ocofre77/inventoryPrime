@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="913c5967-d7c6-4ae4-af35-4d23d9a9882d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString>
+		<![CDATA[SELECT
+     productos.`PRO_ID4` AS productos_PRO_ID4,
+     productos.`BD_ID` AS productos_BD_ID,
+     productos.`PRO_CODIGOPRO` AS productos_PRO_CODIGOPRO,
+     productos.`PRO_NOMBRES` AS productos_PRO_NOMBRES,
+     productos.`PRO_MODELO` AS productos_PRO_MODELO,
+     productos.`PRO_SERIAL` AS productos_PRO_SERIAL,
+     productos.`PRO_TAMANOMEDIDA` AS productos_PRO_TAMANOMEDIDA,
+     productos.`PRO_CATEGORIA` AS productos_PRO_CATEGORIA,
+     productos.`PRO_CANTIDAD` AS productos_PRO_CANTIDAD,
+     productos.`PRO_PRECIO_UNI` AS productos_PRO_PRECIO_UNI,
+     productos.`PRO_IMAGEN` AS productos_PRO_IMAGEN,
+     productos.`PRO_ADI_OBSERVACION` AS productos_PRO_ADI_OBSERVACION,
+     productos.`PRO_ESTADO_ELIMINAR` AS productos_PRO_ESTADO_ELIMINAR,
+     productos.`PRO_SUBTOTAL_PRO` AS productos_PRO_SUBTOTAL_PRO,
+     productos.`PRO_TOTAL_PRO` AS productos_PRO_TOTAL_PRO,
+     productos.`PRO_SUB_PREC` AS productos_PRO_SUB_PREC,
+     productos.`PRO_TOTAL_PREC` AS productos_PRO_TOTAL_PREC,
+     productos.`PRO_TOTAL_IVA` AS productos_PRO_TOTAL_IVA,
+     herramienta.`HER_ID` AS herramienta_HER_ID,
+     herramienta.`PRO_ID4` AS herramienta_PRO_ID4,
+     herramienta.`HER_ESTADO` AS herramienta_HER_ESTADO,
+     herramienta.`HER_FECHA_MANTENIMIENTO` AS herramienta_HER_FECHA_MANTENIMIENTO,
+     herramienta.`HER_RAZON_MANTENIMIENTO` AS herramienta_HER_RAZON_MANTENIMIENTO,
+     herramienta.`HER_FEC_CADA_MANTE` AS herramienta_HER_FEC_CADA_MANTE,
+     herramienta.`HER_PRO_ADICIONALES` AS herramienta_HER_PRO_ADICIONALES,
+     imagenes.`IMG_ID` AS imagenes_IMG_ID,
+     imagenes.`logo` AS imagenes_logo,
+     imagenes.`pie` AS imagenes_pie
+FROM
+     `productos` productos INNER JOIN `herramienta` herramienta ON productos.`PRO_ID4` = herramienta.`PRO_ID4`,
+     `imagenes` imagenes
+WHERE
+     productos.`PRO_ESTADO_ELIMINAR` = "activo"
+     and DATEDIFF(herramienta.`HER_FECHA_MANTENIMIENTO`,CURDATE()) BETWEEN 0 AND 31
+ORDER BY
+     productos.`PRO_NOMBRES` ASC]]>
+	</queryString>
+	<field name="productos_PRO_ID4" class="java.lang.Integer"/>
+	<field name="productos_BD_ID" class="java.lang.Integer"/>
+	<field name="productos_PRO_CODIGOPRO" class="java.lang.String"/>
+	<field name="productos_PRO_NOMBRES" class="java.lang.String"/>
+	<field name="productos_PRO_MODELO" class="java.lang.String"/>
+	<field name="productos_PRO_SERIAL" class="java.lang.String"/>
+	<field name="productos_PRO_TAMANOMEDIDA" class="java.lang.String"/>
+	<field name="productos_PRO_CATEGORIA" class="java.lang.String"/>
+	<field name="productos_PRO_CANTIDAD" class="java.lang.Integer"/>
+	<field name="productos_PRO_PRECIO_UNI" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_IMAGEN" class="java.lang.Object"/>
+	<field name="productos_PRO_ADI_OBSERVACION" class="java.lang.String"/>
+	<field name="productos_PRO_ESTADO_ELIMINAR" class="java.lang.String"/>
+	<field name="productos_PRO_SUBTOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_TOTAL_PRO" class="java.lang.Integer"/>
+	<field name="productos_PRO_SUB_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_PREC" class="java.math.BigDecimal"/>
+	<field name="productos_PRO_TOTAL_IVA" class="java.math.BigDecimal"/>
+	<field name="herramienta_HER_ID" class="java.lang.Integer"/>
+	<field name="herramienta_PRO_ID4" class="java.lang.Integer"/>
+	<field name="herramienta_HER_ESTADO" class="java.lang.String"/>
+	<field name="herramienta_HER_FECHA_MANTENIMIENTO" class="java.sql.Date"/>
+	<field name="herramienta_HER_RAZON_MANTENIMIENTO" class="java.lang.String"/>
+	<field name="herramienta_HER_FEC_CADA_MANTE" class="java.lang.String"/>
+	<field name="herramienta_HER_PRO_ADICIONALES" class="java.lang.String"/>
+	<field name="imagenes_IMG_ID" class="java.lang.Integer"/>
+	<field name="imagenes_logo" class="java.lang.Object"/>
+	<field name="imagenes_pie" class="java.lang.Object"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<staticText>
+				<reportElement x="207" y="15" width="232" height="28" uuid="9927f12a-9942-4684-9c69-6ba6182ab24a"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONSTRUCTORA CONALGI]]></text>
+			</staticText>
+			<image>
+				<reportElement x="17" y="12" width="110" height="60" uuid="733c565c-3f4c-4f46-a9f5-fd17521fb559"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="199" y="43" width="251" height="20" forecolor="#000000" uuid="26e774ef-a3d6-48ae-ba7e-12c7b74e98da"/>
+				<textElement>
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ MANTENIMIENTO DE HERRAMIENTAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="1" width="100" height="20" forecolor="#CC0000" uuid="42144c30-1eee-429c-b535-0eca371c17fc"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALERTA!!]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="401" y="10" width="38" height="20" uuid="38af5529-c37f-48d7-805d-d408ff924bd8"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[FECHA:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="439" y="10" width="100" height="20" uuid="e80337c5-f609-460f-aa9b-3d1cef7d0421"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="12" y="26" width="69" height="20" uuid="7db77f6a-da80-41ff-bad7-bf8a84e92094"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="96" y="26" width="75" height="20" uuid="82e3fde5-5c1d-4d86-90f2-424a81b7d647"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="6" width="88" height="20" uuid="1bc24ee5-42c3-49f5-81a2-ff43ad193916"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="26" width="88" height="20" uuid="d73365bf-f1bb-4225-8a73-748e4c5337bb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANTENIMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="26" width="79" height="20" uuid="3a5e0121-49c7-4ae6-9f8a-a0cf0ed979ae"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RAZÓN ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="6" width="68" height="20" uuid="f785becc-65fa-4c3f-af00-15c76456a30b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERÍODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="371" y="26" width="89" height="20" uuid="f1cec9c7-2a30-406b-9d45-b447e006578a"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANTENIMIENTO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="12" y="5" width="528" height="2" forecolor="#E3E3E3" uuid="1d1bae35-126b-4cff-b773-525b37193ab0"/>
+				<graphicElement>
+					<pen lineStyle="Double"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="101" splitType="Stretch">
+			<textField>
+				<reportElement x="96" y="22" width="75" height="20" uuid="cf3bf2b9-a66f-41b0-8341-a878dd041b55"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_CODIGOPRO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="22" width="84" height="78" uuid="573ca8d9-86b2-43d1-b849-62851f091012"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productos_PRO_NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="188" y="22" width="74" height="20" uuid="b82282ea-8e3a-43d0-91ea-d8de98ce22bf"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{herramienta_HER_FECHA_MANTENIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="276" y="22" width="79" height="78" uuid="9fb7dffb-7081-4c93-8d2e-b515a00c9b20"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{herramienta_HER_RAZON_MANTENIMIENTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="22" width="80" height="20" uuid="01bac81e-fd8e-4cb3-b823-764c330eb852"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{herramienta_HER_FEC_CADA_MANTE}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="471" y="9" width="69" height="50" uuid="a39c0bdb-47b6-4699-a28e-1dabe8b06ddb"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{productos_PRO_IMAGEN})]]></imageExpression>
+			</image>
+			<line>
+				<reportElement x="12" y="0" width="527" height="1" forecolor="#E3E3E3" uuid="fbbbb387-3db5-494f-a935-e5609a5c4808"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="17" y="100" width="527" height="1" forecolor="#E3E3E3" uuid="5cb688c4-081c-4897-a0ad-a4c927267df9"/>
+				<graphicElement>
+					<pen lineStyle="Solid"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="28" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="109" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="555" height="109" uuid="8a2dc991-3183-4e71-9bbf-ab34ec8ae14a"/>
+				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="490" y="47" width="50" height="20" uuid="a5ad58e5-ba01-456b-8e44-a0f3a655d899"/>
+				<textElement>
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

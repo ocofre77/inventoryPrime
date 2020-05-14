@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MaquinariaEditDlg" widgetVar="MaquinariaEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditMaquinariaTitle}">
+            <h:form id="MaquinariaEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{maquinariaController.selected != null}">
+                        <p:outputLabel value="#{bundle.EditMaquinariaLabel_maqEstado}" for="maqEstado" />
+                        <p:selectOneMenu id="maqEstado" value="#{maquinariaController.selected.maqEstado}" style="width:125px">
+                         <f:selectItem itemLabel="Atendido" itemValue="Atendido" />
+                         <f:selectItem itemLabel="Desatendido" itemValue="Desatendido" />
+                        </p:selectOneMenu>
+                        <h:outputText value="Fecha: "/>
+                        <h:outputText value="#{maquinariaController.selected.maqFechaMantenimiento}" title="#{bundle.ViewHerramientaTitle_herFechaMantenimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <p:outputLabel value="#{bundle.EditMaquinariaLabel_maqRazonMante}" for="maqRazonMante" />
+                        <p:inputText id="maqRazonMante" value="#{maquinariaController.selected.maqRazonMante}" title="#{bundle.EditMaquinariaTitle_maqRazonMante}" />
+                        <p:outputLabel value="#{bundle.EditMaquinariaLabel_maqFecCadaMante}" for="maqFecCadaMante" />
+                        <p:selectOneMenu id="maqFecCadaMante" value="#{maquinariaController.selected.maqFecCadaMante}" style="width:125px">
+                            <f:selectItem itemLabel="Mensual" itemValue="Mensual" />
+                            <f:selectItem itemLabel="Bimestral" itemValue="Bimestral" />
+                            <f:selectItem itemLabel="Trimestral" itemValue="Trimestral" />
+                            <f:selectItem itemLabel="Semestral" itemValue="Semestral" />
+                            <f:selectItem itemLabel="Anual" itemValue="Anual" />
+                        </p:selectOneMenu>
+                        <p:outputLabel value="#{bundle.EditMaquinariaLabel_maqPlaca}" for="maqPlaca" />
+                        <p:inputText id="maqPlaca" value="#{maquinariaController.selected.maqPlaca}" title="#{bundle.EditMaquinariaTitle_maqPlaca}" required="true" requiredMessage="#{bundle.EditMaquinariaRequiredMessage_maqPlaca}"/>
+                        <p:outputLabel value="#{bundle.EditMaquinariaLabel_maqProdAdiciona}" for="maqProdAdiciona" />
+                        <p:inputText id="maqProdAdiciona" value="#{maquinariaController.selected.maqProdAdiciona}" title="#{bundle.EditMaquinariaTitle_maqProdAdiciona}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{maquinariaController.update}" value="#{bundle.Save}" update="display,:MaquinariaListForm:datalist,:growl" oncomplete="handleSubmit(args, 'MaquinariaEditDialog');"/>
+                    <p:commandButton value="#{bundle.Cancel}" onclick="MaquinariaEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

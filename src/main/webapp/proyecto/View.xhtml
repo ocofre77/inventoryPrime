@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProyectoViewDlg" widgetVar="ProyectoViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewProyectoTitle}">
+            <h:form id="ProyectoViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{proyectoController.selected != null}">
+                        
+                       
+                        <h:outputText value="#{bundle.ViewProyectoLabel_proyNombre}"/>
+                        <h:outputText value="#{proyectoController.selected.proyNombre}" title="#{bundle.ViewProyectoTitle_proyNombre}"/>
+                        <h:outputText value="#{bundle.ViewProyectoLabel_proyDireccion}"/>
+                        <h:outputText value="#{proyectoController.selected.proyDireccion}" title="#{bundle.ViewProyectoTitle_proyDireccion}"/>
+                        <h:outputText value="#{bundle.ViewProyectoLabel_proyFechInicio}"/>
+                        <h:outputText value="#{proyectoController.selected.proyFechInicio}" title="#{bundle.ViewProyectoTitle_proyFechInicio}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewProyectoLabel_proyFechFin}"/>
+                        <h:outputText value="#{proyectoController.selected.proyFechFin}" title="#{bundle.ViewProyectoTitle_proyFechFin}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="#{bundle.ViewProyectoLabel_proyEstado}"/>
+                        <h:outputText value="#{proyectoController.selected.proyEstado}" title="#{bundle.ViewProyectoTitle_proyEstado}"/>
+                        <h:outputText value="#{bundle.ViewProyectoLabel_proyObservacion}"/>
+                        <h:outputText value="#{proyectoController.selected.proyObservacion}" title="#{bundle.ViewProyectoTitle_proyObservacion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="ProyectoViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

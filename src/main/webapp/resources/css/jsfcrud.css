@@ -1,0 +1,59 @@
+.ui-widget {
+    font-size: 12px !important;
+}
+.ui-layout-north {
+    z-index: 20 !important;
+    overflow: visible !important;;
+}
+.ui-layout-north .ui-layout-unit-content {
+    overflow: visible !important;
+}
+.ui-widget-header {
+    text-align: center;
+    text-transform: uppercase;
+}
+/*.ui-button {
+    margin-top: 10px !important;
+}*/
+
+
+
+
+.ui-datatable,
+   .ui-datatable .ui-datatable-tablewrapper table {
+        font-size: 10px !important;
+   }
+            
+   /* For Paginator */
+   .ui-datatable .ui-paginator .ui-paginator-first, 
+   .ui-datatable .ui-paginator .ui-paginator-prev, 
+   .ui-datatable .ui-paginator .ui-paginator-pages .ui-paginator-page, 
+   .ui-datatable .ui-paginator .ui-paginator-next, 
+   .ui-datatable .ui-paginator .ui-paginator-last, 
+   .ui-datatable .ui-paginator .ui-paginator-rpp-options {
+        font-size: 10px !important;
+   }
+            
+   .ui-datatable .ui-paginator .ui-paginator-current {
+       font-size: 10px !important;
+   }
+   
+/*   
+   .ui-menubar,.ui-menu-child,.ui-menu {
+    background: #B4B4B4 !important;
+    color: #E3E3E3 !important;
+}
+*/
+
+.ui-menu{
+    border:none;
+    padding-top: 0;
+    padding-bottom: 0;
+        
+}
+
+.companyHeaderGrid.ui-panelgrid>*>tr,
+.companyHeaderGrid.ui-panelgrid>*>tr>td {
+    border: none !important;
+}
+

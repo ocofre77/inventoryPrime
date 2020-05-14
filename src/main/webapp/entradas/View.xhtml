@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EntradasViewDlg" widgetVar="EntradasViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewEntradasTitle}">
+            <h:form id="EntradasViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{entradasController.selected != null}">
+                      
+                        <h:outputText value="#{bundle.ViewEntradasLabel_entNumero}"/>
+                        <h:outputText value="#{entradasController.selected.entNumero}" title="#{bundle.ViewEntradasTitle_entNumero}"/>
+                        <h:outputText value="#{bundle.ViewEntradasLabel_entFecha}"/>
+                        <h:outputText value="#{entradasController.selected.entFecha}" title="#{bundle.ViewEntradasTitle_entFecha}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputText value="Nombre del Proveedor:"/>
+                        <h:outputText value="#{entradasController.selected.provId.provNombre}" title="#{bundle.ViewEntradasTitle_provId}"/>
+                        <h:outputText value="#{bundle.ViewEntradasLabel_entTransportista}"/>
+                        <h:outputText value="#{entradasController.selected.entTransportista}" title="#{bundle.ViewEntradasTitle_entTransportista}"/>
+                        <h:outputText value="#{bundle.ViewEntradasLabel_entLugarLlegada}"/>
+                        <h:outputText value="#{entradasController.selected.entLugarLlegada}" title="#{bundle.ViewEntradasTitle_entLugarLlegada}"/>
+                         <h:outputText value="Nombre Producto:"/>
+                        <h:outputText value="#{entradasController.selected.proId4.proNombres}" title="#{bundle.ViewEntradasTitle_proId4}"/>
+                       <h:outputText value="Código del Producto"/>
+                        <h:outputText value="#{entradasController.selected.entCodigo}" title="#{bundle.ViewEntradasTitle_entCodigo}"/>
+                        <h:outputText value="#{bundle.ViewEntradasLabel_entCantidad}"/>
+                        <h:outputText value="#{entradasController.selected.entCantidad}" title="#{bundle.ViewEntradasTitle_entCantidad}"/>
+                        <h:outputText value="#{bundle.ViewEntradasLabel_entPrecioUni}"/>
+                        <h:outputText value="#{entradasController.selected.entPrecioUni}" title="#{bundle.ViewEntradasTitle_entPrecioUni}"/>
+                     
+                        <h:outputText value="TOTAL"/>
+                        <h:outputText value="#{entradasController.selected.entSubtotal}" title="#{bundle.ViewEntradasTitle_entSubtotal}"/>
+                      
+                      
+                    </p:panelGrid>
+                    <p:commandButton value="#{bundle.Close}" onclick="EntradasViewDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>
