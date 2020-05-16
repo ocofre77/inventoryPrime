@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5711eebb-e63d-44ab-91e4-d9f343647bda">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="306"/>
 	<parameter name="numSalida" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -140,7 +140,7 @@ WHERE
 		<band height="79" splitType="Stretch">
 			<image>
 				<reportElement x="30" y="15" width="123" height="55" uuid="7dcb8ab5-7cfc-4bde-86fc-d0baa268f3c8"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="187" y="15" width="246" height="20" uuid="11129f1f-f4ca-4373-8c42-84b6a59c8a75"/>
@@ -397,7 +397,7 @@ WHERE
 		<band height="120" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="120" uuid="f7b70888-5888-43b5-8e2a-8e0728ccc1ed"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_pie}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="498" y="49" width="42" height="20" uuid="36384608-f62d-40c5-a4ed-ca33323f0600"/>

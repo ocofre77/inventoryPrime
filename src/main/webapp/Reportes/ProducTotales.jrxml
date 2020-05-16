@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1626ad0b-a648-48e4-a1ed-c42164574517">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="128"/>
-	<property name="ireport.y" value="140"/>
+	<property name="ireport.x" value="491"/>
+	<property name="ireport.y" value="311"/>
 	<queryString>
 		<![CDATA[SELECT
      productos.`PRO_ID4` AS productos_PRO_ID4,
@@ -151,7 +151,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="26" y="1" width="105" height="60" uuid="8a36f636-3836-401d-8a96-a57cbee0b355"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_logo}]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -277,7 +277,7 @@ WHERE
 			</textField>
 			<image>
 				<reportElement x="505" y="2" width="49" height="48" uuid="0d697b45-7c86-4b88-9b23-00ef6c5414b6"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{productos_PRO_IMAGEN})]]></imageExpression>
+				<imageExpression><![CDATA[$F{productos_PRO_IMAGEN}]]></imageExpression>
 			</image>
 			<textField pattern="###0.00">
 				<reportElement x="394" y="2" width="45" height="20" uuid="58333c33-40cf-438d-bce4-a1a9dc3817ff"/>

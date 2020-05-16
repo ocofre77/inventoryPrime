@@ -40,9 +40,9 @@ ORDER BY LTRIM(productos.`PRO_NOMBRES`)]]>
 			<elementGroup/>
 			<componentElement>
 				<reportElement x="0" y="21" width="136" height="50" uuid="330383ef-e233-4563-aca3-c6fd8516701e"/>
-				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+				<jr:Code39 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
 					<jr:codeExpression><![CDATA[$F{productos_PRO_CODIGOPRO}]]></jr:codeExpression>
-				</jr:Code128>
+				</jr:Code39>
 			</componentElement>
 		</band>
 	</detail>

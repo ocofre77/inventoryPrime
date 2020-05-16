@@ -86,7 +86,7 @@ ORDER BY
 			</staticText>
 			<image>
 				<reportElement x="18" y="4" width="111" height="65" uuid="96e9fef9-db55-4dcc-9733-92f10511328a"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="201" y="49" width="194" height="20" uuid="2977e9cf-fe2c-4e31-a62c-064d81063953"/>
@@ -213,7 +213,7 @@ ORDER BY
 			</textField>
 			<image>
 				<reportElement x="468" y="11" width="83" height="50" uuid="5fe97458-10c7-4fd1-b8db-41e4d940a88a"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{productos_PRO_IMAGEN})]]></imageExpression>
+				<imageExpression><![CDATA[$F{productos_PRO_IMAGEN}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="19" y="66" width="508" height="1" uuid="ce38511d-abb7-4aec-b048-3aa2d971a534"/>

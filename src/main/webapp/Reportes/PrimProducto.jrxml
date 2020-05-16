@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="68687be3-ecaf-4fe8-957d-c0b1d16f55f5">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="374"/>
 	<parameter name="CodigoProducto" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -72,7 +72,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="23" y="10" width="100" height="50" uuid="875dad50-3853-4204-bf92-e26e56f85705"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_logo}]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -172,7 +172,7 @@ WHERE
 			</textField>
 			<image>
 				<reportElement x="302" y="55" width="223" height="193" uuid="d7f828a6-b708-4687-825f-792564d8364b"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{productos_PRO_IMAGEN})]]></imageExpression>
+				<imageExpression><![CDATA[$F{productos_PRO_IMAGEN}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="57" y="91" width="100" height="20" uuid="ad5d0d68-9d35-4219-a372-d99318158d41"/>
@@ -257,7 +257,7 @@ WHERE
 		<band height="101" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="101" uuid="eb31a976-60b2-4441-9f6d-bfd6a437b938"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_pie}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="492" y="46" width="53" height="20" uuid="21d6addb-3bd4-4c60-8413-66015213d5a7"/>

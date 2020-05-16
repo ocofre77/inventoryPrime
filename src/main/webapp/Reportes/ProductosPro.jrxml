@@ -97,7 +97,7 @@ FROM
 			</staticText>
 			<image>
 				<reportElement x="28" y="18" width="111" height="59" uuid="4e782e97-6e07-481a-8a22-0bbd39a2650c"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="234" y="38" width="126" height="20" uuid="93d796f4-844b-4e8d-a2af-ec8eaee1684b"/>

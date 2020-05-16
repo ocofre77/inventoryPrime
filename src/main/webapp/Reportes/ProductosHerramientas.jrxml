@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="913c5967-d7c6-4ae4-af35-4d23d9a9882d">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="198"/>
 	<queryString>
 		<![CDATA[SELECT
      productos.`PRO_ID4` AS productos_PRO_ID4,
@@ -84,7 +84,7 @@ ORDER BY
 			</staticText>
 			<image>
 				<reportElement x="17" y="12" width="110" height="60" uuid="733c565c-3f4c-4f46-a9f5-fd17521fb559"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="199" y="43" width="251" height="20" forecolor="#000000" uuid="26e774ef-a3d6-48ae-ba7e-12c7b74e98da"/>
@@ -218,7 +218,7 @@ ORDER BY
 			</textField>
 			<image>
 				<reportElement x="471" y="9" width="69" height="50" uuid="a39c0bdb-47b6-4699-a28e-1dabe8b06ddb"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{productos_PRO_IMAGEN})]]></imageExpression>
+				<imageExpression><![CDATA[$F{productos_PRO_IMAGEN}]]></imageExpression>
 			</image>
 			<line>
 				<reportElement x="12" y="0" width="527" height="1" forecolor="#E3E3E3" uuid="fbbbb387-3db5-494f-a935-e5609a5c4808"/>
@@ -241,7 +241,7 @@ ORDER BY
 		<band height="109" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="555" height="109" uuid="8a2dc991-3183-4e71-9bbf-ab34ec8ae14a"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_pie})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_pie}]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="490" y="47" width="50" height="20" uuid="a5ad58e5-ba01-456b-8e44-a0f3a655d899"/>

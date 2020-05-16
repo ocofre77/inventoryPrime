@@ -121,7 +121,7 @@ WHERE
 		<band height="79" splitType="Stretch">
 			<image>
 				<reportElement x="23" y="0" width="117" height="67" uuid="426715e2-253c-4583-82ad-ddfdd20f1be0"/>
-				<imageExpression><![CDATA[net.sf.jasperreports.engine.util.JRImageLoader.loadImage ((byte []) $F{imagenes_logo})]]></imageExpression>
+				<imageExpression><![CDATA[$F{imagenes_logo}]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="194" y="15" width="229" height="20" uuid="e315fd8d-0d38-4c2c-9fcc-ae527446e3e7"/>
