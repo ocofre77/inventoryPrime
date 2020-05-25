@@ -207,8 +207,8 @@
                 <p:dialog id="dlgProductos" widgetVar="dialogoProductos" 
                           resizable="false" showEffect="explode" header="Listado de Productos"
                           hideEffect="explode" style="height: 300px;" >
-                    
-                    <p:panelGrid columns="6">
+                    <p:focus/>
+                    <p:panelGrid columns="6" id="panelProductos">
                         <p:row>
                             <p:outputLabel value="Producto:"/>
                             <p:inputText placeholder="Nombre Producto" value="#{entradasController.productoNombre}"/>
@@ -219,17 +219,16 @@
                         </p:row>
                         <p:row>
                             <p:outputLabel value="Cantidad:"/>
-                            <p:spinner id="cantidad" min="0.01" stepFactor="0.01" 
+                            <p:spinner size="8" id="cantidad" min="0.01" stepFactor="0.01" 
                                 value="#{entradasController.cantidadProducto}" />
                             <p:outputLabel value="Precio:"/>
-                            <p:spinner id="precio" min="0.01" stepFactor="0.01" prefix="$" 
+                            <p:spinner size="8" id="precio" min="0.01" stepFactor="0.01" prefix="$" 
                                 value="#{entradasController.precioUnitario}" />
                             <p:commandButton value="ACEPTAR"  icon="pi pi-check"
                                 actionListener="#{entradasController.agregarDatosProductos()}" 
                                 update=":AsignarProyectoListForm:tablaProductosEntrada :AsignarProyectoListForm:gridTotal :AsignarProyectoListForm:dlgProductos"/>
                             <p:commandButton value="Cerrar" icon="ui-icon-closethick"
-                                onclick="PF('dialogoProductos').hide();" 
-                                style="margin: 1em !important;"/>
+                                onclick="PF('dialogoProductos').hide();" />
                         </p:row>
                     </p:panelGrid>
                         
@@ -242,6 +241,8 @@
                                 selection="#{entradasController.productosSeleccionado}"
                                  >     
                         
+                        <p:ajax event="rowSelect" listener="#{entradasController.onRowSelect}" update=":AsignarProyectoListForm:mensajeGeneral :AsignarProyectoListForm:panelProductos" />
+                        <p:ajax event="rowUnselect" listener="#{entradasController.onRowUnselect}" update=":AsignarProyectoListForm:mensajeGeneral :AsignarProyectoListForm:panelProductos" />                        
                         <p:column style="width: 100px;">
                             <f:facet name="header">
                                 <h:outputText value="CÓDIGO"/>
@@ -288,7 +289,7 @@
                             <f:facet name="header">
                                 <h:outputText value="IMAGEN"/>
                             </f:facet>
-                            <h:graphicImage value="/DisplayImage?Image_id=#{item.proId4}" width="25" height="25"></h:graphicImage>
+                            <h:graphicImage value="/DisplayImage?Image_id=#{item.proId4}" width="50" height="50"></h:graphicImage>
                         </p:column>
                         
 <!--                        

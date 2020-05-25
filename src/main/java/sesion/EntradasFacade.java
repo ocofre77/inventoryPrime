@@ -31,7 +31,7 @@ public class EntradasFacade extends AbstractFacade<Entradas> {
     public EntradasFacade() {
         super(Entradas.class);
     }
-    
+
     public Entradas encontarFactura(String selected, Productos productos) {
         Entradas en = null;
         String consulta;
@@ -69,7 +69,7 @@ public class EntradasFacade extends AbstractFacade<Entradas> {
         return entrada;
     }
 
-        public List<Entradas> encontarFactura2(String selected) {
+    public List<Entradas> encontarFactura2(String selected) {
         List<Entradas> lstAsig = null;
         String consulta;
         try {
@@ -84,5 +84,5 @@ public class EntradasFacade extends AbstractFacade<Entradas> {
         }
         return lstAsig;
     }
-    
+
 }

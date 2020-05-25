@@ -44,30 +44,30 @@ public class DevolucionesEntradasController implements Serializable {
     private List<DevolucionesEntradas> items2;
     private DevolucionesEntradas deVentrada;
     private String FechaSistema;
-    private String totalV;    
+    private String totalV;
     private String numeroGuia;
-    
+
     @EJB
     private sesion.ProveedorFacade ejbFacadeP;
     private Proveedor selectedP;
     private String Ruc;
     private String Transportista;
     private String LugarLlagada;
-    
+
     @EJB
     private sesion.ProductosFacade ejbFacadeR;
     private Productos selectedR;
     private Productos productos;
     private String Serial;
     private String cantidadProducto;
-    private String productoSeleccionado; 
+    private String productoSeleccionado;
     private int cantidadSeleccionada;
-    
+
     @EJB
     private sesion.EntradasFacade ejbFacadeA;
     private Entradas selectD;
     private String observaciones;
-    private List<Entradas>Lista;
+    private List<Entradas> Lista;
 
     public int getCantidadSeleccionada() {
         return cantidadSeleccionada;
@@ -76,9 +76,6 @@ public class DevolucionesEntradasController implements Serializable {
     public void setCantidadSeleccionada(int cantidadSeleccionada) {
         this.cantidadSeleccionada = cantidadSeleccionada;
     }
-    
-    
-    
 
     public List<Entradas> getLista() {
         return Lista = ejbFacadeA.findAll();
@@ -87,8 +84,7 @@ public class DevolucionesEntradasController implements Serializable {
     public void setLista(List<Entradas> Lista) {
         this.Lista = Lista;
     }
-    
-    
+
     public List<DevolucionesEntradas> getItems2() {
         return items2;
     }
@@ -218,7 +214,7 @@ public class DevolucionesEntradasController implements Serializable {
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
     }
-    
+
     public DevolucionesEntradasController() {
     }
 
@@ -245,6 +241,7 @@ public class DevolucionesEntradasController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
+
     @PostConstruct
     public void init() {
         selectedP = new Proveedor();
@@ -253,163 +250,191 @@ public class DevolucionesEntradasController implements Serializable {
         Lista = new ArrayList<>();
         deVentrada = new DevolucionesEntradas();
     }
-    
-    
-    public void pedirCantidadProducto(String codigo, Productos productos,int cantidad){
-        System.out.println(".jgyyhhh "+ codigo);
-        this.productoSeleccionado=codigo;
+
+    public void pedirCantidadProducto(String codigo, Productos productos, int cantidad) {
+        System.out.println(".jgyyhhh " + codigo);
+        this.productoSeleccionado = codigo;
         this.productos = productos;
-        this.cantidadSeleccionada=cantidad;
+        this.cantidadSeleccionada = cantidad;
     }
-     
-    public void agregarDatosProductos(){
-        try{
-            if(!(this.cantidadProducto.matches("[0-9]*")) || this.cantidadProducto.equals("0") || this.cantidadProducto.equals("")){
-                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR"," Datos Incorrectos "));
-                 this.cantidadProducto = null;
+
+    public void agregarDatosProductos() {
+        try {
+            if (!(this.cantidadProducto.matches("[0-9]*")) || this.cantidadProducto.equals("0") || this.cantidadProducto.equals("")) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", " Datos Incorrectos "));
+                this.cantidadProducto = null;
             } else {
 
                 System.out.println(".probarrr  " + this.productoSeleccionado);
                 this.selectD = this.ejbFacadeA.encontarFactura(this.productoSeleccionado, this.productos);
                 System.out.println(".Errorr " + this.selectD.getEntNumero() + "   ");
-                if ( Double.parseDouble(this.cantidadProducto) > this.selectD.getEntCantidad().doubleValue() ) {
+                if (Double.parseDouble(this.cantidadProducto) > this.selectD.getEntCantidad().doubleValue()) {
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "INCORRECTO", " Cantidad Excedida "));
                     this.cantidadProducto = null;
                 } else {
                     items2.add(new DevolucionesEntradas(null, new Date(), Integer.parseInt(this.getCantidadProducto()),
-                            this.selectD.getEntNumero(),this.selectD.getEntPrecioUni(),
+                            this.selectD.getEntNumero(), this.selectD.getEntPrecioUni(),
                             BigDecimal.valueOf(Double.parseDouble(this.cantidadProducto) * (this.productos.getProPrecioUni()).doubleValue()),
-                             this.selectD));
+                            this.selectD));
                     this.total();
                     this.cantidadProducto = null;
                 }
             }
-            
-        }catch(Exception e){        
+
+        } catch (Exception e) {
         }
     }
-     
-     public void quitarProductoDetalle(int cod, int fila){
-         try{
-             int i=0;
-             for(DevolucionesEntradas en: this.items2){
-                 if(en.getEntId().getProId4().getProId4()==cod && fila==i){
-                     this.items2.remove(i); 
-                     break;
-                 }
-                 i++;
-             }
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CORRECTO", " Producto Eliminado de la Lista "));
-             //ACTUALIZAR EL TOTAL
-             this.total();
-         }catch(Exception e){
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
-         }
-     }
-     
-     public void total(){
-         BigDecimal Total =new BigDecimal("0");
-         for(DevolucionesEntradas en : items2){
-             BigDecimal subtotal= en.getDevePUnitario().multiply(new BigDecimal(en.getDeveCantidad()));
-             en.setDeveSubtotal(subtotal);
-             Total = Total.add(subtotal);
-         }
-         double aux = Total.doubleValue()+(Total.doubleValue()*0.12); 
-         setTotalV(Double.toString((double)Math.round(aux * 100d) / 100d));
-     }
-    
-     public void guardarEntrada(){
+
+    public void quitarProductoDetalle(int cod, int fila) {
         try {
-            System.out.println("INGRESOOOOOOOOOOOOO: ");             
+            int i = 0;
+            for (DevolucionesEntradas en : this.items2) {
+                if (en.getEntId().getProId4().getProId4() == cod && fila == i) {
+                    this.items2.remove(i);
+                    break;
+                }
+                i++;
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CORRECTO", " Producto Eliminado de la Lista "));
+            //ACTUALIZAR EL TOTAL
+            this.total();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
+        }
+    }
+
+    public void total() {
+        BigDecimal Total = new BigDecimal("0");
+        for (DevolucionesEntradas en : items2) {
+            BigDecimal subtotal = en.getDevePUnitario().multiply(new BigDecimal(en.getDeveCantidad()));
+            en.setDeveSubtotal(subtotal);
+            Total = Total.add(subtotal);
+        }
+        double aux = Total.doubleValue() + (Total.doubleValue() * 0.12);
+        setTotalV(Double.toString((double) Math.round(aux * 100d) / 100d));
+    }
+
+    /**
+     * Guardar Devolución de Entrada
+     */
+    public void guardarEntrada() {
+        try {
+            System.out.println("INGRESOOOOOOOOOOOOO: ");
+
+            for (DevolucionesEntradas devEntrada : items2) {
+                devEntrada.setDeveTotal(new BigDecimal(this.totalV));
+                devEntrada.setDeveRazon(this.observaciones);
+                this.ejbFacade.create(devEntrada);
                 
-            for (DevolucionesEntradas en : items2) {
-                en.setDeveTotal(new BigDecimal(this.totalV));
-                en.setDeveRazon(this.observaciones);
-                this.ejbFacade.create(en);
-                Productos pro = this.ejbFacadeR.encontarProductos2(en.getEntId().getEntCodigo());
-                pro.setProCantidad(BigDecimal.valueOf(pro.getProCantidad().doubleValue() - en.getDeveCantidad().doubleValue() ));
-                pro.setProPrecioUni(en.getDevePUnitario());
-                pro.setProSubPrec(BigDecimal.valueOf(pro.getProCantidad().doubleValue()*pro.getProPrecioUni().doubleValue()));
-                pro.setProTotalIva( BigDecimal.valueOf(pro.getProSubPrec().doubleValue()+pro.getProSubPrec().doubleValue()*0.12));
+                Productos pro = this.ejbFacadeR.encontarProductos2(devEntrada.getEntId().getEntCodigo());
+                pro.setProCantidad(BigDecimal.valueOf(pro.getProCantidad().doubleValue() - devEntrada.getDeveCantidad().doubleValue()));
+                pro.setProPrecioUni(devEntrada.getDevePUnitario());
+                pro.setProSubPrec(BigDecimal.valueOf(pro.getProCantidad().doubleValue() * pro.getProPrecioUni().doubleValue()));
+                pro.setProTotalIva(BigDecimal.valueOf(pro.getProSubPrec().doubleValue() + pro.getProSubPrec().doubleValue() * 0.12));
                 this.ejbFacadeR.edit(pro);
-                Entradas entrada = en.getEntId();
-                entrada.setEntCantidad(BigDecimal.valueOf(entrada.getEntCantidad().doubleValue()-en.getDeveCantidad().doubleValue() ));
-                entrada.setEntSubtotal(BigDecimal.valueOf(entrada.getEntSubtotal().doubleValue()-entrada.getEntCantidad().doubleValue() * entrada.getEntPrecioUni().doubleValue()));
+                
+                Entradas entrada = devEntrada.getEntId();
+                entrada.setEntCantidad(BigDecimal.valueOf(entrada.getEntCantidad().doubleValue() - devEntrada.getDeveCantidad().doubleValue()));
+                entrada.setEntSubtotal(BigDecimal.valueOf(entrada.getEntSubtotal().doubleValue() - entrada.getEntCantidad().doubleValue() * entrada.getEntPrecioUni().doubleValue()));
                 entrada.setEntTotal(entrada.getEntSubtotal());
-                entrada.setEntTotaliva(BigDecimal.valueOf(entrada.getEntSubtotal().doubleValue()+entrada.getEntSubtotal().doubleValue()*0.12));
+                entrada.setEntTotaliva(BigDecimal.valueOf(entrada.getEntSubtotal().doubleValue() + entrada.getEntSubtotal().doubleValue() * 0.12));
                 this.ejbFacadeA.edit(entrada);
-                     
+
 //                 Entradas entrada2 = en.getEntId();
 //                 entrada2.setEntCantidad(entrada2.getEntCantidad()-en.getDeveCantidad());
 //                 entrada2.setEntSubtotal(BigDecimal.valueOf(entrada2.getEntCantidad()*entrada2.getProId4().getProPrecioUni().doubleValue()));
 //                 System.out.println("Subtotal D antes"+entrada2.getEntSubtotal());
 //                 this.ejbFacadeA.edit(entrada2);
             }
-            
-            System.out.println("NUm guia"+productoSeleccionado);
-            List<Entradas> lsA=ejbFacadeA.encontarFactura2(productoSeleccionado);
-            
+
+            //Actualiza en valor de la entrada modificada
+            System.out.println("NUm guia" + productoSeleccionado);
+            List<Entradas> entradas = ejbFacadeA.encontarFactura2(productoSeleccionado);
+
             BigDecimal acumulativo = new BigDecimal("0");
             BigDecimal acumulativo2 = new BigDecimal("0");
-            
-            for (Entradas en : lsA) {
+
+            for (Entradas en : entradas) {
                 en.setEntTotal(en.getEntSubtotal());
-                System.out.println("Subtotal D"+en.getEntSubtotal());
+                //System.out.println("Subtotal D" + en.getEntSubtotal());
                 BigDecimal subtotal1 = en.getEntTotal();
                 acumulativo = acumulativo.add(subtotal1);
                 en.setEntTotal(acumulativo);
-                System.out.println("Total D"+en.getEntTotal());
-                BigDecimal subtotal2 = BigDecimal.valueOf(en.getEntTotal().doubleValue() +en.getEntTotal().doubleValue()*0.12 );
+                //System.out.println("Total D" + en.getEntTotal());
+                BigDecimal subtotal2 = BigDecimal.valueOf(en.getEntTotal().doubleValue() + en.getEntTotal().doubleValue() * 0.12);
                 acumulativo2 = acumulativo2.add(subtotal2);
                 en.setEntTotaliva(acumulativo2);
-                System.out.println("Total con iva D"+en.getEntTotaliva());
+                //System.out.println("Total con iva D" + en.getEntTotaliva());
                 this.ejbFacadeA.edit(en);
             }
-                 
+            
+            //Actualiza el stock de producto
             List<Productos> ls = ejbFacadeR.findAll();
             BigDecimal acumulativo3 = new BigDecimal("0");
-            for (Productos en : ls) {
-                 BigDecimal subtotal = en.getProTotalIva();
-                 acumulativo3 = acumulativo3.add(subtotal);
-                 en.setProTotalPrec(acumulativo3);
-                 this.ejbFacadeR.edit(en);
+            for (Productos producto : ls) {
+                BigDecimal subtotal = producto.getProTotalIva();
+                acumulativo3 = acumulativo3.add(subtotal);
+                producto.setProTotalPrec(acumulativo3);
+                this.ejbFacadeR.edit(producto);
             }
-                     
+
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", " Producto regresados con éxito "));
+            
+            //this.selected = ejbFacade.findAll()[0];
+            this.verReporte(productoSeleccionado);
             limpiar();
-        } 
-        catch (Exception e){
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
         }
     }
-     
-     public void limpiar(){
-         this.selectedP=new Proveedor();
-         this.selectedR = new Productos();
-         this.items2 = new ArrayList<>();
-         this.Ruc="";
-         this.Serial="";
-         this.Transportista="";
-         this.LugarLlagada="";
-         this.totalV="";
-         this.numeroGuia="";
-         this.observaciones = "";
-     }
- 
+
+    public void limpiar() {
+        this.selectedP = new Proveedor();
+        this.selectedR = new Productos();
+        this.items2 = new ArrayList<>();
+        this.Ruc = "";
+        this.Serial = "";
+        this.Transportista = "";
+        this.LugarLlagada = "";
+        this.totalV = "";
+        this.numeroGuia = "";
+        this.observaciones = "";
+    }
+
 //metodos pra editar la cantidad del producto en la tabla
-     public void onRowEdit(RowEditEvent event) {
-          total();
+    public void onRowEdit(RowEditEvent event) {
+        total();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFORMACIÓN", " Se modificaron campos "));
     }
-     
+
     public void onRowCancel(RowEditEvent event) {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFORMACIÓN", "  No se hicieron cambios  "));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFORMACIÓN", "  No se hicieron cambios  "));
     }
 
+    public void verReporte(String numEntrada) throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        try {
+            if (!numEntrada.equals("") || !numEntrada.isEmpty()) {
 
+                //Instancia hacia la clase reporteProductos        
+                reporteDevolucionEntrada rFactura = new reporteDevolucionEntrada();
+
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+                String ruta = servletContext.getRealPath("/Reportes/DevolucionesEntradas.jasper");
+                rFactura.getReporte(ruta, numEntrada);
+                FacesContext.getCurrentInstance().responseComplete();
+            } else {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Alerta", "Seleccione una salida"));
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Seleccione una salida", "Seleccione una salida"));
+        }
+    }
+    
+    
     public void verReporteDos() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        try {       
-            if (!selected.getDeveNumero().equals("") || !selected.getDeveNumero().isEmpty() || selected.getDeveNumero()!= null) {
+        try {
+            if (!selected.getDeveNumero().equals("") || !selected.getDeveNumero().isEmpty() || selected.getDeveNumero() != null) {
 
                 //Instancia hacia la clase reporteProductos        
                 reporteDevolucionEntrada rFactura = new reporteDevolucionEntrada();
@@ -419,16 +444,14 @@ public class DevolucionesEntradasController implements Serializable {
                 String ruta = servletContext.getRealPath("/Reportes/DevolucionesEntradas.jasper");
                 rFactura.getReporte(ruta, selected.getDeveNumero());
                 FacesContext.getCurrentInstance().responseComplete();
-            } 
-            else {
+            } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Alerta", "Seleccione una salida"));
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Seleccione una salida", "Seleccione una salida"));
         }
     }
-   
-    
+
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("resource/Bundle").getString("DevolucionesEntradasCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -436,11 +459,10 @@ public class DevolucionesEntradasController implements Serializable {
         }
     }
 
-    
-    
-     public void actualizar(){
+    public void actualizar() {
         items = null;
     }
+
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("resource/Bundle").getString("DevolucionesEntradasUpdated"));
     }

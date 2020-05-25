@@ -51,6 +51,8 @@ import javax.servlet.ServletContext;
 import net.sf.jasperreports.engine.JRException;
 
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.UploadedFile;
 
 
@@ -626,12 +628,16 @@ public class EntradasController implements Serializable {
         this.selectedR = new Productos();
         this.items2 = new ArrayList<>();
         this.listaProductosXML = new ArrayList<>();
+        this.listaProductos = new ArrayList<>();
         this.Ruc="";
         this.Serial="";
         this.Transportista="";
         this.LugarLlegada="";
         this.totalV="";
         this.numeroGuia="";
+        this.cantidadProducto ="";
+        this.precioUnitario ="";
+        this.productoNombre="";
     }
  
     public void generarGuia(){         
@@ -730,7 +736,7 @@ public class EntradasController implements Serializable {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
             String ruta = servletContext.getRealPath("/Reportes/EntradaReporte.jasper");
-            rFactura.getReportePdf(ruta, this.numeroGuiaResp);
+            rFactura.getReporteExcel(ruta, this.numeroGuiaResp);
             FacesContext.getCurrentInstance().responseComplete();
             this.numeroGuiaResp="";
         }
@@ -1111,6 +1117,25 @@ public class EntradasController implements Serializable {
     public void getListaProductosProveedor(){
         this.ejbFacadeProductoProveedor.findAll();
     
+    }
+
+    public void onRowSelect(SelectEvent event) {
+        Productos producto = (Productos)event.getObject();
+        this.cantidadProducto = producto.getProCantidad().toString();
+        this.precioUnitario = producto.getProPrecioUni().toString();
+        
+        FacesMessage msg = new FacesMessage("Producto Seleccionado", producto.getProNombres());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+        
+    }
+ 
+    public void onRowUnselect(UnselectEvent event) {
+        Productos producto = (Productos)event.getObject();
+        this.cantidadProducto = "0";
+        this.precioUnitario = "0";
+
+        FacesMessage msg = new FacesMessage("Producto Deseleccionado", producto.getProNombres());
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
     
 }

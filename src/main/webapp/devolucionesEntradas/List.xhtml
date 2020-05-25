@@ -14,8 +14,8 @@
         </ui:define>
 
         <ui:define name="body">
-            
-           <h:form id="AsignarProyectoListForm">
+
+            <h:form id="AsignarProyectoListForm">
                 <p:growl id="mensajeGeneral" showDetail="true" autoUpdate="true" life="3000"/>
                 <p:panel header="DEVOLUCIONES A PROVEEDORES" style="width: 900px; margin:  0 auto; text-align: center">
                     <p:layout id="capaDatosProveedor" style="width: 100%; height: 80px">
@@ -28,20 +28,20 @@
                             </h:panelGrid>
                         </p:layoutUnit>  
                     </p:layout>
-                     
-                    
-                     <p:layout id="capaDatosProductos" style="width: 100%; height: 300px">
-                         <p:layoutUnit  id="datosProducto" position="center" style="padding: 5px; text-align: justify; font-size: 14px" size="500">
-                        
+
+
+                    <p:layout id="capaDatosProductos" style="width: 100%; height: 300px">
+                        <p:layoutUnit  id="datosProducto" position="center" style="padding: 5px; text-align: justify; font-size: 14px" size="500">
+
                             <p:separator/>
                             <h:panelGrid id="gridDatosProducto" columns="3">
                                 <p:outputLabel value="Nombre del producto: " style="font-weight: bold"/>
                                 <p:commandButton icon="ui-icon-cart" oncomplete="PF('dialogoProductos').show();"
                                                  update=":AsignarProyectoListForm:dlgProductos"/>                                
                             </h:panelGrid>
-                            
+
                             <p:dataTable id="tablaProductosEntrada" var="item" editable="true" value="#{devolucionesEntradasController.items2}" rowIndexVar="rowIndex">
-                                
+
                                 <p:ajax event="rowEdit" listener="#{devolucionesEntradasController.onRowEdit}" update=":AsignarProyectoListForm:tablaProductosEntrada :AsignarProyectoListForm:gridTotal" />
                                 <p:ajax event="rowEditCancel" listener="#{devolucionesEntradasController.onRowCancel}" update=":AsignarProyectoListForm:tablaProductosEntrada" />
 
@@ -75,13 +75,13 @@
                                 <p:column headerText="EDITAR" >
                                     <p:rowEditor />
                                 </p:column>
-                                
+
                                 <p:column headerText="QUITAR" >
                                     <p:commandLink value="X" actionListener="#{devolucionesEntradasController.quitarProductoDetalle(item.entId.proId4.proId4, rowIndex)}" 
                                                    style="text-decoration: none; color: orangered;" title="Quitar producto"
                                                    update=":AsignarProyectoListForm:tablaProductosEntrada :AsignarProyectoListForm:gridTotal" />
                                 </p:column>
-                               
+
                             </p:dataTable>
                             <center>
                                 <h:panelGrid id="gridTotal" columns="2" style="font-size: 14px; margin: 0 auto;">
@@ -92,20 +92,20 @@
 
                                 <p:separator/>
 
-                            <p:commandButton value="REGISTRAR" actionListener="#{devolucionesEntradasController.guardarEntrada()}" update=":AsignarProyectoListForm" />
-                            <p:commandButton value="CANCELAR" action="#{devolucionesEntradasController.limpiar()}" update=":AsignarProyectoListForm"/>
+                                <p:commandButton value="REGISTRAR" actionListener="#{devolucionesEntradasController.guardarEntrada()}" update=":AsignarProyectoListForm" ajax="false" />
+                                <p:commandButton value="CANCELAR" action="#{devolucionesEntradasController.limpiar()}" update=":AsignarProyectoListForm"/>
                             </center>
-                            
+
                         </p:layoutUnit>                     
-                        
+
                     </p:layout>                
                 </p:panel>
-                
+
                 <!--VENTANA PARA AÑADIR PRODUCTOS -->
                 <p:dialog id="dlgProductos" widgetVar="dialogoProductos" 
                           resizable="false" showEffect="explode" 
                           hideEffect="explode" >
-                    
+
                     <p:dataTable id="datalist" value="#{devolucionesEntradasController.lista}" var="item"
                                  selectionMode="single" 
                                  paginator="true"
@@ -113,14 +113,14 @@
                                  rows="5"
                                  rowsPerPageTemplate="5,10,20,30,40"
                                  >
-                         
+
                         <p:column filterBy="#{item.entNumero}" headerText="Id" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEntradasTitle_entNumero}"/>
                             </f:facet>
                             <h:outputText value="#{item.entNumero}"/>
                         </p:column>
-                         <p:column>
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListEntradasTitle_entFecha}"/>
                             </f:facet>
@@ -179,25 +179,25 @@
                         </p:column>  
                     </p:dataTable>                    
                     <p:commandButton value="Cerrar" onclick="PF('dialogoProductos').hide();"/>
-                    
+
                 </p:dialog>
-                 
+
                 <!--VENTANA PARA AÑADIR CANTIDAD PRODUCTOS -->
-                 <p:dialog id="dlgProductosCanPre" widgetVar="dialogoProductosCanPre" 
-                           resizable="false" header="CANTIDAD " 
-                           hideEffect="explode" >
-                       <br/>
-                     <h:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
-                     Cantidad: <p:spinner id="cantidad" min="1" style="height: 12px !important; box-shadow: none !important; border-radius: 4px 0px 0px 4px;" value="#{devolucionesEntradasController.cantidadProducto}" />
-                         <h:outputText value="Stock:" />
-                         <h:outputText value="#{devolucionesEntradasController.cantidadSeleccionada}" title="#{bundle.ViewProductosTitle_proCantidad}"/>
-                
-                       <p:commandButton value="ACEPTAR"  actionListener="#{devolucionesEntradasController.agregarDatosProductos()}" 
-                                      oncomplete="PF('dialogoProductos').hide(); PF('dialogoProductosCanPre').hide();"
-                                      update=":AsignarProyectoListForm:tablaProductosEntrada :AsignarProyectoListForm:dlgProductosCanPre :AsignarProyectoListForm:gridTotal"/>
-                     </h:panelGrid>
-                 </p:dialog>                        
-                    
+                <p:dialog id="dlgProductosCanPre" widgetVar="dialogoProductosCanPre" 
+                          resizable="false" header="CANTIDAD " 
+                          hideEffect="explode" >
+                    <br/>
+                    <h:panelGrid columns="2" cellpadding="5" styleClass="ui-grid">
+                        Cantidad: <p:spinner id="cantidad" min="1" style="height: 12px !important; box-shadow: none !important; border-radius: 4px 0px 0px 4px;" value="#{devolucionesEntradasController.cantidadProducto}" />
+                        <h:outputText value="Stock:" />
+                        <h:outputText value="#{devolucionesEntradasController.cantidadSeleccionada}" title="#{bundle.ViewProductosTitle_proCantidad}"/>
+
+                        <p:commandButton value="ACEPTAR"  actionListener="#{devolucionesEntradasController.agregarDatosProductos()}" 
+                                         oncomplete="PF('dialogoProductos').hide(); PF('dialogoProductosCanPre').hide();"
+                                         update=":AsignarProyectoListForm:tablaProductosEntrada :AsignarProyectoListForm:dlgProductosCanPre :AsignarProyectoListForm:gridTotal"/>
+                    </h:panelGrid>
+                </p:dialog>                        
+
             </h:form>
         </ui:define>
     </ui:composition>

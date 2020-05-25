@@ -10,7 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -30,24 +30,24 @@ public class ProductoFacade extends AbstractFacade<Producto> {
     public ProductoFacade() {
         super(Producto.class);
     }
-       public Producto encontrarProductoEspecifico(int selected) {
+
+    public Producto encontrarProductoEspecifico(final int selected) {
         Producto productos = null;
         String consulta;
         try {
-            System.out.println("CÓDIGO: " + selected );
+            System.out.println("CÓDIGO: " + selected);
             consulta = "SELECT p FROM Producto p WHERE p.prodId = ?1";
-            Query query = em.createQuery(consulta);
+            final TypedQuery<Producto> query = em.createQuery(consulta, Producto.class);
             query.setParameter(1, selected);
 
-            List<Producto> lstProductos = query.getResultList();
+            final List<Producto> lstProductos = query.getResultList();
             if (!lstProductos.isEmpty()) {
                 productos = lstProductos.get(0);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw e;
         }
         return productos;
     }
-  
-    
+
 }

@@ -393,19 +393,32 @@ WHERE
 		<band height="70" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="94" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="0" width="555" height="88" uuid="17ff1476-3092-4024-b536-5e5321413cc7"/>
-				<imageExpression><![CDATA[$F{imagenes_pie}]]></imageExpression>
-			</image>
-			<textField>
-				<reportElement x="494" y="47" width="36" height="20" uuid="1e609bf8-3a9f-4ba7-9d59-ec5756b5ff26"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
+            <band height="30" splitType="Stretch">
+                    <frame>
+                            <reportElement mode="Opaque" x="0" y="0" width="555" height="24" forecolor="#FFFFFF" backcolor="#FF0000" uuid="f1480ee5-c8a3-4459-91b3-adfdc45fd522"/>
+                            <staticText>
+                                    <reportElement x="2" y="2" width="256" height="20" uuid="d0d9bfe1-e778-4be4-b73b-8cf48dd5acbf"/>
+                                    <textElement>
+                                            <font fontName="Arial" size="8" isBold="false"/>
+                                    </textElement>
+                                    <text><![CDATA[Dirección: Calle 1 Lote 3 y Calle Machachi Sector "Poncho Verde" Teléfonos: 02 287 1839 / 099 2512 558]]></text>
+                            </staticText>
+                            <staticText>
+                                    <reportElement x="322" y="3" width="100" height="20" uuid="5f047ef1-6fb9-4560-9cdb-d28fdbc2102e"/>
+                                    <textElement>
+                                            <font fontName="Arial" size="8" isBold="false"/>
+                                    </textElement>
+                                    <text><![CDATA[E-mail: info@conalgi.com www.conalgi.com]]></text>
+                            </staticText>
+                    </frame>
+                    <textField>
+                            <reportElement x="520" y="0" width="22" height="20" uuid="e045ac27-96d3-4745-bb4c-3e5750a8a60a"/>
+                            <textElement textAlignment="Center">
+                                    <font fontName="Arial"/>
+                            </textElement>
+                            <textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+                    </textField>
+            </band>
 	</pageFooter>
 	<summary>
 		<band height="90" splitType="Stretch">

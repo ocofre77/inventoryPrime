@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="70ab46a5-54cd-438f-8b07-789b74a326d5">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="428"/>
+	<property name="ireport.x" value="99"/>
+	<property name="ireport.y" value="245"/>
 	<parameter name="Num_entrada" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -359,19 +359,32 @@ WHERE
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="94" splitType="Stretch">
-			<image>
-				<reportElement x="0" y="0" width="555" height="93" uuid="87d79107-b834-46e9-b2ab-45cf3e71f0ae"/>
-				<imageExpression><![CDATA[$F{imagenes_pie}]]></imageExpression>
-			</image>
-			<textField>
-				<reportElement x="493" y="47" width="38" height="20" uuid="d1b525b9-73b4-4b48-9223-ed0cb1973f52"/>
-				<textElement>
-					<font fontName="Arial"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
-			</textField>
-		</band>
+            <band height="30" splitType="Stretch">
+                    <frame>
+                            <reportElement mode="Opaque" x="0" y="0" width="555" height="24" forecolor="#FFFFFF" backcolor="#FF0000" uuid="f1480ee5-c8a3-4459-91b3-adfdc45fd522"/>
+                            <staticText>
+                                    <reportElement x="2" y="2" width="256" height="20" uuid="d0d9bfe1-e778-4be4-b73b-8cf48dd5acbf"/>
+                                    <textElement>
+                                            <font fontName="Arial" size="8" isBold="false"/>
+                                    </textElement>
+                                    <text><![CDATA[Dirección: Calle 1 Lote 3 y Calle Machachi Sector "Poncho Verde" Teléfonos: 02 287 1839 / 099 2512 558]]></text>
+                            </staticText>
+                            <staticText>
+                                    <reportElement x="322" y="3" width="100" height="20" uuid="5f047ef1-6fb9-4560-9cdb-d28fdbc2102e"/>
+                                    <textElement>
+                                            <font fontName="Arial" size="8" isBold="false"/>
+                                    </textElement>
+                                    <text><![CDATA[E-mail: info@conalgi.com www.conalgi.com]]></text>
+                            </staticText>
+                    </frame>
+                    <textField>
+                            <reportElement x="520" y="0" width="22" height="20" uuid="e045ac27-96d3-4745-bb4c-3e5750a8a60a"/>
+                            <textElement textAlignment="Center">
+                                    <font fontName="Arial"/>
+                            </textElement>
+                            <textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+                    </textField>
+            </band>
 	</pageFooter>
 	<summary>
 		<band height="69" splitType="Stretch">
