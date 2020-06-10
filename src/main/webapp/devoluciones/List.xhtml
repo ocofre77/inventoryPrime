@@ -95,17 +95,12 @@
                             <center>
                             <h:panelGrid id="gridTotal" columns="2" style="font-size: 14px; margin: 0 auto;">
                                     TOTAL DE DEVOLUCIONES $
-                                    <p:outputLabel value="#{devolucionesController.totalV}"> 
-                                        
-                                    </p:outputLabel>
-                                    
-
-                            </h:panelGrid>    
+                                <p:outputLabel value="#{devolucionesController.totalV}"></p:outputLabel>
+                            </h:panelGrid>
                             
                             <p:separator/>
                             
-                            <p:commandButton value="REGISTRAR" icon="ui-icon-circle-check" actionListener="#{devolucionesController.guardarCotizacion()}" update=":AForm" />
-                            
+                            <p:commandButton value="REGISTRAR" icon="ui-icon-circle-check" actionListener="#{devolucionesController.guardarCotizacion()}" update=":AForm" ajax="false" />
                             <p:commandButton value="CANCELAR" icon="ui-icon-closethick" actionListener="#{devolucionesController.limpiar()}" update=":AForm" />
                             
                             </center>

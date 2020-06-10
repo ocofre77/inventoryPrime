@@ -10,6 +10,7 @@ import entities.Herramienta;
 import entities.Maquinaria;
 import entities.MaterialAcabado;
 import entities.Producto;
+import entities.ProductoProveedor;
 import entities.Productos;
 import entities.Proveedor;
 import entities.Vehiculos;
@@ -616,6 +617,18 @@ public class EntradasController implements Serializable {
                     this.ejbFacadeR.edit(en);
                 }
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", " Producto Ingresados "));
+                //Grabar Productos Homologados
+                if( this.listaProductosXML.size()> 0 ){
+                    for(ProductosXML item : this.listaProductosXML ){
+                        ProductoProveedor entityP = new ProductoProveedor();
+                        entityP.setProvId(this.selectedP.getProvId());
+                        entityP.setProCodigoPro(item.getCodProducto());
+                        entityP.setProvCodigoProv(item.getCodigo());
+                        
+                        this.ejbFacadeProductoProveedor.create(entityP);
+                    }
+                }
+                
                 limpiar();
             }
         } catch (Exception e){
@@ -744,7 +757,7 @@ public class EntradasController implements Serializable {
     
     
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("resource/Bundle").getString("EntradasCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("Bundle").getString("EntradasCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
@@ -754,11 +767,11 @@ public class EntradasController implements Serializable {
         items = null;
     }
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("resource/Bundle").getString("EntradasUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("Bundle").getString("EntradasUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("resource/Bundle").getString("EntradasDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("Bundle").getString("EntradasDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -791,11 +804,11 @@ public class EntradasController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("resource/Bundle").getString("PersistenceErrorOccured"));
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("Bundle").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("resource/Bundle").getString("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("Bundle").getString("PersistenceErrorOccured"));
             }
         }
     }
