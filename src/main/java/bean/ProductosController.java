@@ -612,7 +612,7 @@ public class ProductosController implements Serializable {
             selected.setProTotalPrec(selected.getProTotalIva());           
             selected.setProEstadoEliminar("activo");
             selected.setProCodigopro(generarClaves(selected.getProCategoria(),selected.getProNombres(),1));
-            persist(PersistAction.CREATE, ResourceBundle.getBundle(("Bundle")ring("ProductosCreated"));
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("Bundle").getString("ProductosCreated"));
             if (!JsfUtil.isValidationFailed()) {
                 items = null;    // Invalidate list of items to trigger re-query.
             }
@@ -666,7 +666,7 @@ public class ProductosController implements Serializable {
              System.out.println("TOTAL TOTAL "+selected.getProTotalPrec());
             selected.setProCodigopro(generarClaves(selected.getProCategoria(),selected.getProNombres(),pro1.getProId4()+1));
             selected.setProEstadoEliminar("activo");
-            persist(PersistAction.CREATE, ResourceBundle.getBundle(("Bundle")ring("ProductosCreated"));
+            persist(PersistAction.CREATE, ResourceBundle.getBundle("Bundle").getString("ProductosCreated"));
             if (!JsfUtil.isValidationFailed()) {
                 items = null;    // Invalidate list of items to trigger re-query.
             }
@@ -724,11 +724,11 @@ public class ProductosController implements Serializable {
             selected.setProTotalIva(BigDecimal.valueOf(selected.getProSubPrec().doubleValue()+selected.getProSubPrec().doubleValue()*0.12));
             System.out.println("Total con  Iva "+selected.getProTotalIva());            
             selected.setProTotalPrec(BigDecimal.valueOf(pro1.getProTotalPrec().doubleValue()+selected.getProTotalIva().doubleValue()));
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle(("Bundle")ring("ProductosUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("Bundle").getString("ProductosUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle(("Bundle")ring("ProductosDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("Bundle").getString("ProductosDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -784,7 +784,7 @@ public class ProductosController implements Serializable {
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle(("Bundle")ring("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("Bundle").getString("PersistenceErrorOccured"));
             }
         }
     }
