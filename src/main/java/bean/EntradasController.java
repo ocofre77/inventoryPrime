@@ -16,8 +16,8 @@ import entities.Proveedor;
 import entities.Vehiculos;
 //import entities.ProductoProveedor;
 import java.io.IOException;
-import sesion.EntradasFacade;
 
+import sesion.EntradasFacade;
 
 
 import java.io.Serializable;
@@ -49,6 +49,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import javax.faces.validator.ValidatorException;
 import javax.servlet.ServletContext;
+
 import net.sf.jasperreports.engine.JRException;
 
 import org.primefaces.event.RowEditEvent;
@@ -61,32 +62,30 @@ import org.primefaces.model.UploadedFile;
 @SessionScoped
 public class EntradasController implements Serializable {
 
-
     private UploadedFile file;
-    private String textXml; 
+    private String textXml;
 
-
-@EJB
+    @EJB
     private sesion.EntradasFacade ejbFacade;
     private List<Entradas> items = null;
     private List<Entradas> items2;
     private Entradas selected;
     private Entradas entrada;
     private String FechaSistema;
-    private String totalV;    
+    private String totalV;
     private String numeroGuia;
     private String numeroGuiaResp;
-    private int codigo=0;
+    private int codigo = 0;
     @EJB
     private sesion.ProveedorFacade ejbFacadeP;
     private Proveedor selectedP;
     private String Ruc;
     private String Transportista;
     private String LugarLlegada;
-    
+
     @EJB
     private sesion.ProductoProveedorFacade ejbFacadeProductoProveedor;
-    
+
     @EJB
     private sesion.ProductosFacade ejbFacadeR;
     private Productos selectedR;
@@ -102,37 +101,35 @@ public class EntradasController implements Serializable {
     private entities.Productos selectedProductComplete;
     private ProductosXML selectedProductoXML;
 
- 
-    @EJB 
+    @EJB
     private sesion.ProductoFacade ejbFacadePr;
-    
+
     @EJB
     private sesion.HerramientaFacade ejbFacade2;
-   
-    
+
     //Equipos de Protección
     @EJB
     private sesion.EquipoProteccionFacade ejbFacade4;
-    
+
     //MATERIAL ACABADO
     @EJB
     private sesion.MaterialAcabadoFacade ejbFacade5;
 
-    
+
     //VEHICULO
     @EJB
     private sesion.VehiculosFacade ejbFacade6;
-  
-    
+
+
     //MAQUINARIA
     @EJB
     private sesion.MaquinariaFacade ejbFacade7;
-      
+
     @EJB
     private sesion.BodegaFacade ejbFacadeB;
     private List<Bodega> lstBodega;
     private Bodega bodega;
-     
+
     public List<Bodega> getLstBodega() {
         return lstBodega = this.ejbFacadeB.findAll();
     }
@@ -156,7 +153,7 @@ public class EntradasController implements Serializable {
     public void setProductoNombre(String productoNombre) {
         this.productoNombre = productoNombre;
     }
-    
+
     public List<Productos> getListaProductos() {
         return listaProductos;
     }
@@ -193,7 +190,7 @@ public class EntradasController implements Serializable {
     public void setLista(List<Productos> Lista) {
         this.Lista = Lista;
     }
-     
+
     public String getNumeroGuiaResp() {
         return numeroGuiaResp;
     }
@@ -309,7 +306,6 @@ public class EntradasController implements Serializable {
         this.productosSeleccionado = productosSeleccionado;
     }
 
-   
 
     public String getPrecioUnitario() {
         return precioUnitario;
@@ -354,7 +350,8 @@ public class EntradasController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
-   @PostConstruct
+
+    @PostConstruct
     public void init() {
         selectedP = new Proveedor();
         selectedR = new Productos();
@@ -362,34 +359,57 @@ public class EntradasController implements Serializable {
         entrada = new Entradas();
         Lista = new ArrayList<>();
         lstBodega = new ArrayList<>();
-        bodega=new Bodega();
-        LugarLlegada ="";
+        bodega = new Bodega();
+        LugarLlegada = "";
         Transportista = "";
-        totalV ="";
+        totalV = "";
     }
-    
 
-     public void agregarDatosProveedor(int codProveedor){
-        try{
-            this.selectedP = ejbFacadeP.encontarProveedor(codProveedor);   
-        }catch(Exception e){        
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR"," Proveedor no encontrado "));
+
+    public void agregarDatosProveedor(int codProveedor) {
+        try {
+            this.selectedP = ejbFacadeP.encontarProveedor(codProveedor);
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", " Proveedor no encontrado "));
         }
     }
 
-    public void pedirCantidadProducto(int codigo){
-        this.productoSeleccionado=codigo;
+    public void validarDatosProveedor(int codProveedor) {
+        try {
+            this.selectedP = ejbFacadeP.encontarProveedor(codProveedor);
+            //si hay datos xml cargados buscar en tabla de homologación
+
+            if( this.listaProductosXML.size() > 0 ){
+                for (ProductosXML item : this.listaProductosXML) {
+                    item.setCodProducto("");
+                }
+            }
+
+            List<ProductoProveedor> productosProveedor =  ejbFacadeProductoProveedor.encontarProductosProveedor(codProveedor);
+            if( productosProveedor.size() > 0 && this.listaProductosXML.size() > 0 ){
+                for (ProductosXML item : this.listaProductosXML) {
+                    item.setCodProducto("");
+                    item.setCodProducto(existeProductoProveedor(item.getCodigo(), productosProveedor));
+                }
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", " Proveedor no encontrado "));
+        }
     }
-    
-    public void agregarDatosProductosXML(){
-        try{
+
+    public void pedirCantidadProducto(int codigo) {
+        this.productoSeleccionado = codigo;
+    }
+
+    public void agregarDatosProductosXML() {
+        try {
             //Número de Guia
             //this.generarGuia();
             this.setLugarLlegada(this.bodega.getBdNombre());
             //Cargar items homologados
-            for( ProductosXML item: this.listaProductosXML ){
-                if( !item.getCodProducto().equals("") ){
-                    this.productoSeleccionado = item.getIdProducto() ;
+            for (ProductosXML item : this.listaProductosXML) {
+                if (!item.getCodProducto().equals("")) {
+                    this.productoSeleccionado = item.getIdProducto();
                     this.selectedR = ejbFacadeR.encontarProductos(this.productoSeleccionado);
                     items2.add(new Entradas(null,
                             this.selectedP,
@@ -399,43 +419,42 @@ public class EntradasController implements Serializable {
                             this.Transportista,
                             this.LugarLlegada,
                             new BigDecimal(item.getCantidad()).setScale(2, BigDecimal.ROUND_UP),
-                            new BigDecimal(item.getPrecio()).setScale(2, BigDecimal.ROUND_UP), new Date() , 
-                            BigDecimal.valueOf(item.getCantidad()* item.getPrecio()) 
+                            new BigDecimal(item.getPrecio()).setScale(2, BigDecimal.ROUND_UP), new Date(),
+                            BigDecimal.valueOf(item.getCantidad() * item.getPrecio())
                     ));
                     this.total();
                     this.cantidadProducto = "1";
                     this.precioUnitario = null;
                     this.productoNombre = "";
-                    this.productosSeleccionado = null;                    
+                    this.productosSeleccionado = null;
                 }
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
     }
-     
-    public void agregarDatosProductos(){
-        try
-        {
-            if(!(this.cantidadProducto.matches("[0-9.0-9]*")) || this.cantidadProducto.equals("0") || this.cantidadProducto.equals("") 
-               || !(this.precioUnitario.matches("[0-9.0-9]*")) || this.precioUnitario.equals("0") || this.precioUnitario.equals("") 
-                    || this.productosSeleccionado == null ){
-                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR"," Datos Incorrectos "));
-                 //this.cantidadProducto = null;
-                 //this.precioUnitario = null;
-                 
-            }else{
+
+    public void agregarDatosProductos() {
+        try {
+            if (!(this.cantidadProducto.matches("[0-9.0-9]*")) || this.cantidadProducto.equals("0") || this.cantidadProducto.equals("")
+                    || !(this.precioUnitario.matches("[0-9.0-9]*")) || this.precioUnitario.equals("0") || this.precioUnitario.equals("")
+                    || this.productosSeleccionado == null) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", " Datos Incorrectos "));
+                //this.cantidadProducto = null;
+                //this.precioUnitario = null;
+
+            } else {
                 this.productoSeleccionado = this.productosSeleccionado.getProId4();
                 this.selectedR = ejbFacadeR.encontarProductos(this.productoSeleccionado);
                 items2.add(new Entradas(null,
                         this.selectedP,
                         this.selectedR,
                         this.selectedR.getProCodigopro(),
-                        null,this.Transportista,
+                        null, this.Transportista,
                         this.LugarLlegada,
                         new BigDecimal(this.cantidadProducto),
-                        new BigDecimal(this.precioUnitario), new Date() , 
-                        BigDecimal.valueOf(Double.parseDouble(this.cantidadProducto)* Double.parseDouble(this.precioUnitario) ) 
+                        new BigDecimal(this.precioUnitario), new Date(),
+                        BigDecimal.valueOf(Double.parseDouble(this.cantidadProducto) * Double.parseDouble(this.precioUnitario))
                 ));
                 this.total();
                 this.cantidadProducto = null;
@@ -444,58 +463,56 @@ public class EntradasController implements Serializable {
                 this.productosSeleccionado = null;
                 this.listaProductos = new ArrayList<>();
             }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", " Datos Inconrrectos: " + e.getMessage()));
         }
-        catch(Exception e){  
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR"," Datos Inconrrectos: " + e.getMessage()));
-        }
-    }
-     
-     public void quitarProductoDetalle(String cod, int fila){
-         try{
-             int i=0;
-             for(Entradas en: this.items2){
-                 if(en.getEntCodigo().equals(cod) && fila==i){
-                     this.items2.remove(i); 
-                     break;
-                 }
-                 i++;
-             }
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CORRECTO", " Producto Eliminado de la Lista "));
-             //ACTUALIZAR EL TOTAL
-             this.total();
-         }catch(Exception e){
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
-         }
-     }
-     
-    public void total(){
-         BigDecimal Total =new BigDecimal("0");
-         for(Entradas en : items2){
-            BigDecimal subtotal= en.getEntPrecioUni().multiply(en.getEntCantidad());
-            en.setEntSubtotal(subtotal);
-            Total = Total.add(subtotal);
-         }
-         double aux = (Total.doubleValue()*1.12); 
-         setTotalV(Double.toString((double)Math.round(aux * 100d) / 100d));
     }
 
-     
-    public void guardarEntrada(){
+    public void quitarProductoDetalle(String cod, int fila) {
         try {
-            System.out.println("INGRESOOOOOOOOOOOOO: ");             
+            int i = 0;
+            for (Entradas en : this.items2) {
+                if (en.getEntCodigo().equals(cod) && fila == i) {
+                    this.items2.remove(i);
+                    break;
+                }
+                i++;
+            }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "CORRECTO", " Producto Eliminado de la Lista "));
+            //ACTUALIZAR EL TOTAL
+            this.total();
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
+        }
+    }
+
+    public void total() {
+        BigDecimal Total = new BigDecimal("0");
+        for (Entradas en : items2) {
+            BigDecimal subtotal = en.getEntPrecioUni().multiply(en.getEntCantidad());
+            en.setEntSubtotal(subtotal);
+            Total = Total.add(subtotal);
+        }
+        double aux = (Total.doubleValue() * 1.12);
+        setTotalV(Double.toString((double) Math.round(aux * 100d) / 100d));
+    }
+
+
+    public void guardarEntrada() {
+        try {
+            System.out.println("INGRESOOOOOOOOOOOOO: ");
             if (this.numeroGuia.equals("") || this.numeroGuia == null) {
-                numeroGuiaResp=getNumeroGuia();
+                numeroGuiaResp = getNumeroGuia();
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "INCORRECTO", " Debe generar número de guía "));
-            } 
-            else
-            {
+            }
+            else {
                 for (Entradas en : items2) {
                     en.setEntTransportista(this.Transportista);
                     en.setEntLugarLlegada(this.bodega.getBdNombre());
                     en.setProvId(this.selectedP);
-                    numeroGuiaResp=getNumeroGuia();
+                    numeroGuiaResp = getNumeroGuia();
                     en.setEntNumero(this.numeroGuia);
-                    double aux = (Double.parseDouble(this.totalV) * 25)/28;
+                    double aux = (Double.parseDouble(this.totalV) * 25) / 28;
                     en.setEntTotal(new BigDecimal(Double.toString(aux)));
                     en.setEntTotaliva(new BigDecimal(this.totalV));
                     this.ejbFacade.create(en);
@@ -513,33 +530,29 @@ public class EntradasController implements Serializable {
                             p.setProdFechaIng(new Date());
                             this.ejbFacadePr.edit(p);
                         }
-                    } 
-                    else 
-                    {      
+                    }
+                    else {
                         Boolean bandera = true;
-                        List<Productos> lstProductos=this.ejbFacadeR.encontrarBodegas(en.getEntCodigo());
-                        for(int i=0;i<lstProductos.size();i++)
-                        {
-                           if(this.bodega.getBdNombre().equals(lstProductos.get(i).getBdId().getBdNombre()))
-                           {           
-                               Productos pro2 = lstProductos.get(i);
-                               bandera =  false;
-                               pro2.setProCantidad(new BigDecimal(en.getEntCantidad().doubleValue() + pro2.getProCantidad().doubleValue()));
-                               pro2.setProPrecioUni(en.getEntPrecioUni());
-                               pro2.setProSubPrec(BigDecimal.valueOf(pro2.getProCantidad().doubleValue() * pro2.getProPrecioUni().doubleValue()));
-                               pro2.setProTotalIva(BigDecimal.valueOf(pro2.getProSubPrec().doubleValue() + pro2.getProSubPrec().doubleValue() * 0.12));
-                               this.ejbFacadeR.edit(pro2);
+                        List<Productos> lstProductos = this.ejbFacadeR.encontrarBodegas(en.getEntCodigo());
+                        for (int i = 0; i < lstProductos.size(); i++) {
+                            if (this.bodega.getBdNombre().equals(lstProductos.get(i).getBdId().getBdNombre())) {
+                                Productos pro2 = lstProductos.get(i);
+                                bandera = false;
+                                pro2.setProCantidad(new BigDecimal(en.getEntCantidad().doubleValue() + pro2.getProCantidad().doubleValue()));
+                                pro2.setProPrecioUni(en.getEntPrecioUni());
+                                pro2.setProSubPrec(BigDecimal.valueOf(pro2.getProCantidad().doubleValue() * pro2.getProPrecioUni().doubleValue()));
+                                pro2.setProTotalIva(BigDecimal.valueOf(pro2.getProSubPrec().doubleValue() + pro2.getProSubPrec().doubleValue() * 0.12));
+                                this.ejbFacadeR.edit(pro2);
 
-                               if (pro.getProCategoria().equals("Producto")) {
-                                   Producto p = this.ejbFacadePr.encontrarProductoEspecifico(pro2.getProId4());
-                                   p.setProdFechaIng(new Date());
-                                   this.ejbFacadePr.edit(p);
-                               }
-                           }
+                                if (pro.getProCategoria().equals("Producto")) {
+                                    Producto p = this.ejbFacadePr.encontrarProductoEspecifico(pro2.getProId4());
+                                    p.setProdFechaIng(new Date());
+                                    this.ejbFacadePr.edit(p);
+                                }
+                            }
                         }
-                        
-                        if(bandera==true)
-                        {
+
+                        if (bandera == true) {
                             //Crear
                             codigo = pro.getProId4();
                             pro.setProId4(null);
@@ -550,25 +563,25 @@ public class EntradasController implements Serializable {
                             pro.setBdId(bodega);
                             this.ejbFacadeR.create(pro);
                             Productos pro1 = this.ejbFacadeR.Obtenerobj();
-                         
-                            System.out.println("Listo para la creacion de especificos: "+ pro1.getProId4());
+
+                            System.out.println("Listo para la creacion de especificos: " + pro1.getProId4());
 
                             if (pro1.getProCategoria().equals("Producto")) {
-                                System.out.println("Entro productos: "+ codigo);
+                                System.out.println("Entro productos: " + codigo);
                                 Producto p = this.ejbFacadePr.encontrarProductoEspecifico(codigo);
                                 p.setProdId(pro1.getProId4());
                                 p.setProId4(pro1);
                                 p.setProdFechaIng(new Date());
-                                System.out.println("Ver productos: "+ p.getProdPeriodoCadu());
+                                System.out.println("Ver productos: " + p.getProdPeriodoCadu());
                                 this.ejbFacadePr.create(p);
                             }
-                            
+
                             if (pro1.getProCategoria().equals("Herramientas")) {
-                                System.out.println("Entro Herramienta "+ codigo);
+                                System.out.println("Entro Herramienta " + codigo);
                                 Herramienta h = this.ejbFacade2.encontrarHerramientaEspecifica(codigo);
                                 h.setProId4(pro1);
                                 h.setHerId(pro1.getProId4());
-                                System.out.println("Fecha cadaM Herramienta "+ h.getHerFecCadaMante());
+                                System.out.println("Fecha cadaM Herramienta " + h.getHerFecCadaMante());
                                 this.ejbFacade2.create(h);
                             }
 
@@ -577,37 +590,37 @@ public class EntradasController implements Serializable {
                                 EquipoProteccion ep = this.ejbFacade4.encontrarEquipoProteccionEspecifica(codigo);
                                 ep.setProId4(pro1);
                                 ep.setProId2(pro1.getProId4());
-                                System.out.println("Equipo Herramienta "+ ep.getEquiMaterial());
+                                System.out.println("Equipo Herramienta " + ep.getEquiMaterial());
                                 this.ejbFacade4.create(ep);
                             }
                             if (pro1.getProCategoria().equals("Material de acabados")) {
-                                System.out.println("Material de acabado "+ codigo);
+                                System.out.println("Material de acabado " + codigo);
                                 MaterialAcabado ma = this.ejbFacade5.encontrarMaterialAcabadoEspecifica(codigo);
                                 ma.setProId4(pro1);
                                 ma.setProId3(pro1.getProId4());
-                                System.out.println("Color Material "+ ma.getMatColor());
+                                System.out.println("Color Material " + ma.getMatColor());
                                 this.ejbFacade5.create(ma);
                             }
                             if (pro1.getProCategoria().equals("Vehículos")) {
-                                System.out.println("Entro Vehiculos "+ codigo);
+                                System.out.println("Entro Vehiculos " + codigo);
                                 Vehiculos ve = this.ejbFacade6.encontrarVehiculosEspecifica(codigo);
-                                System.out.println(" Vehiculo "+ ve.getVehPlaca());
+                                System.out.println(" Vehiculo " + ve.getVehPlaca());
                                 ve.setProId4(pro1);
                                 ve.setVehId(pro1.getProId4());
                                 this.ejbFacade6.create(ve);
                             }
                             if (pro1.getProCategoria().equals("Maquinaria")) {
-                                System.out.println("Entro maquinaria: "+ codigo);
+                                System.out.println("Entro maquinaria: " + codigo);
                                 Maquinaria m = this.ejbFacade7.encontrarMaquinariaEspecifica(codigo);
                                 m.setProId4(pro1);
                                 m.setMaqId(pro1.getProId4());
-                                System.out.println("Razón: "+ m.getMaqRazonMante());
+                                System.out.println("Razón: " + m.getMaqRazonMante());
                                 this.ejbFacade7.create(m);
                             }
                         }//fin crear
                     }
                 }//fin for
-                 
+
                 List<Productos> ls = ejbFacadeR.findAll();
                 BigDecimal acumulativo = new BigDecimal("0");
                 for (Productos en : ls) {
@@ -616,57 +629,59 @@ public class EntradasController implements Serializable {
                     en.setProTotalPrec(acumulativo);
                     this.ejbFacadeR.edit(en);
                 }
+
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "CORRECTO", " Producto Ingresados "));
+
                 //Grabar Productos Homologados
-                if( this.listaProductosXML.size()> 0 ){
-                    for(ProductosXML item : this.listaProductosXML ){
-                        ProductoProveedor entityP = new ProductoProveedor();
-                        entityP.setProvId(this.selectedP.getProvId());
-                        entityP.setProCodigoPro(item.getCodProducto());
-                        entityP.setProvCodigoProv(item.getCodigo());
-                        
-                        this.ejbFacadeProductoProveedor.create(entityP);
+                if (this.listaProductosXML.size() > 0) {
+                    for (ProductosXML item : this.listaProductosXML) {
+                        if(item.getCodigo() !="" && existeProductoEntrada(item.getCodigo(), items2)){
+                            ProductoProveedor entityP = new ProductoProveedor();
+                            entityP.setProvId(this.selectedP.getProvId());
+                            entityP.setProCodigoPro(item.getCodProducto());
+                            entityP.setProvCodigoProv(item.getCodigo());
+                            this.ejbFacadeProductoProveedor.create(entityP);
+                        }
                     }
                 }
-                
                 limpiar();
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
         }
     }
-     
-    public void limpiar(){
-        this.selectedP=new Proveedor();
+
+    public void limpiar() {
+        this.selectedP = new Proveedor();
         this.selectedR = new Productos();
         this.items2 = new ArrayList<>();
         this.listaProductosXML = new ArrayList<>();
         this.listaProductos = new ArrayList<>();
-        this.Ruc="";
-        this.Serial="";
-        this.Transportista="";
-        this.LugarLlegada="";
-        this.totalV="";
-        this.numeroGuia="";
-        this.cantidadProducto ="";
-        this.precioUnitario ="";
-        this.productoNombre="";
+        this.Ruc = "";
+        this.Serial = "";
+        this.Transportista = "";
+        this.LugarLlegada = "";
+        this.totalV = "";
+        this.numeroGuia = "";
+        this.cantidadProducto = "";
+        this.precioUnitario = "";
+        this.productoNombre = "";
     }
- 
-    public void generarGuia(){         
-        try{
+
+    public void generarGuia() {
+        try {
             limpiar();
             this.selected = ejbFacade.encontarUltimaGuia();
-            if(getSelected() == null){
-                this.numeroGuia="E000001";
-            }else{
-                this.numeroGuia=generarClaves(this.selected.getEntNumero());
-            }            
-        }catch(Exception e){
-             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
+            if (getSelected() == null) {
+                this.numeroGuia = "E000001";
+            } else {
+                this.numeroGuia = generarClaves(this.selected.getEntNumero());
+            }
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
         }
-    } 
-     
+    }
+
     public String generarClaves(String cadena) {
         String categoria = cadena.substring(1, 7).toUpperCase();
         System.out.println("Numeroo:" + categoria);
@@ -693,54 +708,49 @@ public class EntradasController implements Serializable {
         System.out.println(numeros);
         return clave;
     }
-     
-     //metodos pra editar la cantidad del producto en la tabla
-     public void onRowEdit(RowEditEvent event) {
+
+    //metodos pra editar la cantidad del producto en la tabla
+    public void onRowEdit(RowEditEvent event) {
         total();
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFORMACIÓN", " Se modificaron campos "));
     }
-     
+
     public void onRowCancel(RowEditEvent event) {
-         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFORMACIÓN", "  No se hicieron cambios  "));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "INFORMACIÓN", "  No se hicieron cambios  "));
     }
 
-        public void verReporteDos() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public void verReporteDos() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
 
-         try {       
-         if (!selected.getEntNumero().equals("") || !selected.getEntNumero().isEmpty() || selected.getEntNumero()!= null) {
-        reporteEntrada rFactura = new reporteEntrada();
+        try {
+            if (!selected.getEntNumero().equals("") || !selected.getEntNumero().isEmpty() || selected.getEntNumero() != null) {
+                reporteEntrada rFactura = new reporteEntrada();
 
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("/Reportes/EntradaReporte.jasper");
-        rFactura.getReporte(ruta, selected.getEntNumero());
-        FacesContext.getCurrentInstance().responseComplete();
-          } else {
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+                String ruta = servletContext.getRealPath("/Reportes/EntradaReporte.jasper");
+                rFactura.getReporte(ruta, selected.getEntNumero());
+                FacesContext.getCurrentInstance().responseComplete();
+            } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Alerta", "Seleccione una entrada"));
-                
+
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Seleccione una entrada", "Seleccione una entrada"));
         }
     }
-    
+
     public void verReporte() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException, JRException, IOException {
 
-        if( this.selectedP.getProvNombre() == null ){
+        if (this.selectedP.getProvNombre() == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("CONALGI", "Debe Seleccionar Proveedor"));
-        }
-        else if( this.bodega == null ){
+        } else if (this.bodega == null) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("CONALGI", "Debe Seleccionar Lugar llegada"));
-        }
-        else if( this.Transportista.trim().equals("") ){
+        } else if (this.Transportista.trim().equals("")) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("CONALGI", "Debe Ingresar Transportista"));
-        }
-        else if( this.totalV.length() == 0  ){
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage("CONALGI", "Debe Ingresar Productos"));
-        }
-        else
-        {
+        } else if (this.totalV.length() == 0) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("CONALGI", "Debe Ingresar Productos"));
+        } else {
             this.LugarLlegada = this.bodega.getBdNombre();
             guardarEntrada();
             //Instancia hacia la clase reporteProductos        
@@ -751,11 +761,11 @@ public class EntradasController implements Serializable {
             String ruta = servletContext.getRealPath("/Reportes/EntradaReporte.jasper");
             rFactura.getReporteExcel(ruta, this.numeroGuiaResp);
             FacesContext.getCurrentInstance().responseComplete();
-            this.numeroGuiaResp="";
+            this.numeroGuiaResp = "";
         }
     }
-    
-    
+
+
     public void create() {
         persist(PersistAction.CREATE, ResourceBundle.getBundle("Bundle").getString("EntradasCreated"));
         if (!JsfUtil.isValidationFailed()) {
@@ -763,9 +773,10 @@ public class EntradasController implements Serializable {
         }
     }
 
-        public void actualizar(){
+    public void actualizar() {
         items = null;
     }
+
     public void update() {
         persist(PersistAction.UPDATE, ResourceBundle.getBundle("Bundle").getString("EntradasUpdated"));
     }
@@ -849,8 +860,7 @@ public class EntradasController implements Serializable {
         this.selectedProductoXML = selectedProductoXML;
     }
 
-    
-    
+
     @FacesConverter(forClass = Entradas.class)
     public static class EntradasControllerConverter implements Converter {
 
@@ -893,84 +903,85 @@ public class EntradasController implements Serializable {
     }
 
 
-    public void validator(FacesContext context, UIComponent component, Object value ){
-        if(file.getContentType().equals("text/plain") ){
+    public void validator(FacesContext context, UIComponent component, Object value) {
+        if (file.getContentType().equals("text/plain")) {
             throw new ValidatorException(new FacesMessage("File is not text file"));
         }
-    
+
     }
-    
+
     public void upload() throws IOException {
         if (file != null) {
             FacesMessage msg = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
             FacesContext.getCurrentInstance().addMessage(null, msg);
-            
+
             textXml = readFileXml();
             System.out.println(textXml);
         }
     }
-    public String readFileXml () {
-            String xmlFactura="";
-            try {
 
-                //abrimos archivo xml
-                //File file = new File("D:\\tempo\\factura.xml");
-                //DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
-                //Document doc = builder.parse(file);
+    public String readFileXml() {
+        String xmlFactura = "";
+        try {
 
-                Scanner s = new Scanner(file.getInputstream());
-                String textFactura = s.useDelimiter("\\A").next();
-                String textFacturaAux = new String(textFactura.getBytes("UTF-8"));		
-                
-                org.w3c.dom.Document doc = loadXMLFrom(textFacturaAux);
-                
-                
-                //leimos el cdata de la factura
-                NodeList nodes = doc.getElementsByTagName("comprobante");
-                Element element = (Element) nodes.item(0);
-                xmlFactura = getCharacterDataFromElement(element);
+            //abrimos archivo xml
+            //File file = new File("D:\\tempo\\factura.xml");
+            //DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            //Document doc = builder.parse(file);
 
-                String cadenaAux = new String(xmlFactura.getBytes("UTF-8"));		
-                org.w3c.dom.Document docXml = loadXMLFrom(cadenaAux);
+            Scanner s = new Scanner(file.getInputstream());
+            String textFactura = s.useDelimiter("\\A").next();
+            String textFacturaAux = new String(textFactura.getBytes("UTF-8"));
 
-                //Recorremos Detalles
-                //String listaProductos = "<table border=1>";
-                List<ProductosXML> lstAux =new ArrayList<>();
-                        
-                NodeList detalles = docXml.getElementsByTagName("detalle");
-                for (int i = 0; i < detalles.getLength(); i++) {
-                    //listaProductos = listaProductos + "<tr>";
-                    Element detalle = (Element) detalles.item(i);
+            org.w3c.dom.Document doc = loadXMLFrom(textFacturaAux);
 
-                    if (detalle.getNodeType() == Node.ELEMENT_NODE) {
-                            Element item = (Element) detalle;
+
+            //leimos el cdata de la factura
+            NodeList nodes = doc.getElementsByTagName("comprobante");
+            Element element = (Element) nodes.item(0);
+            xmlFactura = getCharacterDataFromElement(element);
+
+            String cadenaAux = new String(xmlFactura.getBytes("UTF-8"));
+            org.w3c.dom.Document docXml = loadXMLFrom(cadenaAux);
+
+            //Recorremos Detalles
+            //String listaProductos = "<table border=1>";
+            List<ProductosXML> lstAux = new ArrayList<>();
+
+            NodeList detalles = docXml.getElementsByTagName("detalle");
+            for (int i = 0; i < detalles.getLength(); i++) {
+                //listaProductos = listaProductos + "<tr>";
+                Element detalle = (Element) detalles.item(i);
+
+                if (detalle.getNodeType() == Node.ELEMENT_NODE) {
+                    Element item = (Element) detalle;
 //                            listaProductos = listaProductos + "<td>" + item.getElementsByTagName("codigoPrincipal").item(0).getTextContent()  + "</td>";
 //                            listaProductos = listaProductos + "<td>" + item.getElementsByTagName("descripcion").item(0).getTextContent()  + "</td>";
 //                            listaProductos = listaProductos + "<td>" + item.getElementsByTagName("cantidad").item(0).getTextContent()  + "</td>";
 //                            listaProductos = listaProductos + "<td>" + item.getElementsByTagName("precioUnitario").item(0).getTextContent()  + "</td>";
-                    
-                            ProductosXML itemXml2 = new ProductosXML(
-                                item.getElementsByTagName("codigoPrincipal").item(0).getTextContent(), 
-                                item.getElementsByTagName("descripcion").item(0).getTextContent(), 
-                                Double.parseDouble(item.getElementsByTagName("cantidad").item(0).getTextContent()),
-                                Double.parseDouble(item.getElementsByTagName("precioUnitario").item(0).getTextContent()));
-                            
-                        lstAux.add(itemXml2);
-                    }
+
+                    ProductosXML itemXml2 = new ProductosXML(
+                            item.getElementsByTagName("codigoPrincipal").item(0).getTextContent(),
+                            item.getElementsByTagName("descripcion").item(0).getTextContent(),
+                            Double.parseDouble(item.getElementsByTagName("cantidad").item(0).getTextContent()),
+                            Double.parseDouble(item.getElementsByTagName("precioUnitario").item(0).getTextContent()));
+
+                    lstAux.add(itemXml2);
+                }
 //                    listaProductos = listaProductos + "</tr>";
-                }	
+            }
 
 //                listaProductos = listaProductos + "</table>";
 
-                this.listaProductosXML = lstAux;
-                
+            this.listaProductosXML = lstAux;
+
 //                xmlFactura = (listaProductos);
 
-                
-            } catch (final Exception e) {
-                    
-            } 
-        return xmlFactura;    
+
+        } catch (final Exception e) {
+
+        }
+        return xmlFactura;
     }
 
     public List<bean.ProductosXML> getListaProductosXML() {
@@ -981,22 +992,19 @@ public class EntradasController implements Serializable {
         this.listaProductosXML = listaProductosXML;
     }
 
-    
-
 
     public static org.w3c.dom.Document loadXMLFrom(String xml) throws org.xml.sax.SAXException, java.io.IOException {
         return loadXMLFromX(new java.io.ByteArrayInputStream(xml.getBytes()));
     }
 
     public static org.w3c.dom.Document loadXMLFromX(java.io.InputStream is)
-        throws org.xml.sax.SAXException, java.io.IOException {
+            throws org.xml.sax.SAXException, java.io.IOException {
         final javax.xml.parsers.DocumentBuilderFactory factory = javax.xml.parsers.DocumentBuilderFactory.newInstance();
         factory.setNamespaceAware(true);
         javax.xml.parsers.DocumentBuilder builder = null;
         try {
             builder = factory.newDocumentBuilder();
-        } 
-        catch (final javax.xml.parsers.ParserConfigurationException ex) {
+        } catch (final javax.xml.parsers.ParserConfigurationException ex) {
         }
         final org.w3c.dom.Document doc = builder.parse(is);
         is.close();
@@ -1006,31 +1014,31 @@ public class EntradasController implements Serializable {
     public static String getCharacterDataFromElement(Element e) {
         Node child = e.getFirstChild();
         if (child instanceof CharacterData) {
-          CharacterData cd = (CharacterData) child;
-          return cd.getData();
+            CharacterData cd = (CharacterData) child;
+            return cd.getData();
         }
         return "";
     }
 
-    
-    public void agregarProductoXML(){
-        try{
-            if(!(this.cantidadProducto.matches("[0-9.0-9]*")) || this.cantidadProducto.equals("0") || this.cantidadProducto.equals("") 
-               || !(this.precioUnitario.matches("[0-9.0-9]*")) || this.precioUnitario.equals("0") || this.precioUnitario.equals("") ){
-                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"ERROR"," Datos Incorrectos "));
-                 this.cantidadProducto = null;
-                 this.precioUnitario = null;
-            }else{
+
+    public void agregarProductoXML() {
+        try {
+            if (!(this.cantidadProducto.matches("[0-9.0-9]*")) || this.cantidadProducto.equals("0") || this.cantidadProducto.equals("")
+                    || !(this.precioUnitario.matches("[0-9.0-9]*")) || this.precioUnitario.equals("0") || this.precioUnitario.equals("")) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", " Datos Incorrectos "));
+                this.cantidadProducto = null;
+                this.precioUnitario = null;
+            } else {
                 this.selectedR = ejbFacadeR.encontarProductos(this.productoSeleccionado);
                 items2.add(new Entradas(null,
                         this.selectedP, //Proveedor
                         this.selectedR, //Producto
                         this.selectedR.getProCodigopro(),
-                        null,this.Transportista,
+                        null, this.Transportista,
                         this.LugarLlegada,
                         new BigDecimal(this.cantidadProducto).setScale(2, BigDecimal.ROUND_UP),
-                        new BigDecimal(this.precioUnitario).setScale(2, BigDecimal.ROUND_UP), new Date() , 
-                        BigDecimal.valueOf(Double.parseDouble(this.cantidadProducto)* Double.parseDouble(this.precioUnitario) ) 
+                        new BigDecimal(this.precioUnitario).setScale(2, BigDecimal.ROUND_UP), new Date(),
+                        BigDecimal.valueOf(Double.parseDouble(this.cantidadProducto) * Double.parseDouble(this.precioUnitario))
                 ));
                 this.total();
                 this.cantidadProducto = null;
@@ -1038,8 +1046,7 @@ public class EntradasController implements Serializable {
                 this.productoNombre = "";
                 this.listaProductos = new ArrayList<>();
             }
-        }
-        catch(Exception e){        
+        } catch (Exception e) {
         }
     }
 
@@ -1052,12 +1059,13 @@ public class EntradasController implements Serializable {
     }
 
     /**
-     * Verifica la existncia de un codigo de producto en una lista
+     * Verifica la existencia de un código de producto en una lista
+     *
      * @param codigoProducto, a see buscado
-     * @param productos, lista de productos
+     * @param productos,      lista de productos
      * @return verdadero y existe, falso si no existe
      */
-    public boolean existeProducto( String codigoProducto, List<entities.Productos> productos) {
+    public boolean existeProducto(String codigoProducto, List<entities.Productos> productos) {
         Iterator<Productos> iterator = productos.iterator();
         while (iterator.hasNext()) {
             Productos customer = iterator.next();
@@ -1067,23 +1075,51 @@ public class EntradasController implements Serializable {
         }
         return false;
     }
-    
+
+
+    /*
+    * Verifica la existencia de un código de producto en una lista de Entradas
+    *
+    * */
+    public boolean existeProductoEntrada(String codigoProducto, List<entities.Entradas> entradas) {
+        Iterator<Entradas> iterator = entradas.iterator();
+        while (iterator.hasNext()) {
+            Entradas entrada = iterator.next();
+            if (entrada.getEntCodigo().equals(codigoProducto)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String existeProductoProveedor(String codigoProductoProv, List<entities.ProductoProveedor> productosProveedor) {
+        Iterator<ProductoProveedor> iterator = productosProveedor.iterator();
+        while (iterator.hasNext()) {
+            ProductoProveedor productoProveedor = iterator.next();
+            if (productoProveedor.getProvCodigoProv().equals(codigoProductoProv)) {
+                return productoProveedor.getProCodigoPro();
+            }
+        }
+        return "";
+    }
+
+
     /**
      * Obtiene una lista de producto para componete autocomplete
-     * @param query, criterio de consulta 
+     *
+     * @param query, criterio de consulta
      * @return, Lista de Productos
      */
     public List<entities.Productos> getListaProductosComplete(String query) {
         listaProductos = ejbFacadeR.productosByNombre("%".concat(query).concat("%"));
-        List<entities.Productos> resultProductos=new ArrayList<>();
+        List<entities.Productos> resultProductos = new ArrayList<>();
         Iterator<entities.Productos> it = listaProductos.iterator();
         while (it.hasNext()) {
             Productos producto = it.next();
-            if( (int)(resultProductos.size()) == 0 ){
+            if ((int) (resultProductos.size()) == 0) {
                 resultProductos.add(producto);
-            }
-            else{
-                if( ! existeProducto(producto.getProCodigopro(),resultProductos )){
+            } else {
+                if (!existeProducto(producto.getProCodigopro(), resultProductos)) {
                     resultProductos.add(producto);
                 }
             }
@@ -1092,15 +1128,15 @@ public class EntradasController implements Serializable {
     }
 
     /**
-     * Actualiza la lista de productos cardados del archivo XML de la 
+     * Actualiza la lista de productos cardados del archivo XML de la
      * factura electronica, se asina el código del producto local
      */
-    public void updateItemListaProductoXML(){
-        int i =0;
-        while(i < this.listaProductosXML.size() ){
+    public void updateItemListaProductoXML() {
+        int i = 0;
+        while (i < this.listaProductosXML.size()) {
             ProductosXML item = listaProductosXML.get(i);
-            if(item.getCodigo().equals(this.selectedProductoXML.getCodigo())){
-                item.setCodProducto( this.selectedProductComplete.getProCodigopro());
+            if (item.getCodigo().equals(this.selectedProductoXML.getCodigo())) {
+                item.setCodProducto(this.selectedProductComplete.getProCodigopro());
                 item.setIdProducto(this.selectedProductComplete.getProId4());
                 this.selectedProductoXML = null;
                 this.selectedProductComplete = null;
@@ -1114,41 +1150,41 @@ public class EntradasController implements Serializable {
      * Guardar relación del código del Producto del Proveedor
      * con el codigo de producto local
      */
-    public void agregarProductoProveedor(){
-        int i =0;
-        while(i < this.listaProductosXML.size()){
+    public void agregarProductoProveedor() {
+        int i = 0;
+        while (i < this.listaProductosXML.size()) {
             ProductosXML item = listaProductosXML.get(i);
-            if(!item.getCodProducto().equals("")){
+            if (!item.getCodProducto().equals("")) {
                 entities.ProductoProveedor productoProveedor;
-                productoProveedor = new entities.ProductoProveedor(selectedP.getProvId(),item.getCodProducto(), item.getCodigo() );
+                productoProveedor = new entities.ProductoProveedor(selectedP.getProvId(), item.getCodProducto(), item.getCodigo());
                 this.ejbFacadeProductoProveedor.create(productoProveedor);
             }
             i++;
         }
     }
 
-    public void getListaProductosProveedor(){
+    public void getListaProductosProveedor() {
         this.ejbFacadeProductoProveedor.findAll();
-    
+
     }
 
     public void onRowSelect(SelectEvent event) {
-        Productos producto = (Productos)event.getObject();
+        Productos producto = (Productos) event.getObject();
         this.cantidadProducto = producto.getProCantidad().toString();
         this.precioUnitario = producto.getProPrecioUni().toString();
-        
+
         FacesMessage msg = new FacesMessage("Producto Seleccionado", producto.getProNombres());
         FacesContext.getCurrentInstance().addMessage(null, msg);
-        
+
     }
- 
+
     public void onRowUnselect(UnselectEvent event) {
-        Productos producto = (Productos)event.getObject();
+        Productos producto = (Productos) event.getObject();
         this.cantidadProducto = "0";
         this.precioUnitario = "0";
 
         FacesMessage msg = new FacesMessage("Producto Deseleccionado", producto.getProNombres());
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
-    
+
 }

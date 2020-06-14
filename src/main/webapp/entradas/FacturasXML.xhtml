@@ -198,15 +198,21 @@
                             </f:facet>
                             <h:outputText value="#{item.provTelefono}"/>
                         </p:column>
-                        <p:column style="width:40px;text-align: center">
+<!--                        <p:column style="width:40px;text-align: center">
                             <p:commandButton update=":AsignarProyectoListForm:gridDatosProveedor" 
                                              oncomplete="PF('dialogoProveedores').hide();" icon="ui-icon-check" title="Seleccionar">
                                 <f:setPropertyActionListener value="#{item}" target="#{entradasController.selectedP}" />
                             </p:commandButton>
-                        </p:column>                              
+                        </p:column>-->
+                        <p:column style="width:95px;">
+                            <f:facet name="header">
+                            </f:facet>
+                            <p:commandButton value="Seleccionar"  actionListener="#{entradasController.validarDatosProveedor(item.provId)}"
+                                             oncomplete="PF('dialogoProveedores').hide();"
+                                             update=":AsignarProyectoListForm:gridDatosProveedor"/>
+                        </p:column>
                     </p:dataTable>
                     <p:commandButton value="Cerrar" onclick="PF('dialogoProveedores').hide();"/>
-
                 </p:dialog>
 
                 <!-- PRODUCTOS HOMOLOGADOS -->
