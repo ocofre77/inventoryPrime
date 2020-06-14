@@ -77,79 +77,76 @@ public class ProyectoController implements Serializable {
         initializeEmbeddableKey();
         return selected;
     }
-    
-    
-    private boolean validateProyecto(){
+
+
+    private boolean validateProyecto() {
         return (!selected.getProyNombre().equals("") || !selected.getProyNombre().isEmpty() || selected.getProyNombre() != null);
     }
-    
-    private boolean validateDates()throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        try{
-            Date date1 = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(fechaDesde); 
-            Date date2 = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(fechaHasta); 
+
+    private boolean validateDates() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        try {
+            Date date1 = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(fechaDesde);
+            Date date2 = new java.text.SimpleDateFormat("dd/MM/yyyy").parse(fechaHasta);
             return true;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Verifique las fechas", "Verifique las fechas"));
             return false;
         }
     }
-        
+
     public void valorProyecto() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        try{
-            if (validateProyecto() && validateDates()) {    
+        try {
+            if (validateProyecto() && validateDates()) {
                 //Instancia hacia la clase reporteProductos        
                 reporteTotalProyecto rFactura = new reporteTotalProyecto();
 
                 FacesContext facesContext = FacesContext.getCurrentInstance();
                 ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
                 String ruta = servletContext.getRealPath("/Reportes/TotalProyectoFechas.jasper");
-                rFactura.getReporteFechas(ruta, selected.getProyNombre(),fechaDesde, fechaHasta );
+                rFactura.getReporteFechas(ruta, selected.getProyNombre(), fechaDesde, fechaHasta);
                 FacesContext.getCurrentInstance().responseComplete();
-            } 
-            else {
+            } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Alerta", "Seleccione un producto"));
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Seleccione un proyecto", "Seleccione un proyecto"));
         }
     }
-         
-    
-    public void verReporteDos() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-         try {
-          if (!selected.getProyNombre().equals("") || !selected.getProyNombre().isEmpty() || selected.getProyNombre() != null) {    
-        //Instancia hacia la clase reporteProductos        
-        reporteTotalProyecto rFactura = new reporteTotalProyecto();
 
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String ruta = servletContext.getRealPath("/Reportes/TotalProyecto.jasper");
-        rFactura.getReporte(ruta, selected.getProyNombre());
-        FacesContext.getCurrentInstance().responseComplete();
-        } else {
+
+    public void verReporteDos() throws SQLException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        try {
+            if (!selected.getProyNombre().equals("") || !selected.getProyNombre().isEmpty() || selected.getProyNombre() != null) {
+                //Instancia hacia la clase reporteProductos
+                reporteTotalProyecto rFactura = new reporteTotalProyecto();
+
+                FacesContext facesContext = FacesContext.getCurrentInstance();
+                ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+                String ruta = servletContext.getRealPath("/Reportes/TotalProyecto.jasper");
+                rFactura.getReporte(ruta, selected.getProyNombre());
+                FacesContext.getCurrentInstance().responseComplete();
+            } else {
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Alerta", "Seleccione un producto"));
-                
+
             }
-         } catch (Exception e) {
+        } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Seleccione un proyecto", "Seleccione un proyecto"));
         }
     }
 
     public void create() {
-        persist(PersistAction.CREATE, ResourceBundle.getBundle("resource/Bundle").getString("ProyectoCreated"));
+        persist(PersistAction.CREATE, ResourceBundle.getBundle("Bundle").getString("ProyectoCreated"));
         if (!JsfUtil.isValidationFailed()) {
             items = null;    // Invalidate list of items to trigger re-query.
         }
     }
 
     public void update() {
-        persist(PersistAction.UPDATE, ResourceBundle.getBundle("resource/Bundle").getString("ProyectoUpdated"));
+        persist(PersistAction.UPDATE, ResourceBundle.getBundle("Bundle").getString("ProyectoUpdated"));
     }
 
     public void destroy() {
-        persist(PersistAction.DELETE, ResourceBundle.getBundle("resource/Bundle").getString("ProyectoDeleted"));
+        persist(PersistAction.DELETE, ResourceBundle.getBundle("Bundle").getString("ProyectoDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
             items = null;    // Invalidate list of items to trigger re-query.
@@ -182,11 +179,11 @@ public class ProyectoController implements Serializable {
                 if (msg.length() > 0) {
                     JsfUtil.addErrorMessage(msg);
                 } else {
-                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("resource/Bundle").getString("PersistenceErrorOccured"));
+                    JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("Bundle").getString("PersistenceErrorOccured"));
                 }
             } catch (Exception ex) {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("resource/Bundle").getString("PersistenceErrorOccured"));
+                JsfUtil.addErrorMessage(ex, ResourceBundle.getBundle("Bundle").getString("PersistenceErrorOccured"));
             }
         }
     }
