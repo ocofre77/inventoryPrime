@@ -410,7 +410,12 @@ public class EntradasController implements Serializable {
             for (ProductosXML item : this.listaProductosXML) {
                 if (!item.getCodProducto().equals("")) {
                     this.productoSeleccionado = item.getIdProducto();
-                    this.selectedR = ejbFacadeR.encontarProductos(this.productoSeleccionado);
+                    if(this.productoSeleccionado > 0){
+                        this.selectedR = ejbFacadeR.encontarProductos(this.productoSeleccionado);
+                    }
+                    else{
+                        this.selectedR = ejbFacadeR.encontarProductos2(item.getCodProducto());
+                    }
                     items2.add(new Entradas(null,
                             this.selectedP,
                             this.selectedR,
@@ -635,19 +640,23 @@ public class EntradasController implements Serializable {
                 //Grabar Productos Homologados
                 if (this.listaProductosXML.size() > 0) {
                     for (ProductosXML item : this.listaProductosXML) {
-                        if(item.getCodigo() !="" && existeProductoEntrada(item.getCodigo(), items2)){
+                        if(item.getCodProducto() !="" && existeProductoEntrada(item.getCodProducto(), items2)){
                             ProductoProveedor entityP = new ProductoProveedor();
                             entityP.setProvId(this.selectedP.getProvId());
                             entityP.setProCodigoPro(item.getCodProducto());
                             entityP.setProvCodigoProv(item.getCodigo());
-                            this.ejbFacadeProductoProveedor.create(entityP);
+                            if(!this.ejbFacadeProductoProveedor.existeProductoProveedor(entityP)){
+                                this.ejbFacadeProductoProveedor.create(entityP);
+                            }
                         }
                     }
                 }
-                limpiar();
             }
         } catch (Exception e) {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "ERROR", e.getMessage()));
+        }
+        finally{
+            limpiar();
         }
     }
 
@@ -759,9 +768,10 @@ public class EntradasController implements Serializable {
             FacesContext facesContext = FacesContext.getCurrentInstance();
             ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
             String ruta = servletContext.getRealPath("/Reportes/EntradaReporte.jasper");
-            rFactura.getReporteExcel(ruta, this.numeroGuiaResp);
+            rFactura.getReporte(ruta, this.numeroGuiaResp);
             FacesContext.getCurrentInstance().responseComplete();
             this.numeroGuiaResp = "";
+
         }
     }
 

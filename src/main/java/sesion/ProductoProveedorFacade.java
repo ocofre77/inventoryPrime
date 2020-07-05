@@ -47,5 +47,32 @@ public class ProductoProveedorFacade extends AbstractFacade<ProductoProveedor>{
         }
         return lstProductoProveedor;
     }
+
+    public boolean existeProductoProveedor(ProductoProveedor productoProveedor ) {
+        List<ProductoProveedor> lstProductoProveedor=new ArrayList<>();
+        String consulta;
+        try {
+            System.out.println("ProductoProveedor: " + productoProveedor.getProvId()  );
+            consulta = "SELECT p FROM ProductoProveedor p WHERE p.provId = ?1 AND p.provCodigoPro = ?2 AND p.prodCodigoPro = ?3 ";
+            Query query = em.createQuery(consulta);
+            query.setParameter(1, productoProveedor.getProvId());
+            query.setParameter(2, productoProveedor.getProvCodigoProv());
+            query.setParameter(3, productoProveedor.getProCodigoPro());
+
+            lstProductoProveedor = query.getResultList();
+        
+            if(lstProductoProveedor.size() > 0 ){
+                return true;
+            } 
+            else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            throw e;
+        }
+        
+    }
+
     
 }

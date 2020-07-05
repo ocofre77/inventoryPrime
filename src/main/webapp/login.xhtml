@@ -70,8 +70,8 @@
         <div class="login-logo" style="margin-left: auto; margin-right: auto; text-align: center">
             <img src="images/logo-conalgi1.png" width="150" height="150" alt=""/>
         </div>
-        <div class="box login-box-body">
-            <h:form >
+        <div class="box login-box-body" style=" margin-left: auto; margin-right: auto;">
+<!--            <h:form >
                 <p class="login-box-msg">Inicia sesión para comenzar</p>
                 <p:messages autoUpdate="true"/>
                 <p:growl id="mensajes" showDetail="true" life="2000" />
@@ -82,7 +82,7 @@
                     <i class="fa fa-envelope form-control-feedback"></i>
                 </div>                
                 <div class="form-group has-feedback">
-<!--                    <h:outputLabel for="password" value="Clave:" />-->
+                    <h:outputLabel for="password" value="Clave:" />
                     <p:inputText id="password" value="#{usuarioController.selected.usuPassword}" type="password" styleClass="form-control"
                                  placeholder="Clave" required="true" autocomplete="off"
                                  requiredMessage="Password is required."/>
@@ -96,7 +96,22 @@
                                          value="Acceder" process="@form" update="@form"/>
                     </div>
                 </div>                
-            </h:form>
+            </h:form>-->
+            
+        <h:form >
+          <p:panel header="Login usuarios" style="width:400px; margin-left: auto; margin-right: auto; margin-top: 80px;">
+            <h:panelGrid columns="2" cellpadding="5">
+              <h:outputLabel for="username" value="Usuario:" />
+              <p:inputText value="#{usuarioController.selected.usuNombre}" id="username" required="true" label="username" />
+              <h:outputLabel for="password" value="Clave:" />
+              <p:password value="#{usuarioController.selected.usuPassword}" id="password" required="true" label="password" />
+              <f:facet name="footer">
+                  <center><p:commandButton id="loginButton" value="Acceder" action="#{usuarioController.iniciarSesion()}" icon="ui-icon-circle-arrow-e" /></center>
+              </f:facet>
+            </h:panelGrid>
+          </p:panel>
+        </h:form>            
+            
         </div>
     </div>    
         

@@ -37,6 +37,10 @@
    .ui-datatable .ui-paginator .ui-paginator-current {
        font-size: 10px !important;
    }
+
+.ui-menu .ui-menu-parent .ui-menu-child{
+	width:15em !important;
+}
    
 /*   
    .ui-menubar,.ui-menu-child,.ui-menu {
